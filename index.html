@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BenchK — Shark Tank Prep</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0a0f;--surface:#13131a;--card:#1a1a24;--border:#2a2a3a;
+  --text:#e8e8ed;--muted:#8888a0;--accent:#4f7cff;--accent2:#7c5cff;
+  --green:#22c55e;--red:#ef4444;--orange:#f59e0b;--cyan:#06b6d4;
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+a{color:var(--accent);text-decoration:none}
+
+/* Layout */
+.app{display:flex;min-height:100vh}
+.sidebar{width:260px;background:var(--surface);border-right:1px solid var(--border);padding:24px 0;position:fixed;top:0;left:0;bottom:0;z-index:100;transition:transform .3s}
+.sidebar .logo{padding:0 24px 24px;border-bottom:1px solid var(--border);margin-bottom:16px}
+.sidebar .logo h1{font-size:20px;font-weight:700;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sidebar .logo p{font-size:11px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:1.5px}
+.nav-item{display:flex;align-items:center;gap:12px;padding:12px 24px;cursor:pointer;transition:all .2s;font-size:14px;color:var(--muted);border-left:3px solid transparent}
+.nav-item:hover{background:rgba(79,124,255,.08);color:var(--text)}
+.nav-item.active{color:var(--accent);background:rgba(79,124,255,.1);border-left-color:var(--accent)}
+.nav-item .icon{font-size:18px;width:24px;text-align:center}
+.main{margin-left:260px;flex:1;padding:32px 40px;max-width:960px}
+.section{display:none}
+.section.active{display:block}
+
+/* Mobile */
+.hamburger{display:none;position:fixed;top:16px;left:16px;z-index:200;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px 12px;cursor:pointer;color:var(--text);font-size:20px}
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .hamburger{display:block}
+  .main{margin-left:0;padding:20px 16px;padding-top:60px}
+  .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:50}
+  .overlay.show{display:block}
+}
+
+/* Cards */
+h2{font-size:24px;font-weight:700;margin-bottom:24px}
+h3{font-size:16px;font-weight:600;margin-bottom:12px;color:var(--accent)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:16px}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center}
+.stat-card .value{font-size:28px;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.stat-card .label{font-size:12px;color:var(--muted);margin-top:6px;text-transform:uppercase;letter-spacing:1px}
+
+/* Countdown */
+.countdown{background:linear-gradient(135deg,rgba(79,124,255,.15),rgba(124,92,255,.15));border:1px solid rgba(79,124,255,.3);border-radius:16px;padding:32px;text-align:center;margin-bottom:32px}
+.countdown h3{color:var(--text);font-size:14px;text-transform:uppercase;letter-spacing:2px;margin-bottom:16px}
+.countdown-grid{display:flex;justify-content:center;gap:20px;flex-wrap:wrap}
+.countdown-unit{background:rgba(0,0,0,.3);border-radius:12px;padding:16px 20px;min-width:80px}
+.countdown-unit .num{font-size:36px;font-weight:800;color:var(--accent)}
+.countdown-unit .lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+
+/* Timeline */
+.timeline{position:relative;padding-left:32px}
+.timeline::before{content:'';position:absolute;left:12px;top:8px;bottom:8px;width:2px;background:var(--border)}
+.timeline-item{position:relative;margin-bottom:24px}
+.timeline-item::before{content:'';position:absolute;left:-24px;top:6px;width:12px;height:12px;border-radius:50%;border:2px solid var(--border);background:var(--bg)}
+.timeline-item.done::before{background:var(--green);border-color:var(--green)}
+.timeline-item.active::before{background:var(--orange);border-color:var(--orange);box-shadow:0 0 8px rgba(245,158,11,.4)}
+.timeline-item .date{font-size:12px;color:var(--muted);margin-bottom:4px}
+.timeline-item .title{font-size:14px;font-weight:600}
+
+/* Quiz */
+.quiz-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:40px;text-align:center;margin-bottom:24px;min-height:250px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.quiz-card .question{font-size:20px;font-weight:600;margin-bottom:24px}
+.quiz-card .answer{font-size:32px;font-weight:800;background:linear-gradient(135deg,var(--green),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;opacity:0;transition:opacity .3s;margin-bottom:24px}
+.quiz-card .answer.show{opacity:1}
+.quiz-progress{font-size:13px;color:var(--muted);margin-bottom:8px}
+.quiz-score{font-size:14px;color:var(--green);font-weight:600;margin-bottom:16px}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:8px;border:none;font-size:14px;font-weight:600;cursor:pointer;transition:all .2s}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:#3a67e8}
+.btn-secondary{background:var(--card);color:var(--text);border:1px solid var(--border)}
+.btn-secondary:hover{border-color:var(--accent)}
+.btn-danger{background:rgba(239,68,68,.15);color:var(--red);border:1px solid rgba(239,68,68,.3)}
+.btn-success{background:rgba(34,197,94,.15);color:var(--green);border:1px solid rgba(34,197,94,.3)}
+.btn-group{display:flex;gap:12px;flex-wrap:wrap}
+
+/* Do/Don't cards */
+.dont-card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:12px;cursor:pointer;transition:all .2s}
+.dont-card:hover{border-color:var(--accent)}
+.dont-card .header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px}
+.dont-card .header .bad{color:var(--red);font-weight:600;font-size:14px}
+.dont-card .header .chevron{color:var(--muted);transition:transform .3s;font-size:18px}
+.dont-card.open .header .chevron{transform:rotate(180deg)}
+.dont-card .body{max-height:0;overflow:hidden;transition:max-height .3s;padding:0 20px}
+.dont-card.open .body{max-height:200px;padding:0 20px 16px}
+.dont-card .body .good{color:var(--green);font-size:14px}
+.dont-card .body .reason{color:var(--muted);font-size:13px;margin-top:8px}
+
+/* Checklist */
+.check-item{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;border-radius:8px;cursor:pointer;transition:background .2s}
+.check-item:hover{background:rgba(79,124,255,.05)}
+.check-item .checkbox{width:22px;height:22px;border-radius:6px;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;margin-top:1px}
+.check-item.checked .checkbox{background:var(--green);border-color:var(--green)}
+.check-item.checked .checkbox::after{content:'✓';color:#fff;font-size:14px;font-weight:700}
+.check-item.checked .text{color:var(--muted);text-decoration:line-through}
+.check-item .text{font-size:14px;line-height:1.5}
+.check-group{margin-bottom:24px}
+.check-group-title{font-size:13px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:12px;padding-left:16px}
+.progress-bar{background:var(--border);border-radius:8px;height:8px;margin-bottom:24px;overflow:hidden}
+.progress-bar .fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--green));border-radius:8px;transition:width .4s}
+
+/* Script */
+.script-section{background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:16px;overflow:hidden}
+.script-header{padding:16px 20px;cursor:pointer;display:flex;align-items:center;justify-content:space-between}
+.script-header h4{font-size:15px;font-weight:600}
+.script-header .time{font-size:12px;color:var(--muted);background:rgba(79,124,255,.1);padding:4px 10px;border-radius:20px}
+.script-body{max-height:0;overflow:hidden;transition:max-height .4s}
+.script-section.open .script-body{max-height:1000px}
+.script-body-inner{padding:0 20px 20px}
+.script-body blockquote{border-left:3px solid var(--accent);padding:12px 16px;margin:8px 0;background:rgba(79,124,255,.05);border-radius:0 8px 8px 0;font-style:italic;line-height:1.7}
+.script-body .note{font-size:13px;color:var(--muted);margin-top:8px}
+
+/* Punchline */
+.punchline{background:linear-gradient(135deg,rgba(79,124,255,.1),rgba(124,92,255,.1));border:1px solid rgba(79,124,255,.25);border-radius:12px;padding:24px;margin-bottom:16px;text-align:center;font-size:18px;font-weight:600;font-style:italic;line-height:1.6}
+
+/* Tabs */
+.tabs{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap}
+.tab{padding:8px 16px;border-radius:8px;font-size:13px;cursor:pointer;background:var(--card);border:1px solid var(--border);color:var(--muted);transition:all .2s}
+.tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.tab-content{display:none}
+.tab-content.active{display:block}
+
+/* Table */
+table{width:100%;border-collapse:collapse;margin-bottom:16px}
+th,td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--border);font-size:14px}
+th{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:1px;font-weight:600}
+td:first-child{font-weight:600}
+
+/* Identity badge */
+.identity-box{background:linear-gradient(135deg,rgba(34,197,94,.1),rgba(6,182,212,.1));border:1px solid rgba(34,197,94,.3);border-radius:12px;padding:20px;margin-bottom:16px}
+.identity-box .phrase{font-size:18px;font-weight:700;color:var(--green);margin-bottom:8px}
+.identity-box p{font-size:14px;color:var(--muted);line-height:1.6}
+
+/* Insight cards */
+.insight-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:16px;border-left:4px solid var(--accent)}
+.insight-card:nth-child(2){border-left-color:var(--accent2)}
+.insight-card:nth-child(3){border-left-color:var(--green)}
+.insight-card h4{font-size:16px;font-weight:700;margin-bottom:8px}
+.insight-card .quote{font-style:italic;color:var(--muted);line-height:1.6;margin-bottom:12px}
+.insight-card .wins{list-style:none;padding:0}
+.insight-card .wins li{font-size:13px;padding:4px 0;color:var(--text)}
+.insight-card .wins li::before{content:'✓ ';color:var(--green);font-weight:700}
+
+/* Confetti */
+.confetti-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999}
+</style>
+</head>
+<body>
+
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+<button class="hamburger" id="hamburger" onclick="toggleSidebar()">☰</button>
+
+<div class="app">
+  <nav class="sidebar" id="sidebar">
+    <div class="logo">
+      <h1>BenchK</h1>
+      <p>Shark Tank S18 Prep</p>
+    </div>
+    <div class="nav-item active" data-section="dashboard"><span class="icon">📊</span>Dashboard</div>
+    <div class="nav-item" data-section="numbers"><span class="icon">🧠</span>Numbers Quiz</div>
+    <div class="nav-item" data-section="donts"><span class="icon">🚨</span>Do's &amp; Don'ts</div>
+    <div class="nav-item" data-section="script"><span class="icon">🎬</span>Script &amp; Lines</div>
+    <div class="nav-item" data-section="insights"><span class="icon">💎</span>3 Core Insights</div>
+    <div class="nav-item" data-section="dylan"><span class="icon">🎤</span>Dylan Moment</div>
+    <div class="nav-item" data-section="checklist"><span class="icon">✅</span>Checklists</div>
+    <div class="nav-item" data-section="identity"><span class="icon">🆔</span>Identity Guide</div>
+  </nav>
+
+  <div class="main">
+
+    <!-- DASHBOARD -->
+    <div class="section active" id="sec-dashboard">
+      <h2>Mission Control</h2>
+      <div class="countdown" id="countdown">
+        <h3>Countdown to Filming Day</h3>
+        <div class="countdown-grid">
+          <div class="countdown-unit"><div class="num" id="cd-days">-</div><div class="lbl">Days</div></div>
+          <div class="countdown-unit"><div class="num" id="cd-hours">-</div><div class="lbl">Hours</div></div>
+          <div class="countdown-unit"><div class="num" id="cd-mins">-</div><div class="lbl">Min</div></div>
+          <div class="countdown-unit"><div class="num" id="cd-secs">-</div><div class="lbl">Sec</div></div>
+        </div>
+      </div>
+      <div class="card-grid">
+        <div class="stat-card"><div class="value">$400K</div><div class="label">The Ask</div></div>
+        <div class="stat-card"><div class="value">15%</div><div class="label">Equity</div></div>
+        <div class="stat-card"><div class="value">$2.67M</div><div class="label">Valuation</div></div>
+        <div class="stat-card"><div class="value">5:30</div><div class="label">Video Length</div></div>
+      </div>
+      <div class="card">
+        <h3>Timeline</h3>
+        <div class="timeline">
+          <div class="timeline-item done"><div class="date">Passed</div><div class="title">Screening call — Emily Watrobsky</div></div>
+          <div class="timeline-item done"><div class="date">Completed</div><div class="title">Production document v3 FINAL</div></div>
+          <div class="timeline-item done"><div class="date">Confirmed</div><div class="title">Filming location — 10Ten Fitness Sarasota</div></div>
+          <div class="timeline-item done"><div class="date">Confirmed</div><div class="title">Videographer secured</div></div>
+          <div class="timeline-item active"><div class="date">Now → May 3</div><div class="title">Practice script + verify ERP numbers</div></div>
+          <div class="timeline-item"><div class="date">May 4 (Mon)</div><div class="title">Filming day @ 10Ten Fitness</div></div>
+          <div class="timeline-item"><div class="date">May 5–6</div><div class="title">Editing + revisions</div></div>
+          <div class="timeline-item"><div class="date">May 7</div><div class="title">Final review</div></div>
+          <div class="timeline-item"><div class="date">May 8 (Thu)</div><div class="title">SUBMISSION DEADLINE — ABC</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Quick Numbers</h3>
+        <table>
+          <tr><td>Global Revenue 2025</td><td>$2,000,000</td></tr>
+          <tr><td>Poland</td><td>$1,000,000 (50%)</td></tr>
+          <tr><td>EU Partners</td><td>$700,000 (35%)</td></tr>
+          <tr><td>USA Year 1</td><td>$300,000 (15%)</td></tr>
+          <tr><td>US Monthly Run Rate</td><td>$60,000/mo</td></tr>
+          <tr><td>Annualized US Run Rate</td><td>$720,000</td></tr>
+          <tr><td>Word-of-Mouth Conversion</td><td>33%</td></tr>
+          <tr><td>US Units Sold</td><td>800+</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- NUMBERS QUIZ -->
+    <div class="section" id="sec-numbers">
+      <h2>Numbers Quiz</h2>
+      <p style="color:var(--muted);margin-bottom:24px">Test yourself. Tap to reveal the answer, then mark if you got it right.</p>
+      <div class="quiz-progress" id="quiz-progress">Question 1 of 15</div>
+      <div class="quiz-score" id="quiz-score"></div>
+      <div class="quiz-card" id="quiz-card">
+        <div class="question" id="quiz-question"></div>
+        <div class="answer" id="quiz-answer"></div>
+        <div class="btn-group">
+          <button class="btn btn-primary" id="quiz-reveal" onclick="revealAnswer()">Reveal Answer</button>
+          <button class="btn btn-success" id="quiz-correct" onclick="quizNext(true)" style="display:none">Got It ✓</button>
+          <button class="btn btn-danger" id="quiz-wrong" onclick="quizNext(false)" style="display:none">Missed ✗</button>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:16px">
+        <button class="btn btn-secondary" onclick="resetQuiz()">Restart Quiz</button>
+        <button class="btn btn-secondary" onclick="shuffleQuiz()">Shuffle Questions</button>
+      </div>
+    </div>
+
+    <!-- DO'S & DON'TS -->
+    <div class="section" id="sec-donts">
+      <h2>Do's &amp; Don'ts</h2>
+      <p style="color:var(--muted);margin-bottom:24px">Tap each card to see the correct phrasing. Memorize these — the vetting team will catch every mistake.</p>
+      <div class="tabs">
+        <div class="tab active" data-tab="tab-identity">Identity</div>
+        <div class="tab" data-tab="tab-visa">Visa</div>
+        <div class="tab" data-tab="tab-business">Business</div>
+        <div class="tab" data-tab="tab-emotional">Emotional</div>
+      </div>
+      <div class="tab-content active" id="tab-identity">
+        <div class="dont-card" onclick="this.classList.toggle('open')">
+          <div class="header"><span class="bad">✗ "I'm Ukrainian"</span><span class="chevron">▼</span></div>
+          <div class="body"><div class="good">✓ "I'm Polish, with Ukrainian origins"</div><div class="reason">Loses 10 years of Polish achievement</div></div>
+        </div>
+        <div class="dont-card" onclick="this.classList.toggle('open')">
+          <div class="header"><span class="bad">✗ "I'm Polish" (alone)</span><span class="chevron">▼</span></div>
+          <div class="body"><div class="good">✓ "I'm Polish, with Ukrainian origins"</div><div class="reason">Denies your real heritage</div></div>
+        </div>
+        <div class="dont-card" onclick="this.classList.toggle('open')">
+          <div class="header"><span class="bad">✗ "I escaped from Ukraine"</span><span class="chevron">▼</span></div>
+          <div class="body"><div class="good">✓ "My family moved to Poland in 2015"</div><div class="reason">Refugee framing wrong for E2 investor</div></div>
+        </div>
+        <div class="dont-card" onclick="this.classList.toggle('open')">
+          <div class="header"><span class="bad">✗ Russia / war references</span><span class="chevron">▼</span></div>
+          <div class="body"><div class="good">✓ Don't bring up war at all</div><div class="reason">Politically charged, brand risk</div></div>
+        </div>
+        <div class="dont-card" onclick="this.classList.toggle('open')">
+          <div class="header"><span class="bad">✗ "I'm Russian-speaking"</span><span class="chevron">▼</span></div>
+          <div class="body"><div class="good">✓ Just speak English</div><div class="reason">Politically problematic in 2026</div></div>
+        </div>
+      </div>
+      <div class="tab-content" id="tab-visa">
+        <div class="dont-card" onclick="this.classList.toggle('open')">
+          <div class="header"><span class="bad">✗ "I immigrated to America"</span><span class="chevron">▼</span></div>
+          <div class="body"><div class="good">✓ "I came here on an investor visa"</div><div class="reason">E2 is non-immigrant visa — legal risk</div></div>
+        </div>
+        <div class="dont-card" onclick="this.classList.toggle('open')">
+          <div class="header"><span class="bad">✗ "I moved here permanently"</span><span class="chevron">▼</span></div>
+          <div class="body"><div class="good">✓ "I'm developing BenchK in the US market"</div><div class="reason">E2 is non-immigrant visa</div></div>
+        </div>
+        <div class="dont-card" onclick="this.classList.toggle('open')">
+          <div class="header"><span class="bad">✗ "I'm settling in Florida"</span><span class="chevron">▼</span></div>
+          <div class="body"><div class="good">✓ "We have our warehouse in Florida"</div><div class="reason">Same visa framing issue</div></div>
+        </div>
+        <div class="dont-card" onclick="this.classList.toggle('open')">
+          <div class="header"><span class="bad">✗ "I'm a refugee"</span><span class="chevron">▼</span></div>
+          <div class="body"><div class="good">✓ Never use — wrong visa class entirely</div><div class="reason">You're on an E2 investor visa</div></div>
+        </div>
+      </div>
+      <div class="tab-content" id="tab-business">
+        <div class="dont-card" onclick="this.classList.toggle('open')">
+          <div class="header"><span class="bad">✗ "Sold in 30 countries"</span><span class="chevron">▼</span></div>
+          <div class="body"><div class="good">✓ "Strong distribution in 5 EU countries + online across Europe"</div><div class="reason">Vetting team will challenge "30"</div></div>
+        </div>
+        <div class="dont-card" onclick="this.classList.toggle('open')">
+          <div class="header"><span class="bad">✗ "Made in Poland and the United States"</span><span class="chevron">▼</span></div>
+          <div class="body"><div class="good">✓ "Made in Poland — US production planned"</div><div class="reason">US production not started yet</div></div>
+        </div>
+        <div class="dont-card" onclick="this.classList.toggle('open')">
+          <div class="header"><span class="bad">✗ "Patented technology"</span><span class="chevron">▼</span></div>
+          <div class="body"><div class="good">✓ "Award-winning design"</div><div class="reason">BenchK has no patent on the ladder</div></div>
+        </div>
+        <div class="dont-card" onclick="this.classList.toggle('open')">
+          <div class="header"><span class="bad">✗ "Recoil's patent is ours"</span><span class="chevron">▼</span></div>
+          <div class="body"><div class="good">✓ "We distribute Recoil — patented system by our partner"</div><div class="reason">Recoil is Robert Bowles' IP</div></div>
+        </div>
+        <div class="dont-card" onclick="this.classList.toggle('open')">
+          <div class="header"><span class="bad">✗ "We're profitable since day 1"</span><span class="chevron">▼</span></div>
+          <div class="body"><div class="good">✓ "We've been profitable for years, no outside investors"</div><div class="reason">Unverifiable — stick to what's on paper</div></div>
+        </div>
+      </div>
+      <div class="tab-content" id="tab-emotional">
+        <div class="dont-card" onclick="this.classList.toggle('open')">
+          <div class="header"><span class="bad">✗ "Please give me a chance"</span><span class="chevron">▼</span></div>
+          <div class="body"><div class="good">✓ Let facts speak — you have a $2M business</div><div class="reason">Begging energy — Sharks read it instantly</div></div>
+        </div>
+        <div class="dont-card" onclick="this.classList.toggle('open')">
+          <div class="header"><span class="bad">✗ "I really need this"</span><span class="chevron">▼</span></div>
+          <div class="body"><div class="good">✓ "I don't need your money. I need YOU."</div><div class="reason">Desperate framing kills the deal</div></div>
+        </div>
+        <div class="dont-card" onclick="this.classList.toggle('open')">
+          <div class="header"><span class="bad">✗ "I'll do anything for an offer"</span><span class="chevron">▼</span></div>
+          <div class="body"><div class="good">✓ Present the opportunity — let them compete</div><div class="reason">You're the one bringing proven revenue</div></div>
+        </div>
+        <div class="dont-card" onclick="this.classList.toggle('open')">
+          <div class="header"><span class="bad">✗ "We're struggling in the US"</span><span class="chevron">▼</span></div>
+          <div class="body"><div class="good">✓ "$720K annualized run rate in year one"</div><div class="reason">Replace negatives with facts</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCRIPT & LINES -->
+    <div class="section" id="sec-script">
+      <h2>Script &amp; Key Lines</h2>
+      <p style="color:var(--muted);margin-bottom:24px">Tap each section to expand. Sections 1 &amp; 8 must be word-for-word.</p>
+
+      <div class="punchline">"Sometimes the best thing that happens to you... is everybody saying you can't."</div>
+      <div class="punchline">"I don't run a startup. I run a factory."</div>
+      <div class="punchline">"I'm not asking you to take a chance. I'm asking you to join something that is already moving."</div>
+
+      <div class="script-section" onclick="this.classList.toggle('open')">
+        <div class="script-header"><h4>Section 1 — Hook &amp; Opener</h4><span class="time">0:00–0:30</span></div>
+        <div class="script-body"><div class="script-body-inner">
+          <blockquote>"My name is Vadym. I'm Polish — with Ukrainian origins. And this behind me... is a BenchK Vertical Training Wall."</blockquote>
+          <blockquote>"We reinvented the 100-year-old Swedish ladder. Modular. Premium. Commercial-grade. One wall. Five training methods. Zero floor space."</blockquote>
+          <div class="note">MEMORIZE WORD-FOR-WORD. Stand in front of BenchK. Energy high from the first second.</div>
+        </div></div>
+      </div>
+      <div class="script-section" onclick="this.classList.toggle('open')">
+        <div class="script-header"><h4>Section 2 — Product Demo</h4><span class="time">0:30–1:10</span></div>
+        <div class="script-body"><div class="script-body-inner">
+          <blockquote>"Used by Pilates studios, PT clinics, hotels, and families. One product. Five markets."</blockquote>
+          <div class="note">Demonstrate on the BenchK wall. Show versatility — stretch, pull-up, resistance, Pilates, rehab.</div>
+        </div></div>
+      </div>
+      <div class="script-section" onclick="this.classList.toggle('open')">
+        <div class="script-header"><h4>Section 3 — Traction + Dylan</h4><span class="time">1:10–2:25</span></div>
+        <div class="script-body"><div class="script-body-inner">
+          <blockquote>"$2 million in global revenue... Poland $1M, Germany, Switzerland... $60,000 each month, $720,000 run rate..."</blockquote>
+          <blockquote>"One out of every three sales comes from word of mouth. 33%, verified by customer surveys."</blockquote>
+          <blockquote>"Sharks — meet Dylan. He owns this studio." → Dylan testimonial (15 sec)</blockquote>
+          <div class="note">Numbers section — deliver with confidence. Then hand off to Dylan naturally.</div>
+        </div></div>
+      </div>
+      <div class="script-section" onclick="this.classList.toggle('open')">
+        <div class="script-header"><h4>Section 4 — Origin Story</h4><span class="time">2:25–3:15</span></div>
+        <div class="script-body"><div class="script-body-inner">
+          <blockquote>"1989, my father bought me a Swedish ladder. I was seven."</blockquote>
+          <blockquote>"2015 — my family moved to Poland. Foreign country, foreign language. I started BenchK with nothing. 99 out of 100 companies said no."</blockquote>
+          <blockquote>"Sometimes the best thing that happens to you... is everybody saying you can't."</blockquote>
+          <div class="note">Emotional moment — slow down. Let the punch line land.</div>
+        </div></div>
+      </div>
+      <div class="script-section" onclick="this.classList.toggle('open')">
+        <div class="script-header"><h4>Section 5 — Operator + Foreign Mastery</h4><span class="time">3:15–4:15</span></div>
+        <div class="script-body"><div class="script-body-inner">
+          <blockquote>"Before BenchK — 9 years selling JCB machines. 250+ machines, $90K–$300K each. Tens of millions in B2B sales."</blockquote>
+          <blockquote>"I don't run a startup. I run a factory."</blockquote>
+          <blockquote>"If I cracked Poland from zero — what makes you think I won't crack America?"</blockquote>
+          <div class="note">Operator credibility section. Confidence, not arrogance. Factory = real business.</div>
+        </div></div>
+      </div>
+      <div class="script-section" onclick="this.classList.toggle('open')">
+        <div class="script-header"><h4>Section 6 — Replication Logic</h4><span class="time">4:15–4:55</span></div>
+        <div class="script-body"><div class="script-body-inner">
+          <blockquote>"Poland: $1M revenue. 38 million people. US: 340 million — 8 times bigger."</blockquote>
+          <blockquote>"Same product. Same playbook. Same operator. The barrier is not awareness — it's TRIAL."</blockquote>
+          <blockquote>"Once they see it, touch it, train on it — they buy. Your money goes to trial generation."</blockquote>
+          <div class="note">Math section — Sharks can model this. Be precise, not emotional.</div>
+        </div></div>
+      </div>
+      <div class="script-section" onclick="this.classList.toggle('open')">
+        <div class="script-header"><h4>Section 7 — The Ask</h4><span class="time">4:55–5:10</span></div>
+        <div class="script-body"><div class="script-body-inner">
+          <blockquote>"$400,000 for 15%."</blockquote>
+          <blockquote>"$200K distribution, $100K marketing, $50K BenchK PRO, $50K trade shows."</blockquote>
+          <blockquote>"10 years bootstrapped. Zero outside investors. I don't need your money — I need YOU. American mindset. American network. American doors."</blockquote>
+          <div class="note">Clear, specific, powerful. This is where Sharks decide.</div>
+        </div></div>
+      </div>
+      <div class="script-section" onclick="this.classList.toggle('open')">
+        <div class="script-header"><h4>Section 8 — Closer</h4><span class="time">5:10–5:30</span></div>
+        <div class="script-body"><div class="script-body-inner">
+          <blockquote>"BenchK is not a startup. 10 years old. Profitable. Award-winning."</blockquote>
+          <blockquote>"I'm not asking you to take a chance. I'm asking you to join something that is already moving."</blockquote>
+          <blockquote>"Lift Yourself. Sharks — let's lift America together."</blockquote>
+          <div class="note">MEMORIZE WORD-FOR-WORD. Hold eye contact with camera. Finish strong.</div>
+        </div></div>
+      </div>
+    </div>
+
+    <!-- 3 CORE INSIGHTS -->
+    <div class="section" id="sec-insights">
+      <h2>The Three Core Insights</h2>
+      <p style="color:var(--muted);margin-bottom:24px">These drive the entire pitch. Memorize the logic. Deliver in your own words.</p>
+      <div class="insight-card">
+        <h4>1. Foreign Market Mastery</h4>
+        <div class="quote">"I built a $1 million business in Poland — a country I had never lived in, in a language I didn't speak. If I cracked Poland from zero — what makes you think I won't crack America?"</div>
+        <ul class="wins">
+          <li>Proves adaptability — you've done this once already</li>
+          <li>Defuses "Polish founder in America" objection</li>
+          <li>Shows operator humility + execution</li>
+          <li>No other Shark Tank applicant has this profile</li>
+        </ul>
+      </div>
+      <div class="insight-card">
+        <h4>2. The Replication Logic</h4>
+        <div class="quote">"Poland $1M, 38M people. USA 340M — 8x bigger. Same product, same playbook. The barrier is TRIAL, not awareness. Once they try it — they buy."</div>
+        <ul class="wins">
+          <li>Concrete math — Sharks can model this</li>
+          <li>Reframes the problem: TRIAL not awareness</li>
+          <li>Justifies use of capital — clear cause-effect</li>
+          <li>33% word-of-mouth proves trial = conversion</li>
+        </ul>
+      </div>
+      <div class="insight-card">
+        <h4>3. Smart Money, Not Just Money</h4>
+        <div class="quote">"10 years, never taken outside investment. I don't need your money — I have my own. I need YOU. American mindset. American network. American doors."</div>
+        <ul class="wins">
+          <li>Rarest Shark Tank pitch type — operator royalty</li>
+          <li>Bootstrapped to $2M = mature business</li>
+          <li>Aligns with what Sharks actually offer</li>
+          <li>Differentiates from 99% of applicants</li>
+        </ul>
+      </div>
+      <div class="card" style="margin-top:24px">
+        <h3>How They Connect</h3>
+        <div style="text-align:center;color:var(--muted);line-height:2.2;font-size:14px">
+          <div style="color:var(--accent);font-weight:600">Insight 1: "I can crack any market — proven by Poland"</div>
+          <div>↓</div>
+          <div style="color:var(--accent2);font-weight:600">Insight 2: "Same product, 8x bigger market, math works"</div>
+          <div>↓</div>
+          <div style="color:var(--green);font-weight:600">Insight 3: "Your role isn't capital — it's American doors"</div>
+          <div>↓</div>
+          <div style="font-weight:700;color:var(--text);font-size:16px;margin-top:8px">"$400K for 15% — Smart money. Not just money."</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DYLAN MOMENT -->
+    <div class="section" id="sec-dylan">
+      <h2>Dylan Testimonial Plan</h2>
+      <p style="color:var(--muted);margin-bottom:24px">15-second customer testimonial in Section 3. Dylan owns 10Ten Fitness — real BenchK customer.</p>
+
+      <div class="card">
+        <h3>The 3 Questions (in order)</h3>
+        <table>
+          <tr><td>1</td><td>"Why did you put BenchK in your studio?"</td></tr>
+          <tr><td>2</td><td>"How often do you use this wall?"</td></tr>
+          <tr><td>3</td><td>"Would you recommend BenchK to other gym owners?" (optional)</td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <h3>Vadym's Exact Lines</h3>
+        <blockquote style="border-left:3px solid var(--accent);padding:12px 16px;margin:12px 0;background:rgba(79,124,255,.05);border-radius:0 8px 8px 0;font-style:italic;line-height:1.8">
+          "Sharks — meet Dylan. He owns this studio. Dylan..."<br>
+          <span style="color:var(--muted);font-style:normal;font-size:13px">(Pause. Look at Dylan.)</span><br>
+          "...why did you put BenchK in your studio?"<br>
+          <span style="color:var(--muted);font-style:normal;font-size:13px">[Dylan answers — DO NOT INTERRUPT]</span><br>
+          "Dylan — how often do you use this wall?"<br>
+          <span style="color:var(--muted);font-style:normal;font-size:13px">[Dylan answers]</span><br>
+          "Thanks, brother."<br>
+          <span style="color:var(--muted);font-style:normal;font-size:13px">(Tap Dylan on shoulder. He exits frame.)</span>
+        </blockquote>
+      </div>
+
+      <div class="card" style="border-left:3px solid var(--red)">
+        <h3 style="color:var(--red)">MUST NOT Do</h3>
+        <ul style="list-style:none;padding:0;line-height:2">
+          <li>✗ Do not interrupt Dylan — even if he pauses</li>
+          <li>✗ Do not finish his sentences</li>
+          <li>✗ Do not correct him (real > perfect)</li>
+          <li>✗ Do not look at camera while he talks — look at HIM</li>
+          <li>✗ Do not say "great answer" between questions</li>
+          <li>✗ Do not script Dylan — bullet points only</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Camera &amp; Audio Setup</h3>
+        <ul style="list-style:none;padding:0;line-height:2;font-size:14px">
+          <li>Shot: Medium two-shot, BenchK visible behind</li>
+          <li>Vadym camera-left, Dylan camera-right</li>
+          <li>About 1 arm's length apart, both standing</li>
+          <li style="color:var(--orange);font-weight:600">If only ONE lav mic — give it to DYLAN, not Vadym</li>
+          <li>Best: TWO lav mics, separate audio channels</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Backup Plan (if Dylan freezes)</h3>
+        <blockquote style="border-left:3px solid var(--orange);padding:12px 16px;background:rgba(245,158,11,.05);border-radius:0 8px 8px 0;font-style:italic">
+          "Behind me — 10Ten Fitness Sarasota. Owned by Dylan. Real American customer."
+        </blockquote>
+      </div>
+    </div>
+
+    <!-- CHECKLISTS -->
+    <div class="section" id="sec-checklist">
+      <h2>Checklists</h2>
+      <p style="color:var(--muted);margin-bottom:8px">Your progress is saved locally. Tap items to mark done.</p>
+      <div class="progress-bar"><div class="fill" id="check-progress" style="width:0%"></div></div>
+      <div id="checklist-container"></div>
+      <div style="margin-top:16px">
+        <button class="btn btn-secondary" onclick="resetChecklist()">Reset All</button>
+      </div>
+    </div>
+
+    <!-- IDENTITY GUIDE -->
+    <div class="section" id="sec-identity">
+      <h2>Identity Guide</h2>
+      <p style="color:var(--muted);margin-bottom:24px">Critical framing for every interaction — on camera, in applications, and in person.</p>
+
+      <div class="identity-box">
+        <div class="phrase">"I'm Polish — with Ukrainian origins."</div>
+        <p>Polish citizen since 2023 (EU passport). Born in Ukraine. Built BenchK in Poland over 10 years. Came to America on an investor visa six months ago.</p>
+      </div>
+
+      <div class="card">
+        <h3>Exact Phrases to Use</h3>
+        <table>
+          <tr><td>"I'm Polish — with Ukrainian origins."</td></tr>
+          <tr><td>"Polish citizen since 2023. EU passport."</td></tr>
+          <tr><td>"Born in Ukraine. Built BenchK in Poland over 10 years."</td></tr>
+          <tr><td>"Came to America on an investor visa six months ago."</td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <h3>Product Phrases</h3>
+        <table>
+          <tr><td>"BenchK Vertical Training Wall."</td></tr>
+          <tr><td>"We reinvented the 100-year-old Swedish ladder."</td></tr>
+          <tr><td>"Modular. Premium. Commercial-grade."</td></tr>
+          <tr><td>"One wall. Five training methods. Zero floor space."</td></tr>
+          <tr><td>"Used by Pilates studios, PT clinics, hotels, and families."</td></tr>
+          <tr><td>"One product. Five markets."</td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <h3>Personal Facts</h3>
+        <table>
+          <tr><td>Born</td><td>Ukraine</td></tr>
+          <tr><td>Citizenship</td><td>Polish (since 2023, EU passport)</td></tr>
+          <tr><td>Visa</td><td>E2 investor visa (US, since Oct 16, 2025)</td></tr>
+          <tr><td>Languages</td><td>Ukrainian, Polish, English</td></tr>
+          <tr><td>Family</td><td>Wife (co-founder), Arina (13), Aron (4)</td></tr>
+        </table>
+      </div>
+
+      <div class="card" style="border-left:3px solid var(--orange)">
+        <h3 style="color:var(--orange)">Golden Rule</h3>
+        <p style="font-size:16px;font-weight:600;line-height:1.6;text-align:center;padding:12px">
+          "If you're not 100% sure something is true and verifiable — DON'T say it."
+        </p>
+        <p style="color:var(--muted);text-align:center;font-size:14px">If a Shark asks something not on the cheat sheet:<br><em>"I'd need to verify that exact number — I'd rather give you the accurate figure than guess."</em></p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// Navigation
+const navItems = document.querySelectorAll('.nav-item');
+const sections = document.querySelectorAll('.section');
+navItems.forEach(item => {
+  item.addEventListener('click', () => {
+    const sec = item.dataset.section;
+    navItems.forEach(n => n.classList.remove('active'));
+    sections.forEach(s => s.classList.remove('active'));
+    item.classList.add('active');
+    document.getElementById('sec-' + sec).classList.add('active');
+    if (window.innerWidth <= 768) toggleSidebar();
+  });
+});
+
+// Mobile sidebar
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('show');
+}
+
+// Tabs
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    const parent = tab.closest('.section');
+    parent.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    parent.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById(tab.dataset.tab).classList.add('active');
+  });
+});
+
+// Countdown to May 4, 2026 09:00 EST
+function updateCountdown() {
+  const target = new Date('2026-05-04T09:00:00-04:00');
+  const now = new Date();
+  let diff = target - now;
+  if (diff < 0) {
+    document.getElementById('cd-days').textContent = '0';
+    document.getElementById('cd-hours').textContent = '0';
+    document.getElementById('cd-mins').textContent = '0';
+    document.getElementById('cd-secs').textContent = '0';
+    return;
+  }
+  const d = Math.floor(diff / 86400000); diff %= 86400000;
+  const h = Math.floor(diff / 3600000); diff %= 3600000;
+  const m = Math.floor(diff / 60000); diff %= 60000;
+  const s = Math.floor(diff / 1000);
+  document.getElementById('cd-days').textContent = d;
+  document.getElementById('cd-hours').textContent = h;
+  document.getElementById('cd-mins').textContent = m;
+  document.getElementById('cd-secs').textContent = s;
+}
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+// Quiz
+const quizData = [
+  { q: "Total global revenue 2025?", a: "$2,000,000" },
+  { q: "Poland revenue (and %)?", a: "$1,000,000 (50%)" },
+  { q: "Germany + Switzerland + Czech + Slovakia revenue?", a: "$700,000 (35%)" },
+  { q: "USA year 1 revenue?", a: "$300,000 (15%)" },
+  { q: "US monthly run rate (Dec/Jan/Feb)?", a: "$60,000 each month" },
+  { q: "Annualized US run rate?", a: "$720,000" },
+  { q: "Word-of-mouth conversion rate?", a: "33%" },
+  { q: "Cumulative US units sold?", a: "800+" },
+  { q: "JCB machines sold by Vadym?", a: "250+ ($90K–$300K each)" },
+  { q: "Personal investment in US?", a: "$450,000+" },
+  { q: "Years in business?", a: "10 (since 2015)" },
+  { q: "Outside investors?", a: "Zero" },
+  { q: "The Ask: investment amount?", a: "$400,000" },
+  { q: "The Ask: equity %?", a: "15%" },
+  { q: "Post-money valuation?", a: "$2.67M" },
+  { q: "Use of funds: distribution?", a: "$200,000" },
+  { q: "Use of funds: marketing?", a: "$100,000" },
+  { q: "Use of funds: BenchK PRO?", a: "$50,000" },
+  { q: "Use of funds: trade shows?", a: "$50,000" },
+  { q: "E2 visa approved date?", a: "October 16, 2025" },
+  { q: "FIBO Innovation Award year?", a: "2022" },
+  { q: "US warehouse location?", a: "Largo, FL" },
+  { q: "Video target length?", a: "5 minutes 30 seconds" },
+  { q: "When did father buy Vadym a wall ladder?", a: "1989 (Vadym was 7)" },
+  { q: "US population vs Poland (multiplier)?", a: "~8–9x bigger (340M vs 38M)" },
+];
+
+let quizOrder = [];
+let quizIdx = 0;
+let quizCorrect = 0;
+let quizTotal = 0;
+
+function initQuiz() {
+  quizOrder = quizData.map((_, i) => i);
+  quizIdx = 0; quizCorrect = 0; quizTotal = 0;
+  showQuizCard();
+}
+
+function shuffleQuiz() {
+  quizOrder = quizData.map((_, i) => i);
+  for (let i = quizOrder.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [quizOrder[i], quizOrder[j]] = [quizOrder[j], quizOrder[i]];
+  }
+  quizIdx = 0; quizCorrect = 0; quizTotal = 0;
+  showQuizCard();
+}
+
+function resetQuiz() { initQuiz(); }
+
+function showQuizCard() {
+  if (quizIdx >= quizOrder.length) {
+    const pct = Math.round((quizCorrect / quizTotal) * 100);
+    document.getElementById('quiz-question').textContent = 'Quiz Complete!';
+    document.getElementById('quiz-answer').textContent = quizCorrect + '/' + quizTotal + ' (' + pct + '%)';
+    document.getElementById('quiz-answer').classList.add('show');
+    document.getElementById('quiz-reveal').style.display = 'none';
+    document.getElementById('quiz-correct').style.display = 'none';
+    document.getElementById('quiz-wrong').style.display = 'none';
+    document.getElementById('quiz-progress').textContent = 'Done!';
+    document.getElementById('quiz-score').textContent = pct >= 90 ? 'Excellent — you\'re ready!' : pct >= 70 ? 'Good — review the misses' : 'Keep practicing!';
+    return;
+  }
+  const card = quizData[quizOrder[quizIdx]];
+  document.getElementById('quiz-question').textContent = card.q;
+  document.getElementById('quiz-answer').textContent = card.a;
+  document.getElementById('quiz-answer').classList.remove('show');
+  document.getElementById('quiz-reveal').style.display = '';
+  document.getElementById('quiz-correct').style.display = 'none';
+  document.getElementById('quiz-wrong').style.display = 'none';
+  document.getElementById('quiz-progress').textContent = 'Question ' + (quizIdx + 1) + ' of ' + quizOrder.length;
+  document.getElementById('quiz-score').textContent = quizTotal > 0 ? (quizCorrect + '/' + quizTotal + ' correct') : '';
+}
+
+function revealAnswer() {
+  document.getElementById('quiz-answer').classList.add('show');
+  document.getElementById('quiz-reveal').style.display = 'none';
+  document.getElementById('quiz-correct').style.display = '';
+  document.getElementById('quiz-wrong').style.display = '';
+}
+
+function quizNext(correct) {
+  quizTotal++;
+  if (correct) quizCorrect++;
+  quizIdx++;
+  showQuizCard();
+}
+
+initQuiz();
+
+// Checklists
+const checklistData = [
+  { group: 'Production Status', items: [
+    'Screening call passed (Emily Watrobsky)',
+    'Production document v3 FINAL completed',
+    'Filming location confirmed (10Ten Fitness)',
+    'Filming date set (Monday May 4)',
+    'Videographer secured',
+    'Dylan testimonial confirmed',
+    'ERP numbers final verification',
+    'PandaDoc Personal Application (92 fields)',
+    'PandaDoc Business Application',
+    'Script memorized (Section 1 + Section 8)',
+    'B-roll Google Drive folder prepared',
+    'Video uploaded to Vimeo (UNLISTED)',
+    'Submission email sent to ABC',
+  ]},
+  { group: 'Sunday May 3 — Day Before', items: [
+    'Practice script aloud 5+ times',
+    'Memorize Section 1 + Section 8 word-for-word',
+    'No alcohol Sunday',
+    'Sleep 8 hours',
+    'Outfit prepared',
+    'Send Dylan reminder text',
+  ]},
+  { group: 'Monday May 4 — Morning', items: [
+    'No coffee',
+    'Light breakfast only',
+    'Hydrate (stop 2 hrs before)',
+    'Arrive 30 min early at 10Ten Fitness',
+    'Mental prep — no calls',
+    'Final review opening + closer in mirror',
+  ]},
+  { group: 'On Set', items: [
+    'Greet Dylan, brief him on questions',
+    'Mic test (Vadym + Dylan)',
+    'Camera test (orientation, framing)',
+    'Sound test (no echo, no bg noise)',
+    'Dry run of Section 1 before recording',
+  ]},
+  { group: 'Equipment (Videographer)', items: [
+    '4K main camera',
+    'TWO lavalier microphones',
+    '3-point LED lighting kit',
+    'Tripod (NOT handheld)',
+    '256GB+ SD cards (formatted)',
+    'Backup batteries (2+ sets)',
+  ]},
+  { group: 'Wardrobe', items: [
+    'Dark fitted T-shirt or polo (NO logo)',
+    'Dark jeans or chinos (clean)',
+    'Clean sneakers (minimal)',
+  ]},
+];
+
+function buildChecklist() {
+  const saved = JSON.parse(localStorage.getItem('benchk-checks') || '{}');
+  const container = document.getElementById('checklist-container');
+  container.innerHTML = '';
+  let total = 0, done = 0;
+  checklistData.forEach(group => {
+    const div = document.createElement('div');
+    div.className = 'check-group';
+    div.innerHTML = '<div class="check-group-title">' + group.group + '</div>';
+    group.items.forEach(item => {
+      const key = group.group + '::' + item;
+      const checked = saved[key] || false;
+      if (checked) done++;
+      total++;
+      const el = document.createElement('div');
+      el.className = 'check-item' + (checked ? ' checked' : '');
+      el.innerHTML = '<div class="checkbox"></div><div class="text">' + item + '</div>';
+      el.addEventListener('click', () => {
+        const s = JSON.parse(localStorage.getItem('benchk-checks') || '{}');
+        s[key] = !s[key];
+        localStorage.setItem('benchk-checks', JSON.stringify(s));
+        buildChecklist();
+      });
+      div.appendChild(el);
+    });
+    container.appendChild(div);
+  });
+  document.getElementById('check-progress').style.width = (total ? Math.round(done / total * 100) : 0) + '%';
+}
+
+function resetChecklist() {
+  localStorage.removeItem('benchk-checks');
+  buildChecklist();
+}
+
+buildChecklist();
+</script>
+</body>
+</html>

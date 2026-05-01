@@ -1,0 +1,30 @@
+# macOS / Windows clutter
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor backups
+*.tmp
+*~
+*.swp
+.vscode/
+.idea/
+
+# Word backup files
+~$*.docx
+~$*.doc
+
+# Personal data — never commit raw video files or exports
+*.mp4
+*.mov
+*.avi
+*.mkv
+raw-footage/
+exports/
+
+# Submitted/final video links — keep in private notes only
+submission-link.txt
+panda-doc-token.txt
+
+# Photos that may contain personal info
+family-photos/
