@@ -153,6 +153,64 @@ td:first-child{font-weight:600}
 
 /* Confetti */
 .confetti-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999}
+
+/* Shark Simulator */
+.shark-avatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 16px;box-shadow:0 0 20px rgba(79,124,255,.3)}
+.shark-avatar.speaking{animation:pulse-ring 1.5s infinite}
+@keyframes pulse-ring{0%{box-shadow:0 0 0 0 rgba(79,124,255,.4)}70%{box-shadow:0 0 0 15px rgba(79,124,255,0)}100%{box-shadow:0 0 0 0 rgba(79,124,255,0)}}
+.shark-question-text{font-size:20px;font-weight:600;text-align:center;min-height:60px;margin-bottom:16px;line-height:1.5}
+.shark-hint{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);border-radius:8px;padding:14px;margin-top:16px;font-size:13px;color:var(--orange);display:none;line-height:1.6}
+.shark-hint.show{display:block}
+.shark-feedback{margin-top:16px;padding:16px;border-radius:8px;font-size:14px;display:none;line-height:1.6}
+.shark-feedback.show{display:block}
+.shark-feedback.good{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);color:var(--green)}
+.shark-feedback.bad{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:var(--red)}
+.shark-name{font-size:14px;color:var(--accent);font-weight:600;margin-bottom:4px}
+.shark-category{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:20px}
+.listening-indicator{display:none;align-items:center;gap:8px;justify-content:center;margin:16px 0;color:var(--red);font-size:14px;font-weight:600}
+.listening-indicator.show{display:flex}
+.listening-dot{width:10px;height:10px;border-radius:50%;background:var(--red);animation:blink 1s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.sim-counter{font-size:13px;color:var(--muted);text-align:center;margin-bottom:16px}
+
+/* Teleprompter */
+.teleprompter{background:#000;border-radius:16px;padding:40px 32px;margin-bottom:24px;position:relative;overflow:hidden;min-height:300px}
+.teleprompter-text{font-size:22px;line-height:2;color:rgba(255,255,255,.35);transition:all .3s;text-align:center}
+.teleprompter-text .active-line{color:#fff;font-weight:600;font-size:26px}
+.teleprompter-text .done-line{color:rgba(255,255,255,.15)}
+.teleprompter-timer{position:absolute;top:16px;right:20px;font-size:28px;font-weight:800;font-family:monospace}
+.teleprompter-timer.ok{color:var(--green)}
+.teleprompter-timer.warn{color:var(--orange)}
+.teleprompter-timer.over{color:var(--red)}
+.teleprompter-section-label{position:absolute;top:16px;left:20px;font-size:12px;color:var(--accent);text-transform:uppercase;letter-spacing:1.5px;font-weight:600}
+.teleprompter-progress{height:4px;background:rgba(255,255,255,.1);border-radius:2px;margin-bottom:24px}
+.teleprompter-progress .fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--green));border-radius:2px;transition:width .3s}
+.rec-badge{display:none;align-items:center;gap:6px;background:rgba(239,68,68,.2);border:1px solid rgba(239,68,68,.4);border-radius:20px;padding:6px 14px;font-size:12px;font-weight:600;color:var(--red);margin:0 auto 16px}
+.rec-badge.show{display:inline-flex}
+.rec-dot{width:8px;height:8px;border-radius:50%;background:var(--red);animation:blink 1s infinite}
+.audio-playback{margin-top:16px;display:none}
+.audio-playback.show{display:block}
+.audio-playback audio{width:100%;border-radius:8px}
+
+/* Red Flag Monitor */
+.monitor-display{background:#000;border-radius:16px;padding:32px;min-height:200px;margin-bottom:24px;position:relative}
+.monitor-status{text-align:center;font-size:16px;font-weight:600;margin-bottom:16px}
+.monitor-status.idle{color:var(--muted)}
+.monitor-status.listening{color:var(--green)}
+.monitor-status.alert{color:var(--red)}
+.monitor-transcript{font-size:15px;color:rgba(255,255,255,.6);line-height:1.8;min-height:80px;text-align:center}
+.monitor-transcript .flagged{color:var(--red);font-weight:700;text-decoration:underline;text-decoration-color:var(--red)}
+.flag-log{max-height:300px;overflow-y:auto}
+.flag-item{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;background:rgba(239,68,68,.05);border-left:3px solid var(--red);border-radius:0 8px 8px 0;margin-bottom:8px}
+.flag-item .flag-time{font-size:12px;color:var(--muted);white-space:nowrap;min-width:50px}
+.flag-item .flag-phrase{font-size:14px;color:var(--red);font-weight:600}
+.flag-item .flag-fix{font-size:13px;color:var(--green);margin-top:4px}
+.flag-stats{display:flex;gap:16px;justify-content:center;margin-bottom:24px}
+.flag-stat{text-align:center}
+.flag-stat .num{font-size:24px;font-weight:800}
+.flag-stat .lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+.flag-stat.clean .num{color:var(--green)}
+.flag-stat.flagged .num{color:var(--red)}
 </style>
 </head>
 <body>
@@ -172,6 +230,9 @@ td:first-child{font-weight:600}
     <div class="nav-item" data-section="script"><span class="icon">🎬</span>Script &amp; Lines</div>
     <div class="nav-item" data-section="insights"><span class="icon">💎</span>3 Core Insights</div>
     <div class="nav-item" data-section="dylan"><span class="icon">🎤</span>Dylan Moment</div>
+    <div class="nav-item" data-section="shark"><span class="icon">🦈</span>Shark Simulator</div>
+    <div class="nav-item" data-section="teleprompter"><span class="icon">📺</span>Pitch Practice</div>
+    <div class="nav-item" data-section="monitor"><span class="icon">🔴</span>Red Flag Monitor</div>
     <div class="nav-item" data-section="checklist"><span class="icon">✅</span>Checklists</div>
     <div class="nav-item" data-section="identity"><span class="icon">🆔</span>Identity Guide</div>
   </nav>
@@ -525,6 +586,96 @@ td:first-child{font-weight:600}
       </div>
     </div>
 
+    <!-- SHARK SIMULATOR -->
+    <div class="section" id="sec-shark">
+      <h2>Shark Simulator</h2>
+      <p style="color:var(--muted);margin-bottom:24px">A Shark asks you tough questions out loud. Practice answering verbally. The app listens and checks for red-flag phrases.</p>
+      <div class="sim-counter" id="sim-counter"></div>
+      <div class="card" style="text-align:center;padding:40px">
+        <div class="shark-avatar" id="shark-avatar">🦈</div>
+        <div class="shark-name" id="shark-name">Shark Tank Panel</div>
+        <div class="shark-category" id="shark-category">Press Start to begin</div>
+        <div class="shark-question-text" id="shark-q-text">Ready to face the Sharks?</div>
+        <div class="listening-indicator" id="shark-listening">
+          <span class="listening-dot"></span> Listening to your answer...
+        </div>
+        <div class="shark-feedback" id="shark-feedback"></div>
+        <div class="shark-hint" id="shark-hint"></div>
+        <div class="btn-group" style="justify-content:center;margin-top:20px">
+          <button class="btn btn-primary" id="shark-start-btn" onclick="sharkStart()">Start Simulation</button>
+          <button class="btn btn-secondary" id="shark-hint-btn" onclick="sharkShowHint()" style="display:none">Show Hint</button>
+          <button class="btn btn-primary" id="shark-next-btn" onclick="sharkNext()" style="display:none">Next Question</button>
+          <button class="btn btn-secondary" id="shark-stop-btn" onclick="sharkStop()" style="display:none">End Session</button>
+        </div>
+      </div>
+      <div class="card" id="shark-results" style="display:none">
+        <h3>Session Results</h3>
+        <div class="flag-stats">
+          <div class="flag-stat clean"><div class="num" id="shark-clean-count">0</div><div class="lbl">Clean Answers</div></div>
+          <div class="flag-stat flagged"><div class="num" id="shark-flag-count">0</div><div class="lbl">Red Flags Caught</div></div>
+        </div>
+        <div class="flag-log" id="shark-flag-log"></div>
+      </div>
+    </div>
+
+    <!-- TELEPROMPTER / PITCH PRACTICE -->
+    <div class="section" id="sec-teleprompter">
+      <h2>Pitch Practice</h2>
+      <p style="color:var(--muted);margin-bottom:24px">Full 5:30 pitch with teleprompter, timer, and audio recording. Practice your delivery like it's filming day.</p>
+      <div style="text-align:center;margin-bottom:16px">
+        <span class="rec-badge" id="rec-badge"><span class="rec-dot"></span> RECORDING</span>
+      </div>
+      <div class="teleprompter" id="teleprompter-box">
+        <div class="teleprompter-section-label" id="tp-section">Ready</div>
+        <div class="teleprompter-timer ok" id="tp-timer">5:30</div>
+        <div class="teleprompter-text" id="tp-text" style="display:flex;align-items:center;justify-content:center;min-height:220px">
+          <div style="color:rgba(255,255,255,.5);font-size:18px">Press Start to begin your pitch practice.<br>The teleprompter will scroll through each section.<br>Tap lines to advance manually.</div>
+        </div>
+      </div>
+      <div class="teleprompter-progress"><div class="fill" id="tp-progress" style="width:0%"></div></div>
+      <div class="btn-group" style="justify-content:center">
+        <button class="btn btn-primary" id="tp-start-btn" onclick="tpStart()">Start Pitch</button>
+        <button class="btn btn-danger" id="tp-stop-btn" onclick="tpStop()" style="display:none">Stop</button>
+        <button class="btn btn-secondary" id="tp-pause-btn" onclick="tpPause()" style="display:none">Pause</button>
+        <button class="btn btn-secondary" onclick="tpReset()">Reset</button>
+      </div>
+      <div class="audio-playback" id="tp-playback">
+        <div class="card" style="margin-top:16px">
+          <h3>Your Recording</h3>
+          <audio id="tp-audio" controls style="width:100%"></audio>
+          <p style="color:var(--muted);font-size:13px;margin-top:8px">Listen back and compare to the script. Focus on pace, energy, and clarity.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- RED FLAG MONITOR -->
+    <div class="section" id="sec-monitor">
+      <h2>Red Flag Monitor</h2>
+      <p style="color:var(--muted);margin-bottom:24px">Practice speaking freely. The monitor listens in real-time and catches any "do not say" phrases instantly.</p>
+      <div class="flag-stats" id="monitor-stats">
+        <div class="flag-stat" style="min-width:100px"><div class="num" id="monitor-time">0:00</div><div class="lbl">Duration</div></div>
+        <div class="flag-stat clean"><div class="num" id="monitor-clean">0</div><div class="lbl">Words Spoken</div></div>
+        <div class="flag-stat flagged"><div class="num" id="monitor-flags">0</div><div class="lbl">Red Flags</div></div>
+      </div>
+      <div class="monitor-display" id="monitor-display">
+        <div class="monitor-status idle" id="monitor-status">Tap Start to begin monitoring</div>
+        <div class="monitor-transcript" id="monitor-transcript"></div>
+      </div>
+      <div class="btn-group" style="justify-content:center;margin-bottom:24px">
+        <button class="btn btn-primary" id="monitor-start-btn" onclick="monitorStart()">Start Monitoring</button>
+        <button class="btn btn-danger" id="monitor-stop-btn" onclick="monitorStop()" style="display:none">Stop</button>
+        <button class="btn btn-secondary" onclick="monitorClear()">Clear Log</button>
+      </div>
+      <div class="card" id="monitor-log-card">
+        <h3 style="color:var(--red)">Caught Red Flags</h3>
+        <div id="monitor-log"><p style="color:var(--muted);font-size:14px">No flags yet — start speaking to begin.</p></div>
+      </div>
+      <div class="card">
+        <h3>Phrases Being Monitored</h3>
+        <div style="display:flex;flex-wrap:wrap;gap:8px" id="monitor-phrase-list"></div>
+      </div>
+    </div>
+
     <!-- CHECKLISTS -->
     <div class="section" id="sec-checklist">
       <h2>Checklists</h2>
@@ -830,6 +981,566 @@ function resetChecklist() {
 }
 
 buildChecklist();
+
+// ============================================================
+// SHARK SIMULATOR
+// ============================================================
+const sharkQuestions = [
+  { shark:"Mark Cuban", cat:"Financials", q:"What are your margins on each unit?", hint:"Distributor margin ~50%. Retail $670–$2,955. Avg wholesale $400–$470.", keys:[] },
+  { shark:"Lori Greiner", cat:"Sales", q:"How do customers find you?", hint:"33% word-of-mouth. IHRSA trade show. Online D2C. Distributor network.", keys:[] },
+  { shark:"Kevin O'Leary", cat:"Valuation", q:"You're asking $400K for 15% — that's a $2.67 million valuation. How do you justify that?", hint:"$2M global revenue. $720K US run rate year 1. 10 years profitable. Zero outside investors.", keys:[] },
+  { shark:"Barbara Corcoran", cat:"Story", q:"Tell me about yourself. Where are you from?", hint:"I'm Polish — with Ukrainian origins. Built $1M in Poland from zero. Now replicating in America.", keys:["ukrainian","immigrated","refugee","escaped","russia","russian"] },
+  { shark:"Mark Cuban", cat:"Operations", q:"Where do you manufacture?", hint:"Poland only. US production planned at ~400 units/month threshold.", keys:["made in.*united states","made in.*america"] },
+  { shark:"Lori Greiner", cat:"Competition", q:"What stops someone from copying this?", hint:"Award-winning design (FIBO 2022). 10 years of engineering. Premium quality — FSC beech, powder-coated steel. Brand trust.", keys:["patent"] },
+  { shark:"Kevin O'Leary", cat:"Financials", q:"What's your customer acquisition cost?", hint:"If you don't have exact CAC — say 'I'd need to verify that exact number.' 33% word-of-mouth = very low organic CAC.", keys:[] },
+  { shark:"Barbara Corcoran", cat:"Growth", q:"What's your plan for the US market?", hint:"$200K distribution (boutique chains, PT, yoga, Pilates). $100K marketing. $50K BenchK PRO. $50K trade shows.", keys:["immigrated","settling","permanently"] },
+  { shark:"Mark Cuban", cat:"Challenge", q:"You've only done $300K in the US. Why should I believe this scales?", hint:"$60K/month for 3 consecutive months = $720K run rate. Poland was $1M with 38M people. US is 340M — 8x bigger. Same playbook.", keys:["struggling"] },
+  { shark:"Lori Greiner", cat:"Retail", q:"Are you in any retail stores?", hint:"Boutique studios, PT clinics, hotels. Praxis Pilates NYC, 10Ten Fitness, KARE Paris. Not big-box retail yet.", keys:["30 countries"] },
+  { shark:"Kevin O'Leary", cat:"Deal", q:"I want 25% — you're asking too little equity for the risk.", hint:"$2M revenue. Profitable. Bootstrapped. $450K personal investment. This is not a startup risk — it's a proven operator scaling.", keys:["please","need this","anything"] },
+  { shark:"Barbara Corcoran", cat:"Personal", q:"Why did you leave your country?", hint:"My family moved to Poland in 2015. I built BenchK there over 10 years. Came to America on an investor visa.", keys:["escaped","refugee","war","russia","invaded"] },
+  { shark:"Mark Cuban", cat:"Financials", q:"What are your revenue projections for next year?", hint:"If you don't have verified projections, say: 'I'd need to verify that exact number — I'd rather give you the accurate figure than guess.'", keys:[] },
+  { shark:"Lori Greiner", cat:"Product", q:"Is this patented?", hint:"Award-winning design. FIBO Innovation Award 2022. Recoil system is patented by our partner Robert Bowles — we distribute it.", keys:["patented technology","our patent"] },
+  { shark:"Kevin O'Leary", cat:"Equity", q:"How much of the company do you own?", hint:"100%. Wife is co-founder. Zero outside investors in 10 years.", keys:[] },
+  { shark:"Barbara Corcoran", cat:"Family", q:"Is your family supportive of this?", hint:"Wife is co-founder. Kids Arina (13) and Aron (4) in Florida. Family moved together.", keys:[] },
+  { shark:"Mark Cuban", cat:"Financials", q:"Are you profitable?", hint:"'We've been profitable for years, no outside investors.' Don't say 'since day 1' — unverifiable.", keys:["since day 1","day one"] },
+  { shark:"Lori Greiner", cat:"Scale", q:"How many countries are you in?", hint:"Strong distribution in 5 EU countries + online across Europe. Plus US.", keys:["30 countries","30"] },
+];
+
+const redFlagPhrases = [
+  { phrase:"i'm ukrainian", fix:"I'm Polish — with Ukrainian origins" },
+  { phrase:"i am ukrainian", fix:"I'm Polish — with Ukrainian origins" },
+  { phrase:"ukrainian", fix:"Polish, with Ukrainian origins" },
+  { phrase:"immigrated", fix:"Came here on an investor visa" },
+  { phrase:"immigrant", fix:"Came here on an investor visa" },
+  { phrase:"permanently", fix:"I'm developing BenchK in the US market" },
+  { phrase:"settling", fix:"We have our warehouse in Florida" },
+  { phrase:"refugee", fix:"Never use — wrong visa class" },
+  { phrase:"escaped", fix:"My family moved to Poland in 2015" },
+  { phrase:"russia", fix:"Don't bring up at all" },
+  { phrase:"putin", fix:"Don't bring up at all" },
+  { phrase:"war", fix:"Don't bring up at all" },
+  { phrase:"invaded", fix:"Don't bring up at all" },
+  { phrase:"russian", fix:"Don't bring up at all" },
+  { phrase:"30 countries", fix:"5 EU countries + online across Europe" },
+  { phrase:"patented technology", fix:"Award-winning design" },
+  { phrase:"patent is ours", fix:"We distribute Recoil — patented by our partner" },
+  { phrase:"made in america", fix:"Made in Poland — US production planned" },
+  { phrase:"made in the united states", fix:"Made in Poland — US production planned" },
+  { phrase:"please give me", fix:"Let the facts speak" },
+  { phrase:"i really need", fix:"I don't need your money — I need YOU" },
+  { phrase:"i need this", fix:"I don't need your money — I need YOU" },
+  { phrase:"struggling", fix:"$720K annualized run rate in year one" },
+  { phrase:"since day one", fix:"Profitable for years, no outside investors" },
+  { phrase:"since day 1", fix:"Profitable for years, no outside investors" },
+  { phrase:"do anything", fix:"Present the opportunity confidently" },
+];
+
+let sharkIdx = 0, sharkOrder = [], sharkClean = 0, sharkFlagged = 0, sharkRecog = null, sharkActive = false;
+
+function sharkStart() {
+  sharkOrder = sharkQuestions.map((_,i)=>i);
+  for(let i=sharkOrder.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[sharkOrder[i],sharkOrder[j]]=[sharkOrder[j],sharkOrder[i]];}
+  sharkIdx = 0; sharkClean = 0; sharkFlagged = 0;
+  document.getElementById('shark-results').style.display = 'none';
+  document.getElementById('shark-flag-log').innerHTML = '';
+  sharkActive = true;
+  sharkAsk();
+}
+
+function sharkAsk() {
+  if(sharkIdx >= sharkOrder.length) { sharkFinish(); return; }
+  const s = sharkQuestions[sharkOrder[sharkIdx]];
+  document.getElementById('shark-name').textContent = s.shark;
+  document.getElementById('shark-category').textContent = s.cat;
+  document.getElementById('shark-q-text').textContent = s.q;
+  document.getElementById('shark-hint').classList.remove('show');
+  document.getElementById('shark-hint').textContent = s.hint;
+  document.getElementById('shark-feedback').classList.remove('show','good','bad');
+  document.getElementById('shark-start-btn').style.display = 'none';
+  document.getElementById('shark-hint-btn').style.display = '';
+  document.getElementById('shark-next-btn').style.display = 'none';
+  document.getElementById('shark-stop-btn').style.display = '';
+  document.getElementById('sim-counter').textContent = 'Question ' + (sharkIdx+1) + ' of ' + sharkOrder.length;
+
+  // Speak the question
+  if('speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+    const utter = new SpeechSynthesisUtterance(s.q);
+    utter.rate = 0.95; utter.pitch = 1;
+    const avatar = document.getElementById('shark-avatar');
+    avatar.classList.add('speaking');
+    utter.onend = () => {
+      avatar.classList.remove('speaking');
+      sharkListen();
+    };
+    window.speechSynthesis.speak(utter);
+  } else {
+    sharkListen();
+  }
+}
+
+function sharkListen() {
+  if(!sharkActive) return;
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SpeechRecognition) {
+    document.getElementById('shark-listening').classList.add('show');
+    document.getElementById('shark-listening').innerHTML = '<span class="listening-dot"></span> Speech recognition not available — answer out loud, then self-assess below.';
+    document.getElementById('shark-next-btn').style.display = '';
+    return;
+  }
+  sharkRecog = new SpeechRecognition();
+  sharkRecog.continuous = true;
+  sharkRecog.interimResults = true;
+  sharkRecog.lang = 'en-US';
+  let finalText = '';
+  document.getElementById('shark-listening').classList.add('show');
+  document.getElementById('shark-listening').innerHTML = '<span class="listening-dot"></span> Listening to your answer...';
+
+  sharkRecog.onresult = (e) => {
+    let interim = '';
+    for(let i=e.resultIndex;i<e.results.length;i++){
+      if(e.results[i].isFinal) finalText += e.results[i][0].transcript + ' ';
+      else interim += e.results[i][0].transcript;
+    }
+  };
+
+  sharkRecog.onend = () => {
+    document.getElementById('shark-listening').classList.remove('show');
+    if(finalText.trim()) sharkAnalyze(finalText.trim());
+    else {
+      document.getElementById('shark-next-btn').style.display = '';
+    }
+  };
+
+  sharkRecog.onerror = () => {
+    document.getElementById('shark-listening').classList.remove('show');
+    document.getElementById('shark-next-btn').style.display = '';
+  };
+
+  sharkRecog.start();
+  setTimeout(() => { if(sharkRecog) try{sharkRecog.stop();}catch(e){} }, 30000);
+}
+
+function sharkStopListening() {
+  if(sharkRecog) try{sharkRecog.stop();}catch(e){}
+}
+
+function sharkAnalyze(text) {
+  const lower = text.toLowerCase();
+  const caught = [];
+  redFlagPhrases.forEach(rf => {
+    if(lower.includes(rf.phrase)) caught.push(rf);
+  });
+  const fb = document.getElementById('shark-feedback');
+  if(caught.length === 0) {
+    sharkClean++;
+    fb.className = 'shark-feedback show good';
+    fb.innerHTML = '<strong>Clean answer!</strong> No red flags detected.';
+  } else {
+    sharkFlagged++;
+    fb.className = 'shark-feedback show bad';
+    fb.innerHTML = '<strong>Red flag' + (caught.length>1?'s':'') + ' detected:</strong><br>' +
+      caught.map(c => '✗ "' + c.phrase + '" → ✓ "' + c.fix + '"').join('<br>');
+    const log = document.getElementById('shark-flag-log');
+    caught.forEach(c => {
+      log.innerHTML += '<div class="flag-item"><div><div class="flag-phrase">✗ "'+c.phrase+'"</div><div class="flag-fix">✓ '+c.fix+'</div></div></div>';
+    });
+  }
+  document.getElementById('shark-next-btn').style.display = '';
+}
+
+function sharkShowHint() {
+  document.getElementById('shark-hint').classList.add('show');
+}
+
+function sharkNext() {
+  sharkStopListening();
+  sharkIdx++;
+  sharkAsk();
+}
+
+function sharkStop() {
+  sharkStopListening();
+  sharkActive = false;
+  if('speechSynthesis' in window) window.speechSynthesis.cancel();
+  sharkFinish();
+}
+
+function sharkFinish() {
+  sharkActive = false;
+  document.getElementById('shark-q-text').textContent = 'Session Complete!';
+  document.getElementById('shark-name').textContent = 'Results';
+  document.getElementById('shark-category').textContent = sharkClean + ' clean, ' + sharkFlagged + ' flagged';
+  document.getElementById('shark-listening').classList.remove('show');
+  document.getElementById('shark-hint-btn').style.display = 'none';
+  document.getElementById('shark-next-btn').style.display = 'none';
+  document.getElementById('shark-stop-btn').style.display = 'none';
+  document.getElementById('shark-start-btn').style.display = '';
+  document.getElementById('shark-start-btn').textContent = 'Restart';
+  document.getElementById('shark-results').style.display = '';
+  document.getElementById('shark-clean-count').textContent = sharkClean;
+  document.getElementById('shark-flag-count').textContent = sharkFlagged;
+  document.getElementById('sim-counter').textContent = '';
+}
+
+// ============================================================
+// TELEPROMPTER / PITCH PRACTICE
+// ============================================================
+const tpScript = [
+  { section:"Section 1 — Hook", time:"0:00–0:30", lines:[
+    "My name is Vadym. I'm Polish — with Ukrainian origins.",
+    "And this behind me... is a BenchK Vertical Training Wall.",
+    "We reinvented the 100-year-old Swedish ladder.",
+    "Modular. Premium. Commercial-grade.",
+    "One wall. Five training methods. Zero floor space.",
+  ]},
+  { section:"Section 2 — Product Demo", time:"0:30–1:10", lines:[
+    "Used by Pilates studios, PT clinics, hotels, and families.",
+    "One product. Five markets.",
+    "[DEMO — show stretch, pull-up, resistance, Pilates, rehab on the wall]",
+  ]},
+  { section:"Section 3 — Traction", time:"1:10–2:10", lines:[
+    "$2 million in global revenue.",
+    "Poland — $1 million. Germany, Switzerland, Czech Republic, Slovakia — $700,000.",
+    "USA, year one — $300,000.",
+    "$60,000 each month — December, January, February.",
+    "$720,000 annualized run rate.",
+    "And listen to this — one out of every three sales comes from word of mouth.",
+    "33%, verified by customer surveys.",
+  ]},
+  { section:"Section 3b — Dylan", time:"2:10–2:25", lines:[
+    "Sharks — meet Dylan. He owns this studio.",
+    "Dylan... why did you put BenchK in your studio?",
+    "[DYLAN ANSWERS ~15 sec]",
+    "Thanks, brother.",
+  ]},
+  { section:"Section 4 — Origin Story", time:"2:25–3:15", lines:[
+    "1989, my father bought me a Swedish ladder. I was seven.",
+    "That wall became everything — my gym, my playground, my escape.",
+    "2015 — my family moved to Poland.",
+    "Foreign country, foreign language, foreign mentality.",
+    "I started BenchK with nothing.",
+    "99 out of 100 companies said no.",
+    "Sometimes the best thing that happens to you... is everybody saying you can't.",
+  ]},
+  { section:"Section 5 — Operator", time:"3:15–4:15", lines:[
+    "Before BenchK — 9 years selling JCB construction machines.",
+    "250+ machines. $90,000 to $300,000 each.",
+    "Tens of millions in B2B sales.",
+    "I don't run a startup. I run a factory.",
+    "25 suppliers. Polish manufacturing. Toyota Way principles.",
+    "If I cracked Poland from zero — what makes you think I won't crack America?",
+  ]},
+  { section:"Section 6 — Replication", time:"4:15–4:55", lines:[
+    "Poland: $1 million revenue. 38 million people.",
+    "USA: 340 million — 8 times bigger.",
+    "Same product. Same playbook. Same operator.",
+    "The barrier is not awareness — it's TRIAL.",
+    "Once they see it, touch it, train on it — they buy.",
+    "Your money goes to trial generation, not market education.",
+  ]},
+  { section:"Section 7 — The Ask", time:"4:55–5:10", lines:[
+    "$400,000 for 15%.",
+    "$200K distribution. $100K marketing. $50K BenchK PRO. $50K trade shows.",
+    "10 years bootstrapped. Zero outside investors.",
+    "I don't need your money — I need YOU.",
+    "American mindset. American network. American doors I can't open from a warehouse in Florida.",
+  ]},
+  { section:"Section 8 — Closer", time:"5:10–5:30", lines:[
+    "BenchK is not a startup.",
+    "10 years old. Profitable. Award-winning.",
+    "I'm not asking you to take a chance.",
+    "I'm asking you to join something that is already moving.",
+    "Lift Yourself.",
+    "Sharks — let's lift America together.",
+  ]},
+];
+
+let tpRunning = false, tpPaused = false, tpTimerInterval = null, tpSeconds = 0;
+let tpCurrentSection = 0, tpCurrentLine = 0;
+let tpMediaRecorder = null, tpAudioChunks = [];
+const TP_TOTAL = 330; // 5:30
+
+function tpBuildLines() {
+  const allLines = [];
+  tpScript.forEach((sec, si) => {
+    sec.lines.forEach((line, li) => {
+      allLines.push({ text: line, section: sec.section, si, li });
+    });
+  });
+  return allLines;
+}
+
+function tpRender() {
+  const allLines = tpBuildLines();
+  const flatIdx = tpFlatIndex();
+  let html = '';
+  allLines.forEach((l, i) => {
+    let cls = '';
+    if(i < flatIdx) cls = 'done-line';
+    else if(i === flatIdx) cls = 'active-line';
+    html += '<div class="' + cls + '" style="padding:4px 0;cursor:pointer" data-idx="'+i+'">' + l.text + '</div>';
+  });
+  document.getElementById('tp-text').innerHTML = html;
+  document.getElementById('tp-section').textContent = tpScript[tpCurrentSection]?.section || 'Done';
+
+  // Scroll active line into view
+  const activeLine = document.querySelector('.active-line');
+  if(activeLine) activeLine.scrollIntoView({ behavior:'smooth', block:'center' });
+
+  // Progress
+  const pct = allLines.length > 0 ? Math.round(flatIdx / allLines.length * 100) : 0;
+  document.getElementById('tp-progress').style.width = pct + '%';
+
+  // Click to advance
+  document.querySelectorAll('#tp-text > div').forEach(div => {
+    div.addEventListener('click', () => {
+      const idx = parseInt(div.dataset.idx);
+      const allL = tpBuildLines();
+      if(idx < allL.length) {
+        tpCurrentSection = allL[idx].si;
+        tpCurrentLine = allL[idx].li;
+        tpRender();
+      }
+    });
+  });
+}
+
+function tpFlatIndex() {
+  let idx = 0;
+  for(let s=0;s<tpCurrentSection;s++) idx += tpScript[s].lines.length;
+  idx += tpCurrentLine;
+  return idx;
+}
+
+function tpUpdateTimer() {
+  const remaining = TP_TOTAL - tpSeconds;
+  const m = Math.floor(Math.abs(remaining) / 60);
+  const s = Math.abs(remaining) % 60;
+  const display = (remaining < 0 ? '-' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+  const el = document.getElementById('tp-timer');
+  el.textContent = display;
+  if(remaining > 60) el.className = 'teleprompter-timer ok';
+  else if(remaining > 0) el.className = 'teleprompter-timer warn';
+  else el.className = 'teleprompter-timer over';
+}
+
+async function tpStart() {
+  if(tpPaused) { tpResume(); return; }
+  tpRunning = true; tpPaused = false; tpSeconds = 0;
+  tpCurrentSection = 0; tpCurrentLine = 0;
+  document.getElementById('tp-start-btn').style.display = 'none';
+  document.getElementById('tp-stop-btn').style.display = '';
+  document.getElementById('tp-pause-btn').style.display = '';
+  document.getElementById('tp-playback').classList.remove('show');
+  document.getElementById('rec-badge').classList.add('show');
+
+  tpRender();
+  tpUpdateTimer();
+  tpTimerInterval = setInterval(() => {
+    if(!tpPaused) {
+      tpSeconds++;
+      tpUpdateTimer();
+    }
+  }, 1000);
+
+  // Auto-advance lines based on approximate timing
+  tpAutoAdvance();
+
+  // Start audio recording
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    tpAudioChunks = [];
+    tpMediaRecorder = new MediaRecorder(stream);
+    tpMediaRecorder.ondataavailable = (e) => { if(e.data.size > 0) tpAudioChunks.push(e.data); };
+    tpMediaRecorder.onstop = () => {
+      const blob = new Blob(tpAudioChunks, { type: 'audio/webm' });
+      document.getElementById('tp-audio').src = URL.createObjectURL(blob);
+      document.getElementById('tp-playback').classList.add('show');
+      stream.getTracks().forEach(t => t.stop());
+    };
+    tpMediaRecorder.start();
+  } catch(e) {
+    console.log('No mic access — recording disabled');
+  }
+}
+
+function tpAutoAdvance() {
+  const allLines = tpBuildLines();
+  const totalLines = allLines.length;
+  const perLine = (TP_TOTAL * 1000) / totalLines;
+  let lineIdx = 0;
+  function advanceTick() {
+    if(!tpRunning) return;
+    if(tpPaused) { setTimeout(advanceTick, 200); return; }
+    lineIdx++;
+    if(lineIdx >= totalLines) return;
+    const l = allLines[lineIdx];
+    tpCurrentSection = l.si;
+    tpCurrentLine = l.li;
+    tpRender();
+    setTimeout(advanceTick, perLine);
+  }
+  setTimeout(advanceTick, perLine);
+}
+
+function tpPause() {
+  tpPaused = !tpPaused;
+  document.getElementById('tp-pause-btn').textContent = tpPaused ? 'Resume' : 'Pause';
+}
+
+function tpResume() {
+  tpPaused = false;
+  document.getElementById('tp-pause-btn').textContent = 'Pause';
+}
+
+function tpStop() {
+  tpRunning = false; tpPaused = false;
+  if(tpTimerInterval) clearInterval(tpTimerInterval);
+  document.getElementById('tp-start-btn').style.display = '';
+  document.getElementById('tp-stop-btn').style.display = 'none';
+  document.getElementById('tp-pause-btn').style.display = 'none';
+  document.getElementById('rec-badge').classList.remove('show');
+  if(tpMediaRecorder && tpMediaRecorder.state !== 'inactive') tpMediaRecorder.stop();
+}
+
+function tpReset() {
+  tpStop();
+  tpCurrentSection = 0; tpCurrentLine = 0; tpSeconds = 0;
+  document.getElementById('tp-timer').textContent = '5:30';
+  document.getElementById('tp-timer').className = 'teleprompter-timer ok';
+  document.getElementById('tp-progress').style.width = '0%';
+  document.getElementById('tp-text').innerHTML = '<div style="color:rgba(255,255,255,.5);font-size:18px;display:flex;align-items:center;justify-content:center;min-height:220px">Press Start to begin your pitch practice.<br>The teleprompter will scroll through each section.<br>Tap lines to advance manually.</div>';
+  document.getElementById('tp-section').textContent = 'Ready';
+  document.getElementById('tp-playback').classList.remove('show');
+}
+
+// ============================================================
+// RED FLAG MONITOR
+// ============================================================
+let monitorRecog = null, monitorRunning = false, monitorFlagCount = 0, monitorWordCount = 0;
+let monitorStartTime = null, monitorTimerInterval = null;
+
+function monitorBuildPhraseList() {
+  const container = document.getElementById('monitor-phrase-list');
+  container.innerHTML = redFlagPhrases.map(p =>
+    '<span style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);border-radius:6px;padding:4px 10px;font-size:12px;color:var(--red)">' + p.phrase + '</span>'
+  ).join('');
+}
+monitorBuildPhraseList();
+
+function monitorStart() {
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SpeechRecognition) {
+    document.getElementById('monitor-status').textContent = 'Speech recognition not supported in this browser. Use Chrome or Edge.';
+    document.getElementById('monitor-status').className = 'monitor-status alert';
+    return;
+  }
+  monitorRunning = true; monitorFlagCount = 0; monitorWordCount = 0;
+  monitorStartTime = Date.now();
+  document.getElementById('monitor-start-btn').style.display = 'none';
+  document.getElementById('monitor-stop-btn').style.display = '';
+  document.getElementById('monitor-status').textContent = 'Listening...';
+  document.getElementById('monitor-status').className = 'monitor-status listening';
+  document.getElementById('monitor-flags').textContent = '0';
+  document.getElementById('monitor-clean').textContent = '0';
+
+  monitorTimerInterval = setInterval(() => {
+    const elapsed = Math.floor((Date.now() - monitorStartTime) / 1000);
+    const m = Math.floor(elapsed / 60);
+    const s = elapsed % 60;
+    document.getElementById('monitor-time').textContent = m + ':' + (s < 10 ? '0' : '') + s;
+  }, 1000);
+
+  monitorRecog = new SpeechRecognition();
+  monitorRecog.continuous = true;
+  monitorRecog.interimResults = true;
+  monitorRecog.lang = 'en-US';
+
+  monitorRecog.onresult = (e) => {
+    let full = '';
+    for(let i=0;i<e.results.length;i++) {
+      full += e.results[i][0].transcript + ' ';
+    }
+    // Count words from final results
+    let finalWords = '';
+    for(let i=0;i<e.results.length;i++) {
+      if(e.results[i].isFinal) finalWords += e.results[i][0].transcript + ' ';
+    }
+    monitorWordCount = finalWords.trim().split(/\s+/).filter(w=>w).length;
+    document.getElementById('monitor-clean').textContent = monitorWordCount;
+
+    // Display with highlights
+    let display = full;
+    const lower = full.toLowerCase();
+    redFlagPhrases.forEach(rf => {
+      if(lower.includes(rf.phrase)) {
+        const regex = new RegExp('(' + rf.phrase.replace(/[.*+?^${}()|[\]\\]/g,'\\$&') + ')', 'gi');
+        display = display.replace(regex, '<span class="flagged">$1</span>');
+      }
+    });
+    document.getElementById('monitor-transcript').innerHTML = display;
+
+    // Check for flags in latest final result
+    for(let i=e.resultIndex;i<e.results.length;i++) {
+      if(e.results[i].isFinal) {
+        const chunk = e.results[i][0].transcript.toLowerCase();
+        redFlagPhrases.forEach(rf => {
+          if(chunk.includes(rf.phrase)) {
+            monitorFlagCount++;
+            document.getElementById('monitor-flags').textContent = monitorFlagCount;
+            document.getElementById('monitor-status').textContent = 'RED FLAG DETECTED!';
+            document.getElementById('monitor-status').className = 'monitor-status alert';
+            setTimeout(() => {
+              if(monitorRunning) {
+                document.getElementById('monitor-status').textContent = 'Listening...';
+                document.getElementById('monitor-status').className = 'monitor-status listening';
+              }
+            }, 3000);
+            const log = document.getElementById('monitor-log');
+            if(monitorFlagCount === 1) log.innerHTML = '';
+            const elapsed = Math.floor((Date.now() - monitorStartTime) / 1000);
+            const m = Math.floor(elapsed / 60);
+            const s = elapsed % 60;
+            log.innerHTML += '<div class="flag-item"><div class="flag-time">' + m + ':' + (s<10?'0':'') + s + '</div><div><div class="flag-phrase">✗ "' + rf.phrase + '"</div><div class="flag-fix">✓ ' + rf.fix + '</div></div></div>';
+          }
+        });
+      }
+    }
+  };
+
+  monitorRecog.onend = () => {
+    if(monitorRunning) monitorRecog.start();
+  };
+
+  monitorRecog.onerror = (e) => {
+    if(e.error === 'no-speech' && monitorRunning) return;
+    if(monitorRunning) {
+      try { monitorRecog.start(); } catch(err) {}
+    }
+  };
+
+  monitorRecog.start();
+}
+
+function monitorStop() {
+  monitorRunning = false;
+  if(monitorRecog) try { monitorRecog.stop(); } catch(e) {}
+  if(monitorTimerInterval) clearInterval(monitorTimerInterval);
+  document.getElementById('monitor-start-btn').style.display = '';
+  document.getElementById('monitor-stop-btn').style.display = 'none';
+  document.getElementById('monitor-status').textContent = 'Stopped — ' + monitorWordCount + ' words, ' + monitorFlagCount + ' flags';
+  document.getElementById('monitor-status').className = 'monitor-status idle';
+}
+
+function monitorClear() {
+  document.getElementById('monitor-log').innerHTML = '<p style="color:var(--muted);font-size:14px">No flags yet — start speaking to begin.</p>';
+  document.getElementById('monitor-transcript').innerHTML = '';
+  monitorFlagCount = 0; monitorWordCount = 0;
+  document.getElementById('monitor-flags').textContent = '0';
+  document.getElementById('monitor-clean').textContent = '0';
+  document.getElementById('monitor-time').textContent = '0:00';
+}
 </script>
 </body>
 </html>
