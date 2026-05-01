@@ -106,7 +106,7 @@ $400,000     TOTAL
 "Modular. Premium. Commercial-grade."
 "One wall. Five training methods. Zero floor space."
 "Used by Pilates studios, PT clinics, hotels, and families."
-"One product. Five markets."
+"One product. Seven markets."
 ```
 
 ---

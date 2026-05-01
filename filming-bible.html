@@ -1,0 +1,2071 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BenchK — Filming Bible — Shark Tank Season 18</title>
+<style>
+  /* ===== RESET & BASE ===== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #1a2744;
+    --gold: #d4a017;
+    --gold-light: #fdf3d0;
+    --gold-border: #c89a10;
+    --blue: #2563eb;
+    --blue-light: #dbeafe;
+    --blue-dark: #1e40af;
+    --red: #dc2626;
+    --red-light: #fee2e2;
+    --red-border: #f87171;
+    --green: #16a34a;
+    --green-light: #dcfce7;
+    --green-border: #4ade80;
+    --yellow: #eab308;
+    --yellow-light: #fef9c3;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-500: #6b7280;
+    --gray-700: #374151;
+    --gray-900: #111827;
+    --font-body: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  }
+
+  html { font-size: 16px; }
+
+  body {
+    font-family: var(--font-body);
+    color: var(--gray-900);
+    background: var(--gray-50);
+    line-height: 1.6;
+  }
+
+  /* ===== PRINT ===== */
+  @media print {
+    body { background: #fff; font-size: 12pt; }
+    .page { page-break-after: always; box-shadow: none !important; border: none !important; margin: 0 !important; padding: 24pt !important; max-width: 100% !important; }
+    .page:last-child { page-break-after: avoid; }
+    .no-print { display: none !important; }
+    .header-bar { background: var(--navy) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .badge, .energy-badge, .question-badge { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .director-box { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .do-not-say-box { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .correct-box { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+
+  /* ===== LAYOUT ===== */
+  .page {
+    max-width: 1100px;
+    margin: 20px auto;
+    background: #fff;
+    padding: 48px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+    border: 1px solid var(--gray-200);
+    min-height: 100vh;
+    position: relative;
+  }
+
+  /* ===== HEADER BAR ===== */
+  .header-bar {
+    background: var(--navy);
+    color: #fff;
+    padding: 10px 24px;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header-bar .conf { color: var(--gold); font-weight: 700; }
+
+  /* ===== TYPOGRAPHY ===== */
+  h1 { font-size: 2.5rem; font-weight: 800; color: var(--navy); margin-bottom: 8px; }
+  h2 { font-size: 1.75rem; font-weight: 700; color: var(--navy); margin: 32px 0 16px; border-bottom: 3px solid var(--gold); padding-bottom: 8px; }
+  h3 { font-size: 1.25rem; font-weight: 700; color: var(--gray-700); margin: 24px 0 12px; }
+  h4 { font-size: 1.1rem; font-weight: 600; color: var(--navy); margin: 16px 0 8px; }
+  p { margin-bottom: 12px; }
+
+  /* ===== COVER ===== */
+  .cover-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 90vh;
+  }
+  .cover-page h1 { font-size: 3.5rem; margin-bottom: 4px; }
+  .cover-subtitle { font-size: 1.5rem; color: var(--gold); font-weight: 700; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 40px; }
+  .cover-meta { color: var(--gray-500); font-size: 1rem; line-height: 2; }
+  .cover-meta strong { color: var(--gray-900); }
+  .cover-divider { width: 120px; height: 4px; background: var(--gold); margin: 32px auto; }
+  .cover-note { font-size: 0.9rem; color: var(--gray-500); margin-top: 40px; font-style: italic; max-width: 500px; }
+
+  /* ===== BADGES ===== */
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .badge-navy { background: var(--navy); color: #fff; }
+
+  .energy-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 16px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-left: 8px;
+  }
+  .energy-high { background: #fef2f2; color: #dc2626; border: 1px solid #fca5a5; }
+  .energy-precise { background: #eff6ff; color: #2563eb; border: 1px solid #93c5fd; }
+  .energy-confident { background: #f0fdf4; color: #16a34a; border: 1px solid #86efac; }
+  .energy-emotional { background: #fdf2f8; color: #db2777; border: 1px solid #f9a8d4; }
+
+  .question-badge {
+    display: inline-block;
+    background: var(--blue);
+    color: #fff;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-right: 4px;
+    margin-bottom: 4px;
+  }
+
+  .verify-badge {
+    display: inline-block;
+    background: var(--yellow-light);
+    color: #92400e;
+    padding: 2px 8px;
+    border-radius: 8px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    border: 1px solid var(--yellow);
+  }
+
+  /* ===== BOXES ===== */
+  .director-box {
+    background: var(--gold-light);
+    border-left: 5px solid var(--gold);
+    padding: 16px 20px;
+    margin: 16px 0;
+    border-radius: 0 8px 8px 0;
+    font-size: 0.92rem;
+  }
+  .director-box strong { color: #92400e; }
+  .director-box .box-label {
+    display: inline-block;
+    background: var(--gold);
+    color: #fff;
+    padding: 2px 10px;
+    border-radius: 8px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+
+  .do-not-say-box {
+    background: var(--red-light);
+    border-left: 5px solid var(--red);
+    padding: 16px 20px;
+    margin: 16px 0;
+    border-radius: 0 8px 8px 0;
+  }
+  .do-not-say-box .box-label {
+    display: inline-block;
+    background: var(--red);
+    color: #fff;
+    padding: 2px 10px;
+    border-radius: 8px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+
+  .correct-box {
+    background: var(--green-light);
+    border-left: 5px solid var(--green);
+    padding: 16px 20px;
+    margin: 16px 0;
+    border-radius: 0 8px 8px 0;
+  }
+  .correct-box .box-label {
+    display: inline-block;
+    background: var(--green);
+    color: #fff;
+    padding: 2px 10px;
+    border-radius: 8px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+
+  /* ===== TABLES ===== */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 0.92rem;
+  }
+  th {
+    background: var(--navy);
+    color: #fff;
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 700;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--gray-200);
+    vertical-align: top;
+  }
+  tr:nth-child(even) td { background: var(--gray-50); }
+
+  /* ===== CHECKLIST ===== */
+  .checklist-item {
+    display: flex;
+    align-items: flex-start;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--gray-200);
+    gap: 12px;
+  }
+  .checklist-item:last-child { border-bottom: none; }
+  .check-box {
+    width: 22px;
+    height: 22px;
+    border: 2px solid var(--gray-300);
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .checklist-item .q-num {
+    font-weight: 800;
+    color: var(--navy);
+    min-width: 28px;
+  }
+
+  /* ===== BILINGUAL SCRIPT ===== */
+  .script-section {
+    margin: 32px 0;
+    border: 2px solid var(--gray-200);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .script-header {
+    background: var(--navy);
+    color: #fff;
+    padding: 16px 24px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+  }
+  .script-header h3 {
+    color: #fff;
+    margin: 0;
+    font-size: 1.15rem;
+    flex: 1;
+  }
+  .script-header .timing {
+    color: var(--gold);
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+  .script-badges {
+    padding: 8px 24px;
+    background: var(--blue-light);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+  }
+  .bilingual-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 50px;
+  }
+  .col-en, .col-ua {
+    padding: 20px 24px;
+  }
+  .col-en {
+    border-right: 2px solid var(--gray-200);
+  }
+  .col-en .col-label, .col-ua .col-label {
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    color: var(--gray-500);
+  }
+  .col-en .col-label { color: var(--blue); }
+  .col-ua .col-label { color: #ca8a04; }
+  .script-line {
+    font-size: 1.15rem;
+    line-height: 1.7;
+    margin-bottom: 10px;
+    color: var(--gray-900);
+  }
+  .script-line em {
+    font-style: italic;
+    color: var(--gray-500);
+    font-size: 0.9rem;
+  }
+  .script-line-stage {
+    font-size: 0.9rem;
+    color: var(--gray-500);
+    font-style: italic;
+    margin-bottom: 10px;
+    padding: 6px 10px;
+    background: var(--gray-100);
+    border-radius: 6px;
+  }
+
+  /* ===== SCHEDULE TABLE ===== */
+  .schedule-time {
+    font-weight: 800;
+    color: var(--navy);
+    white-space: nowrap;
+    font-family: var(--font-mono);
+  }
+
+  /* ===== PAGE NUMBER ===== */
+  .page-num {
+    position: absolute;
+    bottom: 20px;
+    right: 40px;
+    font-size: 0.82rem;
+    color: var(--gray-500);
+  }
+
+  /* ===== MISC ===== */
+  ul, ol { margin: 8px 0 12px 24px; }
+  li { margin-bottom: 4px; }
+  code { font-family: var(--font-mono); background: var(--gray-100); padding: 2px 6px; border-radius: 4px; font-size: 0.88rem; }
+  .text-gold { color: var(--gold); }
+  .text-navy { color: var(--navy); }
+  .text-red { color: var(--red); }
+  .text-green { color: var(--green); }
+  .text-muted { color: var(--gray-500); }
+  .font-mono { font-family: var(--font-mono); }
+  .mt-2 { margin-top: 16px; }
+  .mb-2 { margin-bottom: 16px; }
+  .mb-4 { margin-bottom: 32px; }
+  .fw-800 { font-weight: 800; }
+  .fs-lg { font-size: 1.15rem; }
+  .highlight-line { background: var(--yellow-light); padding: 4px 8px; border-radius: 4px; border: 1px solid #fde68a; }
+
+  .two-col-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin: 16px 0;
+  }
+
+  .info-card {
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    padding: 20px;
+  }
+  .info-card h4 { margin-top: 0; }
+
+  .shot-card {
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+  .shot-card .shot-num {
+    display: inline-block;
+    background: var(--navy);
+    color: #fff;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 28px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    margin-right: 8px;
+  }
+
+  .timeline-item {
+    display: flex;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--gray-200);
+  }
+  .timeline-item:last-child { border-bottom: none; }
+  .timeline-date {
+    min-width: 100px;
+    font-weight: 700;
+    color: var(--navy);
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================== HEADER BAR ============================== -->
+<div class="header-bar no-print">
+  <span>BenchK &mdash; Filming Bible &mdash; Shark Tank Season 18</span>
+  <span class="conf">CONFIDENTIAL</span>
+</div>
+
+<!-- ================================================================== -->
+<!-- PAGE 1 — COVER PAGE                                                -->
+<!-- ================================================================== -->
+<div class="page">
+  <div class="cover-page">
+    <div style="margin-bottom: 12px;">
+      <span class="badge badge-navy">SHARK TANK SEASON 18</span>
+    </div>
+    <h1>BenchK</h1>
+    <div class="cover-subtitle">Filming Bible</div>
+    <div class="cover-divider"></div>
+    <div class="cover-meta">
+      <strong>CONFIDENTIAL</strong> &mdash; Internal production use only<br><br>
+      <strong>Filming Date:</strong> Monday, May 4, 2026<br>
+      <strong>Location:</strong> 10Ten Fitness Studio, Sarasota, FL<br>
+      <strong>Call Time:</strong> 08:30 AM<br>
+      <strong>Wrap (est.):</strong> 3:30 PM<br>
+      <strong>Video Length:</strong> 5 min 35 sec (within ABC 5&ndash;10 min requirement)<br>
+      <strong>Submission Deadline:</strong> Thursday, May 8, 2026<br>
+      <strong>Prepared:</strong> April 30, 2026
+    </div>
+    <div class="cover-divider"></div>
+    <div class="cover-note">
+      This document contains everything needed for filming day: the complete bilingual script (English / Ukrainian),
+      director notes, camera and audio setup, wardrobe, Emily's 8 required questions cross-check, Dylan testimonial plan,
+      filming schedule, energy guide, do-not-say reference, numbers cheat sheet, B-roll shot list, and post-production timeline.
+      <br><br>
+      Print two copies &mdash; one for Vadym, one for the videographer.
+    </div>
+  </div>
+  <div class="page-num">Page 1</div>
+</div>
+
+<!-- ================================================================== -->
+<!-- PAGE 2 — EMILY'S 8 QUESTIONS CHECKLIST                             -->
+<!-- ================================================================== -->
+<div class="page">
+  <h2>Emily's 8 Required Questions &mdash; Checklist</h2>
+  <p class="text-muted">ABC Casting Associate Emily Watrobsky requires the submission video to answer ALL 8 of these questions. Check each one off after reviewing the filmed takes.</p>
+
+  <div style="border: 2px solid var(--navy); border-radius: 12px; overflow: hidden; margin-top: 24px;">
+
+    <div class="checklist-item" style="background: var(--blue-light);">
+      <div class="check-box"></div>
+      <span class="q-num">Q1</span>
+      <div>
+        <strong>What's your name and where are you from?</strong><br>
+        <span class="text-muted">Answered in: <strong>Section 1 &mdash; Hook &amp; Intro</strong> (0:00&ndash;0:35)</span><br>
+        <span class="text-muted">Exact line: "My name is Vadym. I'm Polish &mdash; with Ukrainian origins."</span>
+      </div>
+    </div>
+
+    <div class="checklist-item">
+      <div class="check-box"></div>
+      <span class="q-num">Q2</span>
+      <div>
+        <strong>"My business is..." &mdash; Clearly describe the product.</strong>
+        <span style="background:#dc2626;color:#fff;padding:1px 6px;border-radius:4px;font-size:0.72rem;font-weight:700;margin-left:4px;">MOST IMPORTANT</span><br>
+        <span class="text-muted">Answered in: <strong>Section 1 &mdash; Hook &amp; Intro</strong> (0:00&ndash;0:35)</span><br>
+        <span class="text-muted">Exact line: "My business is BenchK &mdash; and this behind me is our product. The BenchK Vertical Training Wall."</span>
+      </div>
+    </div>
+
+    <div class="checklist-item" style="background: var(--blue-light);">
+      <div class="check-box"></div>
+      <span class="q-num">Q3</span>
+      <div>
+        <strong>"I'm seeking $_____ in exchange for _____%."</strong><br>
+        <span class="text-muted">Answered in: <strong>Section 7 &mdash; The Ask</strong> (4:55&ndash;5:15)</span><br>
+        <span class="text-muted">Exact line: "I'm seeking $400,000 in exchange for 15% of my company."</span>
+      </div>
+    </div>
+
+    <div class="checklist-item">
+      <div class="check-box"></div>
+      <span class="q-num">Q4</span>
+      <div>
+        <strong>How will the money be used? BE SPECIFIC.</strong><br>
+        <span class="text-muted">Answered in: <strong>Section 7 &mdash; The Ask</strong> (4:55&ndash;5:15)</span><br>
+        <span class="text-muted">Lines: $200K distribution / $100K marketing / $50K BenchK PRO / $50K trade shows</span>
+      </div>
+    </div>
+
+    <div class="checklist-item" style="background: var(--blue-light);">
+      <div class="check-box"></div>
+      <span class="q-num">Q5</span>
+      <div>
+        <strong>Describe product: Hook, patents, development stage, demo, differentiation, A-HA moment.</strong><br>
+        <span class="text-muted">Answered in: <strong>Section 2</strong> (hook, demo, uniqueness, patent answer, differentiation) + <strong>Section 4</strong> (A-HA moment, origin story)</span><br>
+        <span class="text-muted">Hook line: "That's the hook &mdash; studios pay $50/sqft in rent. BenchK uses the wall they already have."</span><br>
+        <span class="text-muted">Patent: "We don't rely on patents. We rely on 10 years of engineering, premium materials, and a FIBO Innovation Award."</span><br>
+        <span class="text-muted">A-HA: "1989. My father bought me a Swedish ladder. I was seven years old."</span>
+      </div>
+    </div>
+
+    <div class="checklist-item">
+      <div class="check-box"></div>
+      <span class="q-num">Q6</span>
+      <div>
+        <strong>SALES: Lifetime / 2025 Gross / 2026 YTD / 2026 Projected / WHY.</strong><br>
+        <span class="text-muted">Answered in: <strong>Section 3 &mdash; Traction &amp; Sales</strong> (1:15&ndash;2:10)</span><br>
+        <span class="text-muted">Lifetime: "Over $6 million in total sales across all markets" <span class="verify-badge">VERIFY</span></span><br>
+        <span class="text-muted">2025 Gross: "$2 million in global revenue in 2025"</span><br>
+        <span class="text-muted">2026 YTD: "2026 US sales to date &mdash; over $240,000" <span class="verify-badge">VERIFY</span></span><br>
+        <span class="text-muted">2026 Projected: "$720,000 annualized run rate"</span><br>
+        <span class="text-muted">WHY: "One out of every three sales comes from word of mouth... the product sells itself."</span>
+      </div>
+    </div>
+
+    <div class="checklist-item" style="background: var(--blue-light);">
+      <div class="check-box"></div>
+      <span class="q-num">Q7</span>
+      <div>
+        <strong>How much have you PERSONALLY invested?</strong><br>
+        <span class="text-muted">Answered in: <strong>Section 5 &mdash; Operator Credibility</strong> (3:15&ndash;4:15)</span><br>
+        <span class="text-muted">Exact line: "I've personally invested over $450,000 of my own money into BenchK."</span>
+      </div>
+    </div>
+
+    <div class="checklist-item">
+      <div class="check-box"></div>
+      <span class="q-num">Q8</span>
+      <div>
+        <strong>What is your personal story? Personal stakes? Overcome adversity?</strong><br>
+        <span class="text-muted">Answered in: <strong>Section 4</strong> (origin story, 99 rejections, A-HA) + <strong>Section 5</strong> (moved family, investor visa, everything on the line)</span><br>
+        <span class="text-muted">Stakes: "I moved my entire family to Florida. We're here on an investor visa. Everything is on the line."</span>
+      </div>
+    </div>
+
+  </div>
+  <div class="page-num">Page 2</div>
+</div>
+
+<!-- ================================================================== -->
+<!-- PAGE 3 — TEAM CONTACTS                                             -->
+<!-- ================================================================== -->
+<div class="page">
+  <h2>Team Contacts</h2>
+
+  <table>
+    <thead>
+      <tr><th>Role</th><th>Name</th><th>Contact</th><th>Notes</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Founder &amp; CEO</strong></td>
+        <td>Vadym Zemlianyi</td>
+        <td>biuro@benchk.com<br>+1 (727) 603-4402</td>
+        <td>On camera. Arrives 08:30.</td>
+      </tr>
+      <tr>
+        <td><strong>US Sales</strong></td>
+        <td>Vlad</td>
+        <td>sales@benchk.com<br>+1 (813) 834-0224</td>
+        <td>On-set support. Numbers backup.</td>
+      </tr>
+      <tr>
+        <td><strong>Warehouse / Customer Service</strong></td>
+        <td>Volodymyr</td>
+        <td>US-based</td>
+        <td>Available by phone if needed.</td>
+      </tr>
+      <tr>
+        <td><strong>Studio Owner / Testimonial</strong></td>
+        <td>Dylan</td>
+        <td>10Ten Fitness Sarasota</td>
+        <td>On camera ~2:10. Send text Sun May 3.</td>
+      </tr>
+      <tr>
+        <td><strong>Videographer</strong></td>
+        <td><em>(Confirmed &mdash; name TBD)</em></td>
+        <td>&mdash;</td>
+        <td>Arrives 08:30 for setup.</td>
+      </tr>
+      <tr>
+        <td><strong>ABC Casting Associate</strong></td>
+        <td>Emily Watrobsky</td>
+        <td>(via Calendly)</td>
+        <td>Source of the 8 required questions.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Sample Shipping Address</h3>
+  <div class="info-card" style="max-width: 400px;">
+    <strong>Mae Bennett &mdash; Shark Tank</strong><br>
+    10202 W. Washington Blvd.<br>
+    Gable #100<br>
+    Culver City, CA 90232<br><br>
+    <span class="text-muted">Ship 3&ndash;4 product samples by May 8.</span>
+  </div>
+
+  <div class="page-num">Page 3</div>
+</div>
+
+<!-- ================================================================== -->
+<!-- PAGE 4 — WARDROBE & APPEARANCE                                     -->
+<!-- ================================================================== -->
+<div class="page">
+  <h2>Wardrobe &amp; Appearance</h2>
+
+  <div class="two-col-grid">
+    <div class="info-card">
+      <h4>Vadym &mdash; What to Wear</h4>
+      <ul>
+        <li>Dark fitted T-shirt OR dark polo (navy, charcoal, or black)</li>
+        <li>Dark jeans or chinos &mdash; clean, fitted, no holes</li>
+        <li>Clean minimal sneakers (Nike, Adidas, or plain white/dark)</li>
+        <li>No jewelry except a simple wedding band (if worn daily)</li>
+        <li>Belt &mdash; simple, dark, no large buckle</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>What to Avoid</h4>
+      <div class="do-not-say-box" style="margin:0;">
+        <ul style="margin-left: 16px;">
+          <li>White shirt &mdash; washes out on camera</li>
+          <li>Busy patterns or stripes &mdash; distracting on TV</li>
+          <li>Visible BenchK logo on clothing &mdash; looks like an ad</li>
+          <li>Watch or bracelet &mdash; catches light, reflects into camera</li>
+          <li>Large logos of any brand</li>
+          <li>Shorts &mdash; must be standing, full-length pants</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <h3>Grooming &amp; Posture</h3>
+  <div class="two-col-grid">
+    <div class="info-card">
+      <h4>Grooming Checklist</h4>
+      <ul>
+        <li>Fresh haircut (get it by Saturday May 2, not day-of)</li>
+        <li>Beard trimmed and shaped &mdash; clean neckline</li>
+        <li>Moisturize face morning-of &mdash; avoid shine (matte moisturizer or translucent powder)</li>
+        <li>Clean fingernails &mdash; hands will be on camera during demo</li>
+        <li>No sunglasses on head or tucked into shirt</li>
+        <li>Phone OFF and out of pockets (no visible bulge)</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>On-Camera Posture</h4>
+      <ul>
+        <li>Stand tall &mdash; shoulders back, chin level (not up, not down)</li>
+        <li>Feet shoulder-width apart &mdash; grounded, stable</li>
+        <li>Hands at sides when not gesturing &mdash; never in pockets</li>
+        <li>Lean slightly forward on power lines &mdash; shows conviction</li>
+        <li>No rocking, swaying, or shifting weight foot-to-foot</li>
+        <li>No coffee cup, water bottle, or props on set except BenchK wall</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Night Before (Sunday May 3)</h3>
+  <ul>
+    <li>No alcohol</li>
+    <li>Light dinner &mdash; no heavy/greasy food</li>
+    <li>Sleep 8 hours &mdash; alarm at 6:30 AM</li>
+    <li>Lay out full outfit, belt, shoes</li>
+    <li>Charge phone to 100%</li>
+  </ul>
+
+  <h3>Morning Of (Monday May 4)</h3>
+  <ul>
+    <li>No coffee (can cause jitters and dry mouth on camera)</li>
+    <li>Light breakfast only</li>
+    <li>Hydrate well &mdash; stop drinking water 2 hours before filming to avoid bathroom breaks</li>
+    <li>15-minute voice warm-up (see Energy &amp; Performance Guide)</li>
+    <li>No phone calls before filming &mdash; preserve vocal energy</li>
+  </ul>
+
+  <div class="page-num">Page 4</div>
+</div>
+
+<!-- ================================================================== -->
+<!-- PAGE 5 — CAMERA & TECH                                             -->
+<!-- ================================================================== -->
+<div class="page">
+  <h2>Camera &amp; Technical Requirements</h2>
+
+  <h3>ABC Specifications (Mandatory)</h3>
+  <table>
+    <thead><tr><th>Parameter</th><th>Requirement</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>Video Length</td><td><strong>5&ndash;10 minutes</strong> (our target: 5:35)</td><td>Within range</td></tr>
+      <tr><td>Orientation</td><td><strong>HORIZONTAL / Landscape only</strong></td><td>Confirmed</td></tr>
+      <tr><td>Camera Mount</td><td><strong>TRIPOD &mdash; NOT handheld</strong></td><td>Confirmed</td></tr>
+      <tr><td>Lighting</td><td><strong>Well-lit &mdash; no silhouetting</strong></td><td>3-point LED kit</td></tr>
+      <tr><td>Audio</td><td><strong>Lavalier mic &mdash; clear voice</strong></td><td>2x lav mics planned</td></tr>
+      <tr><td>Music</td><td><strong>NO music &mdash; pure voice</strong></td><td>Confirmed</td></tr>
+      <tr><td>Wind/Noise</td><td><strong>No wind, minimal background noise</strong></td><td>Indoor studio</td></tr>
+      <tr><td>Performance</td><td><strong>STAND entire video. Energetic. Infomercial energy.</strong></td><td>Standing confirmed</td></tr>
+      <tr><td>Product Demo</td><td><strong>VISUALLY DEMONSTRATE the product</strong></td><td>Section 2 &mdash; full demo</td></tr>
+      <tr><td>Resolution</td><td>1080p minimum, <strong>4K preferred</strong></td><td>4K confirmed</td></tr>
+      <tr><td>Upload Format</td><td><strong>Vimeo UNLISTED + password</strong></td><td>Post-production</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Equipment Checklist (Videographer Brings)</h3>
+  <div class="two-col-grid">
+    <div class="info-card">
+      <h4>Camera &amp; Mounting</h4>
+      <ul>
+        <li>4K main camera (Sony FX3 / FX6 / Canon C70 / similar)</li>
+        <li>Sturdy tripod (NO handheld shots for main takes)</li>
+        <li>Optional: 2nd camera for cutaway angle</li>
+        <li>Optional: Gimbal for B-roll movement shots</li>
+        <li>256GB+ SD cards (formatted fresh morning-of)</li>
+        <li>Backup batteries (2+ sets)</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>Audio &amp; Lighting</h4>
+      <ul>
+        <li><strong>TWO lavalier microphones</strong> (Vadym + Dylan &mdash; separate audio channels)</li>
+        <li>If only ONE lav available &mdash; GIVE IT TO DYLAN during his moment</li>
+        <li>3-point LED lighting kit (key, fill, back/hair light)</li>
+        <li>No harsh shadows on face &mdash; soft key light</li>
+        <li>BenchK wall should be evenly lit &mdash; product must look premium</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Camera Positions</h3>
+  <table>
+    <thead><tr><th>Shot</th><th>When</th><th>Framing</th></tr></thead>
+    <tbody>
+      <tr><td>Main &mdash; Medium</td><td>All sections</td><td>Vadym waist-up, BenchK wall visible behind</td></tr>
+      <tr><td>Two-shot</td><td>Dylan moment (Section 3b)</td><td>Both Vadym + Dylan, BenchK behind. Vadym camera-left, Dylan camera-right.</td></tr>
+      <tr><td>Demo &mdash; Wide</td><td>Section 2</td><td>Full wall visible, Vadym demonstrating exercises</td></tr>
+      <tr><td>B-roll &mdash; Detail</td><td>B-roll session</td><td>Close-ups of wood grain, steel, attachments, logo</td></tr>
+    </tbody>
+  </table>
+
+  <div class="page-num">Page 5</div>
+</div>
+
+<!-- ================================================================== -->
+<!-- PAGES 6-12 — THE FULL BILINGUAL SCRIPT                             -->
+<!-- ================================================================== -->
+<div class="page">
+  <h2>The Script &mdash; Bilingual (English / Ukrainian)</h2>
+  <p class="text-muted">Each section: English on the left, natural Ukrainian on the right. Director notes in amber boxes. Blue badges show which of Emily's 8 questions the section answers.</p>
+
+  <!-- ==================== SECTION 1 ==================== -->
+  <div class="script-section">
+    <div class="script-header">
+      <h3>SECTION 1 &mdash; Hook &amp; Intro</h3>
+      <span class="timing">0:00 &ndash; 0:35</span>
+      <span class="energy-badge energy-high">Energy 7/10</span>
+    </div>
+    <div class="script-badges">
+      <span class="question-badge">Answers Q1</span>
+      <span class="question-badge">Answers Q2</span>
+      <span class="text-muted" style="font-size:0.8rem;">Name &amp; origin + "My business is..."</span>
+    </div>
+    <div class="bilingual-grid">
+      <div class="col-en">
+        <div class="col-label">English &mdash; Say on Camera</div>
+        <div class="script-line">"My name is Vadym. I'm Polish &mdash; with Ukrainian origins."</div>
+        <div class="script-line"><span class="highlight-line">"My business is BenchK &mdash; and this behind me is our product."</span></div>
+        <div class="script-line">"The BenchK Vertical Training Wall."</div>
+        <div class="script-line">"We reinvented the 100-year-old Swedish ladder."</div>
+        <div class="script-line">"Modular. Premium. Commercial-grade."</div>
+        <div class="script-line">"One wall. Five training methods. Zero floor space."</div>
+      </div>
+      <div class="col-ua">
+        <div class="col-label">Українською &mdash; Для внутрішнього відчуття</div>
+        <div class="script-line">"Мене звати Вадим. Я поляк &mdash; з українським корінням."</div>
+        <div class="script-line">"Мій бізнес &mdash; BenchK &mdash; і ось це за мною &mdash; наш продукт."</div>
+        <div class="script-line">"Вертикальна тренувальна стіна BenchK."</div>
+        <div class="script-line">"Ми переосмислили столітню шведську стінку."</div>
+        <div class="script-line">"Модульна. Преміальна. Комерційного класу."</div>
+        <div class="script-line">"Одна стіна. П'ять методів тренувань. Нуль зайнятого місця на підлозі."</div>
+      </div>
+    </div>
+    <div class="director-box">
+      <div class="box-label">Director Notes</div>
+      <strong>Position:</strong> Stand in front of BenchK wall. Eye contact with camera from the very first word.<br>
+      <strong>Body:</strong> Confident, warm smile. Gesture to wall on "this behind me" with an open hand. Hold up one finger on "One wall," open hand on "Five," flat sweep on "Zero."<br>
+      <strong>Pace:</strong> 120 WPM. Start slow &mdash; first 5 seconds set the tone. Pause 1 full second after your name.<br>
+      <strong>Critical:</strong> <span class="highlight-line">"My business is BenchK" is REQUIRED by ABC.</span> Do not skip or rephrase.<br>
+      <strong>Memorize:</strong> WORD-FOR-WORD. No improvisation in this section.
+    </div>
+  </div>
+  <div class="page-num">Page 6</div>
+</div>
+
+<div class="page">
+  <!-- ==================== SECTION 2 ==================== -->
+  <div class="script-section">
+    <div class="script-header">
+      <h3>SECTION 2 &mdash; Product Demo &amp; Hook</h3>
+      <span class="timing">0:35 &ndash; 1:15</span>
+      <span class="energy-badge energy-confident">Energy 8/10</span>
+    </div>
+    <div class="script-badges">
+      <span class="question-badge">Answers Q5</span>
+      <span class="text-muted" style="font-size:0.8rem;">Product description, hook, uniqueness, patents, demonstration, differentiation</span>
+    </div>
+    <div class="bilingual-grid">
+      <div class="col-en">
+        <div class="col-label">English &mdash; Say on Camera</div>
+        <div class="script-line">"Used by Pilates studios, physical therapy clinics, gyms, hotels, offices, schools, and families."</div>
+        <div class="script-line">"One product. Seven markets."</div>
+        <div class="script-line-stage">[DEMONSTRATE &mdash; show exercises on the wall: stretch, pull-up, resistance band, Pilates, rehab]</div>
+        <div class="script-line">"Every exercise you see &mdash; one wall. No floor space needed."</div>
+        <div class="script-line"><strong>"That's the hook &mdash; studios pay $50 per square foot in rent. BenchK uses the wall they already have."</strong></div>
+        <div class="script-line">"This is not just a ladder. This is a vertical training station."</div>
+        <div class="script-line">"We don't rely on patents. We rely on 10 years of engineering, premium materials &mdash; FSC-certified beech wood, powder-coated steel &mdash; and a FIBO Innovation Award from 2022."</div>
+      </div>
+      <div class="col-ua">
+        <div class="col-label">Українською</div>
+        <div class="script-line">"Нас використовують студії Пілатесу, клініки фізіотерапії, спортзали, готелі, офіси, школи та сім'ї."</div>
+        <div class="script-line">"Один продукт. Сім ринків."</div>
+        <div class="script-line-stage">[ДЕМОНСТРАЦІЯ &mdash; показати вправи: розтяжка, підтягування, гумки, Пілатес, реабілітація]</div>
+        <div class="script-line">"Всі вправи, які ви бачите &mdash; одна стіна. Жодного місця на підлозі."</div>
+        <div class="script-line"><strong>"Ось у чому фішка &mdash; студії платять $50 за квадратний фут оренди. BenchK використовує стіну, яка в них вже є."</strong></div>
+        <div class="script-line">"Це не просто драбина. Це вертикальна тренувальна станція."</div>
+        <div class="script-line">"Ми не покладаємося на патенти. Ми покладаємося на 10 років інженерії, преміальні матеріали &mdash; сертифіковане FSC букове дерево, порошкове покриття сталі &mdash; і нагороду FIBO Innovation Award 2022 року."</div>
+      </div>
+    </div>
+    <div class="director-box">
+      <div class="box-label">Director Notes</div>
+      <strong>Movement:</strong> MOVE to the wall. Touch it. Show each exercise physically. Be dynamic. Camera follows.<br>
+      <strong>Demo:</strong> Stretch (reach up), pull-up bar (grip it), resistance band (loop it), Pilates bar, rehab position. 5&ndash;7 seconds each.<br>
+      <strong>Hook Delivery:</strong> "That's the hook" &mdash; ABC specifically asked for the HOOK. Deliver with energy. Slight smile. Point at wall.<br>
+      <strong>Patent Answer:</strong> This addresses Emily's patent question honestly. Do NOT say "patented technology." The FIBO Award and 10 years of engineering are the real differentiators.<br>
+      <strong>Camera:</strong> Wide enough to show full wall + demo. Tighten on close-up when Vadym says "That's the hook."<br>
+      <strong>Pace:</strong> 130 WPM. Let the demo breathe. Your body is doing half the work.
+    </div>
+  </div>
+  <div class="page-num">Page 7</div>
+</div>
+
+<div class="page">
+  <!-- ==================== SECTION 3 ==================== -->
+  <div class="script-section">
+    <div class="script-header">
+      <h3>SECTION 3 &mdash; Traction &amp; Sales</h3>
+      <span class="timing">1:15 &ndash; 2:10</span>
+      <span class="energy-badge energy-precise">Energy 8/10</span>
+    </div>
+    <div class="script-badges">
+      <span class="question-badge">Answers Q6</span>
+      <span class="text-muted" style="font-size:0.8rem;">ALL sales: lifetime, 2025 gross, 2026 YTD, projected year-end, WHY</span>
+    </div>
+    <div class="bilingual-grid">
+      <div class="col-en">
+        <div class="col-label">English &mdash; Say on Camera</div>
+        <div class="script-line">"Let me give you the numbers."</div>
+        <div class="script-line">"$2 million in global revenue in 2025."</div>
+        <div class="script-line">"Poland &mdash; $1 million. Germany, Switzerland, Czech Republic, Slovakia &mdash; $700,000. USA &mdash; year one &mdash; $300,000."</div>
+        <div class="script-line">"Lifetime, since I started BenchK &mdash; over $6 million in total sales across all markets." <span class="verify-badge">VERIFY FROM ERP</span></div>
+        <div class="script-line">"Now let's talk 2026."</div>
+        <div class="script-line">"December &mdash; $60,000. January &mdash; $60,000. February &mdash; $60,000. Three consecutive months."</div>
+        <div class="script-line">"2026 US sales to date &mdash; over $240,000." <span class="verify-badge">VERIFY FROM ERP</span></div>
+        <div class="script-line">"That puts us at a $720,000 annualized run rate."</div>
+        <div class="script-line">"Our projected US year-end for 2026 &mdash; $720,000, based on the current run rate."</div>
+        <div class="script-line">"And listen to this &mdash; one out of every three sales comes from word of mouth. 33%, verified by customer surveys."</div>
+        <div class="script-line">"That's why our sales are growing &mdash; the product sells itself once people try it."</div>
+      </div>
+      <div class="col-ua">
+        <div class="col-label">Українською</div>
+        <div class="script-line">"Давайте я покажу вам цифри."</div>
+        <div class="script-line">"$2 мільйони глобального доходу у 2025 році."</div>
+        <div class="script-line">"Польща &mdash; $1 мільйон. Німеччина, Швейцарія, Чехія, Словаччина &mdash; $700 тисяч. США &mdash; перший рік &mdash; $300 тисяч."</div>
+        <div class="script-line">"За весь час існування BenchK &mdash; понад $6 мільйонів загального обороту по всіх ринках."</div>
+        <div class="script-line">"Тепер поговоримо про 2026-й."</div>
+        <div class="script-line">"Грудень &mdash; $60 тисяч. Січень &mdash; $60 тисяч. Лютий &mdash; $60 тисяч. Три місяці поспіль."</div>
+        <div class="script-line">"Продажі в США за 2026 рік на сьогодні &mdash; понад $240 тисяч."</div>
+        <div class="script-line">"Це дає нам річний темп у $720 тисяч."</div>
+        <div class="script-line">"Наш прогноз по США на кінець 2026 року &mdash; $720 тисяч, виходячи з поточного темпу."</div>
+        <div class="script-line">"І послухайте &mdash; кожен третій продаж приходить через рекомендації. 33%, підтверджено опитуваннями клієнтів."</div>
+        <div class="script-line">"Ось чому наші продажі ростуть &mdash; продукт продає себе сам, щойно люди його спробують."</div>
+      </div>
+    </div>
+    <div class="director-box">
+      <div class="box-label">Director Notes</div>
+      <strong>Position:</strong> Stand still, face camera. Stability = credibility during numbers.<br>
+      <strong>Pace:</strong> 120 WPM on numbers (SLOW). Speed up to 140 WPM on the word-of-mouth line for excitement.<br>
+      <strong>Delivery:</strong> Each number gets its own beat. Pause after "$2 million" &mdash; let it land. Hold up 3 fingers for "three consecutive months."<br>
+      <strong>WHY line:</strong> "That's why our sales are growing" directly answers Emily's question about WHY sales are what they are.<br>
+      <strong>VERIFY:</strong> Vadym MUST check ERP for (1) lifetime total and (2) exact 2026 YTD before filming. If $6M is not verifiable, say "millions in cumulative revenue over 10 years." If exact 2026 YTD differs from $240K, use the real number.
+    </div>
+  </div>
+  <div class="page-num">Page 8</div>
+</div>
+
+<div class="page">
+  <!-- ==================== SECTION 3b — DYLAN ==================== -->
+  <div class="script-section">
+    <div class="script-header">
+      <h3>SECTION 3b &mdash; Dylan Testimonial</h3>
+      <span class="timing">2:10 &ndash; 2:25</span>
+      <span class="energy-badge energy-emotional">Energy 6/10</span>
+    </div>
+    <div class="script-badges">
+      <span class="text-muted" style="font-size:0.8rem;">Social proof &mdash; real American customer</span>
+    </div>
+    <div class="bilingual-grid">
+      <div class="col-en">
+        <div class="col-label">English &mdash; Say on Camera</div>
+        <div class="script-line">"Sharks &mdash; meet Dylan. He owns this studio."</div>
+        <div class="script-line-stage">[Turn to Dylan. Look at HIM, not camera.]</div>
+        <div class="script-line">"Dylan... why did you put BenchK in your studio?"</div>
+        <div class="script-line-stage">[DYLAN ANSWERS &mdash; DO NOT INTERRUPT, even if he pauses]</div>
+        <div class="script-line">"Dylan &mdash; how often do you use this wall?"</div>
+        <div class="script-line-stage">[DYLAN ANSWERS]</div>
+        <div class="script-line">"Thanks, brother."</div>
+        <div class="script-line-stage">[Tap shoulder. Dylan exits frame.]</div>
+      </div>
+      <div class="col-ua">
+        <div class="col-label">Українською</div>
+        <div class="script-line">"Акули &mdash; познайомтесь із Діланом. Він власник цієї студії."</div>
+        <div class="script-line-stage">[Повернутися до Ділана. Дивитися на НЬОГО, не в камеру.]</div>
+        <div class="script-line">"Ділане... чому ти поставив BenchK у своїй студії?"</div>
+        <div class="script-line-stage">[ДІЛАН ВІДПОВІДАЄ &mdash; НЕ ПЕРЕБИВАЙ, навіть якщо він задумається]</div>
+        <div class="script-line">"Ділане &mdash; як часто ти користуєшся цією стіною?"</div>
+        <div class="script-line-stage">[ДІЛАН ВІДПОВІДАЄ]</div>
+        <div class="script-line">"Дякую, братику."</div>
+        <div class="script-line-stage">[Поплескати по плечу. Ділан виходить з кадру.]</div>
+      </div>
+    </div>
+    <div class="director-box">
+      <div class="box-label">Director Notes</div>
+      <strong>Camera:</strong> Medium two-shot. BenchK visible behind both. Vadym camera-left, Dylan camera-right.<br>
+      <strong>Audio CRITICAL:</strong> If only ONE lav mic available &mdash; give it to DYLAN. His voice only exists in this 15 seconds.<br>
+      <strong>Body:</strong> Turn naturally to Dylan. Look at him with genuine attention while he speaks. Do NOT say "great answer." Do NOT finish his sentences.<br>
+      <strong>Takes:</strong> Shoot 3 takes. Take 1: standard. Take 2: faster, Q1 + Q3 only. Take 3: most casual, best question from takes 1-2.<br>
+      <strong>Backup:</strong> If Dylan freezes: "Behind me &mdash; 10Ten Fitness Sarasota. Owned by Dylan. Real American customer."
+    </div>
+  </div>
+
+  <!-- ==================== SECTION 4 ==================== -->
+  <div class="script-section">
+    <div class="script-header">
+      <h3>SECTION 4 &mdash; Origin Story &amp; A-HA Moment</h3>
+      <span class="timing">2:25 &ndash; 3:15</span>
+      <span class="energy-badge energy-emotional">Energy 5 &rarr; 8/10</span>
+    </div>
+    <div class="script-badges">
+      <span class="question-badge">Answers Q5</span>
+      <span class="question-badge">Answers Q8</span>
+      <span class="text-muted" style="font-size:0.8rem;">A-HA moment + personal story + adversity</span>
+    </div>
+    <div class="bilingual-grid">
+      <div class="col-en">
+        <div class="col-label">English &mdash; Say on Camera</div>
+        <div class="script-line">"How did I come up with this? Let me take you back."</div>
+        <div class="script-line">"1989. My father bought me a Swedish ladder. I was seven years old."</div>
+        <div class="script-line">"That wall became everything &mdash; my gym, my playground, my escape."</div>
+        <div class="script-line">"Fast forward to 2015. My family moved to Poland."</div>
+        <div class="script-line">"Foreign country. Foreign language. Foreign mentality."</div>
+        <div class="script-line">"I started BenchK with nothing."</div>
+        <div class="script-line">"99 out of 100 companies said no."</div>
+        <div class="script-line-stage">[PAUSE &mdash; 2 full seconds of silence]</div>
+        <div class="script-line"><strong>"Sometimes the best thing that happens to you... is everybody saying you can't."</strong></div>
+      </div>
+      <div class="col-ua">
+        <div class="col-label">Українською</div>
+        <div class="script-line">"Як я до цього дійшов? Дозвольте повернути вас назад."</div>
+        <div class="script-line">"1989-й. Батько купив мені шведську стінку. Мені було сім років."</div>
+        <div class="script-line">"Та стіна стала для мене всім &mdash; спортзалом, майданчиком, моїм світом."</div>
+        <div class="script-line">"Перемотаємо на 2015-й. Моя сім'я переїхала до Польщі."</div>
+        <div class="script-line">"Чужа країна. Чужа мова. Чужий менталітет."</div>
+        <div class="script-line">"Я почав BenchK з нуля."</div>
+        <div class="script-line">"99 зі 100 компаній сказали &laquo;ні&raquo;."</div>
+        <div class="script-line-stage">[ПАУЗА &mdash; 2 повні секунди тиші]</div>
+        <div class="script-line"><strong>"Іноді найкраще, що з тобою трапляється... це коли всі кажуть, що ти не зможеш."</strong></div>
+      </div>
+    </div>
+    <div class="director-box">
+      <div class="box-label">Director Notes</div>
+      <strong>Emotional arc:</strong> Start SOFT, intimate &mdash; energy 5/10. Build through the rejection. The punch line is the peak &mdash; energy 8/10.<br>
+      <strong>Pause:</strong> The 2-second pause before the punch line is CRITICAL. Absolute silence. Look into camera. Then deliver slow.<br>
+      <strong>Voice:</strong> 110 WPM. Slowest section. Drop voice slightly on "you can't." This is not shouting &mdash; this is a man who has been through it.<br>
+      <strong>A-HA moment:</strong> This is what ABC asked for &mdash; "How did you come up with the idea? Celebrate yourself!" The Swedish ladder at age 7 IS the A-HA.<br>
+      <strong>Body:</strong> Stand grounded. Small head shake on "99 said no" &mdash; almost a smile. Look directly into camera for the punch line. Do not move.
+    </div>
+  </div>
+  <div class="page-num">Page 9</div>
+</div>
+
+<div class="page">
+  <!-- ==================== SECTION 5 ==================== -->
+  <div class="script-section">
+    <div class="script-header">
+      <h3>SECTION 5 &mdash; Operator Credibility &amp; Personal Investment</h3>
+      <span class="timing">3:15 &ndash; 4:15</span>
+      <span class="energy-badge energy-confident">Energy 8/10</span>
+    </div>
+    <div class="script-badges">
+      <span class="question-badge">Answers Q7</span>
+      <span class="question-badge">Answers Q8</span>
+      <span class="text-muted" style="font-size:0.8rem;">Personal investment + personal stakes + adversity</span>
+    </div>
+    <div class="bilingual-grid">
+      <div class="col-en">
+        <div class="col-label">English &mdash; Say on Camera</div>
+        <div class="script-line">"Before BenchK &mdash; 9 years selling JCB construction machines."</div>
+        <div class="script-line">"250+ machines. $90,000 to $300,000 each. Tens of millions in B2B sales."</div>
+        <div class="script-line"><strong>"I don't run a startup. I run a factory."</strong></div>
+        <div class="script-line">"25 suppliers. Polish manufacturing. Toyota Way principles."</div>
+        <div class="script-line"><span class="highlight-line"><strong>"I've personally invested over $450,000 of my own money into BenchK."</strong></span></div>
+        <div class="script-line"><strong>"I moved my entire family &mdash; my wife, my daughter, my son &mdash; to Florida."</strong></div>
+        <div class="script-line"><strong>"We're here on an investor visa. Everything is on the line."</strong></div>
+        <div class="script-line">"If I cracked Poland from zero &mdash; what makes you think I won't crack America?"</div>
+      </div>
+      <div class="col-ua">
+        <div class="col-label">Українською</div>
+        <div class="script-line">"До BenchK &mdash; 9 років продажу будівельної техніки JCB."</div>
+        <div class="script-line">"250+ машин. Від $90 до $300 тисяч кожна. Десятки мільйонів у B2B."</div>
+        <div class="script-line"><strong>"Я не керую стартапом. Я керую заводом."</strong></div>
+        <div class="script-line">"25 постачальників. Виробництво в Польщі. Принципи Toyota Way."</div>
+        <div class="script-line"><strong>"Я особисто вклав понад $450 тисяч власних грошей у BenchK."</strong></div>
+        <div class="script-line"><strong>"Я перевіз усю свою сім'ю &mdash; дружину, доньку, сина &mdash; до Флориди."</strong></div>
+        <div class="script-line"><strong>"Ми тут за інвесторською візою. Все поставлено на карту."</strong></div>
+        <div class="script-line">"Якщо я підкорив Польщу з нуля &mdash; що змусить вас думати, що я не підкорю Америку?"</div>
+      </div>
+    </div>
+    <div class="director-box">
+      <div class="box-label">Director Notes</div>
+      <strong>Q7 Answer:</strong> "$450,000 of my own money" &mdash; deliver with WEIGHT. Touch your chest briefly. This directly answers Emily's Q7.<br>
+      <strong>Q8 Stakes:</strong> "Everything is on the line" &mdash; moved family, investor visa, personal savings. This answers Emily's Q8 about personal stakes.<br>
+      <strong>Punch line:</strong> "I don't run a startup. I run a factory." &mdash; Pause BEFORE and AFTER. Plant your feet. Do not move.<br>
+      <strong>Closer:</strong> "What makes you think I won't crack America?" &mdash; Deliver with confidence and a slight smile. This is a challenge, not a question.<br>
+      <strong>Lean forward:</strong> Slightly toward camera on "I run a factory." Factory = solid.
+    </div>
+  </div>
+  <div class="page-num">Page 10</div>
+</div>
+
+<div class="page">
+  <!-- ==================== SECTION 6 ==================== -->
+  <div class="script-section">
+    <div class="script-header">
+      <h3>SECTION 6 &mdash; Replication Logic</h3>
+      <span class="timing">4:15 &ndash; 4:55</span>
+      <span class="energy-badge energy-high">Energy 9/10</span>
+      <span class="energy-badge energy-precise">Precision</span>
+    </div>
+    <div class="script-badges">
+      <span class="text-muted" style="font-size:0.8rem;">The math &mdash; why the US opportunity is massive</span>
+    </div>
+    <div class="bilingual-grid">
+      <div class="col-en">
+        <div class="col-label">English &mdash; Say on Camera</div>
+        <div class="script-line">"Poland: $1 million revenue. 38 million people."</div>
+        <div class="script-line">"USA: 340 million people &mdash; 8 times bigger."</div>
+        <div class="script-line">"Same product. Same playbook. Same operator."</div>
+        <div class="script-line">"The barrier is not awareness &mdash; it's TRIAL."</div>
+        <div class="script-line">"Once they see it, touch it, train on it &mdash; they buy."</div>
+        <div class="script-line">"Your investment goes to trial generation, not market education."</div>
+      </div>
+      <div class="col-ua">
+        <div class="col-label">Українською</div>
+        <div class="script-line">"Польща: $1 мільйон доходу. 38 мільйонів людей."</div>
+        <div class="script-line">"США: 340 мільйонів людей &mdash; у 8 разів більше."</div>
+        <div class="script-line">"Той самий продукт. Той самий план. Той самий оператор."</div>
+        <div class="script-line">"Бар'єр &mdash; не впізнаваність, а СПРОБА."</div>
+        <div class="script-line">"Щойно вони побачать, доторкнуться, потренуються &mdash; вони купують."</div>
+        <div class="script-line">"Ваші інвестиції йдуть на генерацію спроб, а не на навчання ринку."</div>
+      </div>
+    </div>
+    <div class="director-box">
+      <div class="box-label">Director Notes</div>
+      <strong>Momentum:</strong> Building toward the Ask. Pace picks up to 140 WPM. Fastest section.<br>
+      <strong>Hands:</strong> Small gesture for Poland (38M), BIG gesture for USA (340M). The visual contrast makes the math visceral.<br>
+      <strong>Keyword:</strong> "TRIAL" &mdash; punch it hard. It's the intellectual core of the pitch.<br>
+      <strong>"They buy":</strong> Speed through "see it, touch it, train on it" then STOP on "they buy." Hard period. Nod once. Definitive.<br>
+      <strong>Thumb:</strong> On "Same operator" &mdash; point to yourself with thumb.
+    </div>
+  </div>
+
+  <!-- ==================== SECTION 7 ==================== -->
+  <div class="script-section">
+    <div class="script-header">
+      <h3>SECTION 7 &mdash; The Ask</h3>
+      <span class="timing">4:55 &ndash; 5:15</span>
+      <span class="energy-badge energy-high">Energy 9/10</span>
+    </div>
+    <div class="script-badges">
+      <span class="question-badge">Answers Q3</span>
+      <span class="question-badge">Answers Q4</span>
+      <span class="text-muted" style="font-size:0.8rem;">Investment amount + equity + specific use of funds</span>
+    </div>
+    <div class="bilingual-grid">
+      <div class="col-en">
+        <div class="col-label">English &mdash; Say on Camera</div>
+        <div class="script-line"><span class="highlight-line"><strong>"I'm seeking $400,000 in exchange for 15% of my company."</strong></span></div>
+        <div class="script-line">"Here's exactly how I'll use it:"</div>
+        <div class="script-line">"$200,000 &mdash; build a US distribution chain. Boutique studios, PT clinics, yoga, Pilates."</div>
+        <div class="script-line">"$100,000 &mdash; marketing to fitness and medical professionals."</div>
+        <div class="script-line">"$50,000 &mdash; BenchK PRO, our affiliate program for physical therapists and chiropractors."</div>
+        <div class="script-line">"$50,000 &mdash; trade shows. IHRSA, SIBEC, and regional fitness events."</div>
+        <div class="script-line">"10 years bootstrapped. Zero outside investors."</div>
+        <div class="script-line"><strong>"I don't need your money &mdash; I need YOU."</strong></div>
+        <div class="script-line">"American mindset. American network. American doors I can't open from a warehouse in Florida."</div>
+      </div>
+      <div class="col-ua">
+        <div class="col-label">Українською</div>
+        <div class="script-line"><strong>"Я шукаю $400 тисяч в обмін на 15% моєї компанії."</strong></div>
+        <div class="script-line">"Ось як саме я їх використаю:"</div>
+        <div class="script-line">"$200 тисяч &mdash; побудувати дистриб'юторську мережу в США. Бутикові студії, клініки фізіотерапії, йога, Пілатес."</div>
+        <div class="script-line">"$100 тисяч &mdash; маркетинг для фітнес- та медичних спеціалістів."</div>
+        <div class="script-line">"$50 тисяч &mdash; BenchK PRO, наша партнерська програма для фізіотерапевтів та хіропрактиків."</div>
+        <div class="script-line">"$50 тисяч &mdash; виставки. IHRSA, SIBEC та регіональні фітнес-івенти."</div>
+        <div class="script-line">"10 років на власних ресурсах. Жодного зовнішнього інвестора."</div>
+        <div class="script-line"><strong>"Мені не потрібні ваші гроші &mdash; мені потрібні ВИ."</strong></div>
+        <div class="script-line">"Американський менталітет. Американські зв'язки. Американські двері, які я не можу відчинити зі складу у Флориді."</div>
+      </div>
+    </div>
+    <div class="director-box">
+      <div class="box-label">Director Notes</div>
+      <strong>Required phrasing:</strong> <span class="highlight-line">"I'm seeking $400,000 in exchange for 15%"</span> &mdash; Emily's EXACT required format. No variations.<br>
+      <strong>Use of funds:</strong> Tick off each line with clarity. $200K + $100K + $50K + $50K = $400K. Specific = credible.<br>
+      <strong>"I need YOU":</strong> Point subtly toward camera on "YOU." Direct eye contact. This is the smart money insight.<br>
+      <strong>Triple:</strong> "American mindset. American network. American doors." &mdash; Each one slightly louder than the last.<br>
+      <strong>Pace:</strong> 130 WPM. Controlled power. No hesitation on numbers. No begging.
+    </div>
+  </div>
+  <div class="page-num">Page 11</div>
+</div>
+
+<div class="page">
+  <!-- ==================== SECTION 8 ==================== -->
+  <div class="script-section">
+    <div class="script-header">
+      <h3>SECTION 8 &mdash; Closer</h3>
+      <span class="timing">5:15 &ndash; 5:35</span>
+      <span class="energy-badge energy-high">Energy 10/10</span>
+    </div>
+    <div class="script-badges">
+      <span class="text-muted" style="font-size:0.8rem;">Final impression &mdash; memorize WORD-FOR-WORD</span>
+    </div>
+    <div class="bilingual-grid">
+      <div class="col-en">
+        <div class="col-label">English &mdash; Say on Camera</div>
+        <div class="script-line">"BenchK is not a startup."</div>
+        <div class="script-line">"10 years old. Profitable. Award-winning."</div>
+        <div class="script-line"><strong>"I'm not asking you to take a chance."</strong></div>
+        <div class="script-line"><strong>"I'm asking you to join something that is already moving."</strong></div>
+        <div class="script-line-stage">[PAUSE &mdash; 1 second]</div>
+        <div class="script-line">"Lift Yourself."</div>
+        <div class="script-line"><strong>"Sharks &mdash; let's lift America together."</strong></div>
+        <div class="script-line-stage">[HOLD eye contact 3 FULL seconds. Do NOT break character. Do NOT look away.]</div>
+      </div>
+      <div class="col-ua">
+        <div class="col-label">Українською</div>
+        <div class="script-line">"BenchK &mdash; це не стартап."</div>
+        <div class="script-line">"10 років. Прибутковий. Відзначений нагородами."</div>
+        <div class="script-line"><strong>"Я не прошу вас ризикувати."</strong></div>
+        <div class="script-line"><strong>"Я прошу вас приєднатися до того, що вже рухається."</strong></div>
+        <div class="script-line-stage">[ПАУЗА &mdash; 1 секунда]</div>
+        <div class="script-line">"Lift Yourself."</div>
+        <div class="script-line"><strong>"Акули &mdash; давайте піднімемо Америку разом."</strong></div>
+        <div class="script-line-stage">[ТРИМАТИ зоровий контакт 3 ПОВНІ секунди. НЕ виходити з образу. НЕ відводити погляд.]</div>
+      </div>
+    </div>
+    <div class="director-box">
+      <div class="box-label">Director Notes</div>
+      <strong>Peak energy:</strong> Full conviction. 110 WPM &mdash; slowest finish. Every. Word. Counts.<br>
+      <strong>Climax:</strong> "Already moving" = energy 10/10. Then drop to 8/10 for the tagline &mdash; warm, not aggressive.<br>
+      <strong>Body:</strong> Small step toward camera on final line. Stand completely still. No fidgeting.<br>
+      <strong>After "together":</strong> Hold position. Confident, steady eye contact for 3 FULL seconds. Do NOT smile &mdash; just calm conviction. Do NOT move until director says cut.<br>
+      <strong>Memorize:</strong> WORD-FOR-WORD. Do NOT add words after "together" &mdash; that is the last word.
+    </div>
+  </div>
+  <div class="page-num">Page 12</div>
+</div>
+
+<!-- ================================================================== -->
+<!-- PAGE 13 — EMILY'S QUESTIONS CROSS-CHECK TABLE                      -->
+<!-- ================================================================== -->
+<div class="page">
+  <h2>Emily's Questions &mdash; Cross-Check Table</h2>
+  <p class="text-muted">Use this table BEFORE wrapping to verify every question has a confirmed take. Do not leave set until every row has a checkmark.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width:40px;">#</th>
+        <th>Emily's Question</th>
+        <th>Section</th>
+        <th>Exact Line(s)</th>
+        <th style="width:50px;">OK</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Q1</strong></td>
+        <td>Name and where you're from</td>
+        <td>S1 (0:00)</td>
+        <td>"My name is Vadym. I'm Polish &mdash; with Ukrainian origins."</td>
+        <td style="text-align:center;"><div class="check-box" style="display:inline-block;"></div></td>
+      </tr>
+      <tr>
+        <td><strong>Q2</strong></td>
+        <td>"My business is..." &mdash; clearly describe product</td>
+        <td>S1 (0:03)</td>
+        <td>"My business is BenchK &mdash; and this behind me is our product. The BenchK Vertical Training Wall."</td>
+        <td style="text-align:center;"><div class="check-box" style="display:inline-block;"></div></td>
+      </tr>
+      <tr>
+        <td><strong>Q3</strong></td>
+        <td>"I'm seeking $____ in exchange for ____%"</td>
+        <td>S7 (4:55)</td>
+        <td>"I'm seeking $400,000 in exchange for 15% of my company."</td>
+        <td style="text-align:center;"><div class="check-box" style="display:inline-block;"></div></td>
+      </tr>
+      <tr>
+        <td><strong>Q4</strong></td>
+        <td>How money will be used &mdash; specific</td>
+        <td>S7 (5:00)</td>
+        <td>"$200K distribution / $100K marketing / $50K BenchK PRO / $50K trade shows"</td>
+        <td style="text-align:center;"><div class="check-box" style="display:inline-block;"></div></td>
+      </tr>
+      <tr>
+        <td><strong>Q5a</strong></td>
+        <td>Hook / uniqueness</td>
+        <td>S2 (0:50)</td>
+        <td>"That's the hook &mdash; studios pay $50/sqft in rent. BenchK uses the wall they already have."</td>
+        <td style="text-align:center;"><div class="check-box" style="display:inline-block;"></div></td>
+      </tr>
+      <tr>
+        <td><strong>Q5b</strong></td>
+        <td>Patent status</td>
+        <td>S2 (1:05)</td>
+        <td>"We don't rely on patents. We rely on 10 years of engineering, premium materials, and a FIBO Innovation Award."</td>
+        <td style="text-align:center;"><div class="check-box" style="display:inline-block;"></div></td>
+      </tr>
+      <tr>
+        <td><strong>Q5c</strong></td>
+        <td>Development stage</td>
+        <td>S1, S5</td>
+        <td>"10 years old. Profitable. Award-winning." / "I run a factory. 25 suppliers."</td>
+        <td style="text-align:center;"><div class="check-box" style="display:inline-block;"></div></td>
+      </tr>
+      <tr>
+        <td><strong>Q5d</strong></td>
+        <td>Demonstration</td>
+        <td>S2 (0:35)</td>
+        <td>[Physical demo: 5 exercises on the wall]</td>
+        <td style="text-align:center;"><div class="check-box" style="display:inline-block;"></div></td>
+      </tr>
+      <tr>
+        <td><strong>Q5e</strong></td>
+        <td>Differentiation from similar ideas</td>
+        <td>S2 (1:00)</td>
+        <td>"This is not just a ladder. This is a vertical training station." + modularity, premium materials</td>
+        <td style="text-align:center;"><div class="check-box" style="display:inline-block;"></div></td>
+      </tr>
+      <tr>
+        <td><strong>Q5f</strong></td>
+        <td>A-HA moment</td>
+        <td>S4 (2:25)</td>
+        <td>"1989. My father bought me a Swedish ladder. I was seven years old."</td>
+        <td style="text-align:center;"><div class="check-box" style="display:inline-block;"></div></td>
+      </tr>
+      <tr>
+        <td><strong>Q6a</strong></td>
+        <td>Lifetime sales</td>
+        <td>S3 (1:30)</td>
+        <td>"Over $6 million in total sales" <span class="verify-badge">VERIFY</span></td>
+        <td style="text-align:center;"><div class="check-box" style="display:inline-block;"></div></td>
+      </tr>
+      <tr>
+        <td><strong>Q6b</strong></td>
+        <td>2025 Gross</td>
+        <td>S3 (1:18)</td>
+        <td>"$2 million in global revenue in 2025"</td>
+        <td style="text-align:center;"><div class="check-box" style="display:inline-block;"></div></td>
+      </tr>
+      <tr>
+        <td><strong>Q6c</strong></td>
+        <td>2026 YTD</td>
+        <td>S3 (1:45)</td>
+        <td>"2026 US sales to date &mdash; over $240,000" <span class="verify-badge">VERIFY</span></td>
+        <td style="text-align:center;"><div class="check-box" style="display:inline-block;"></div></td>
+      </tr>
+      <tr>
+        <td><strong>Q6d</strong></td>
+        <td>Projected 2026 year-end</td>
+        <td>S3 (1:50)</td>
+        <td>"$720,000, based on the current run rate"</td>
+        <td style="text-align:center;"><div class="check-box" style="display:inline-block;"></div></td>
+      </tr>
+      <tr>
+        <td><strong>Q6e</strong></td>
+        <td>WHY sales are what they are</td>
+        <td>S3 (2:00)</td>
+        <td>"The product sells itself once people try it." + 33% word-of-mouth</td>
+        <td style="text-align:center;"><div class="check-box" style="display:inline-block;"></div></td>
+      </tr>
+      <tr>
+        <td><strong>Q7</strong></td>
+        <td>Personal investment</td>
+        <td>S5 (3:40)</td>
+        <td>"I've personally invested over $450,000 of my own money into BenchK."</td>
+        <td style="text-align:center;"><div class="check-box" style="display:inline-block;"></div></td>
+      </tr>
+      <tr>
+        <td><strong>Q8</strong></td>
+        <td>Personal story / stakes / adversity</td>
+        <td>S4 + S5</td>
+        <td>Origin: 99 rejections, A-HA. Stakes: "Moved family to FL, investor visa, everything on the line."</td>
+        <td style="text-align:center;"><div class="check-box" style="display:inline-block;"></div></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="correct-box">
+    <div class="box-label">All Clear</div>
+    When every checkbox above has a mark, the video covers all of Emily's requirements. Only then should the team wrap filming.
+  </div>
+
+  <div class="page-num">Page 13</div>
+</div>
+
+<!-- ================================================================== -->
+<!-- PAGE 14 — DYLAN FULL PLAN                                          -->
+<!-- ================================================================== -->
+<div class="page">
+  <h2>Dylan Testimonial &mdash; Full Plan</h2>
+
+  <h3>Who Is Dylan</h3>
+  <p>Owner of <strong>10Ten Fitness Sarasota</strong>. Real BenchK customer. His studio is the filming location. His testimonial adds third-party credibility &mdash; one of the strongest moments in the entire video.</p>
+
+  <h3>The 3 Questions (in order)</h3>
+  <table>
+    <thead><tr><th>#</th><th>Question</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><strong>"Why did you put BenchK in your studio?"</strong></td><td>Business rationale &mdash; from a buyer's perspective</td></tr>
+      <tr><td>2</td><td><strong>"How often do you use this wall?"</strong></td><td>Usage proof &mdash; it's not collecting dust</td></tr>
+      <tr><td>3</td><td>"Would you recommend BenchK to other gym owners?" <em>(optional)</em></td><td>Referral signal &mdash; only if Dylan is in flow</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Camera Setup</h3>
+  <div class="two-col-grid">
+    <div class="info-card">
+      <h4>Positioning</h4>
+      <ul>
+        <li><strong>Shot:</strong> Medium two-shot &mdash; both in frame</li>
+        <li><strong>Vadym:</strong> Camera-left (turns naturally toward Dylan)</li>
+        <li><strong>Dylan:</strong> Camera-right</li>
+        <li><strong>Background:</strong> BenchK wall visible behind both</li>
+        <li><strong>Distance:</strong> About 1 arm's length apart</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>Audio (CRITICAL)</h4>
+      <div class="do-not-say-box" style="margin:0;background:#fff3cd;border-color:#ffc107;">
+        <strong>If only ONE lav mic is available &mdash; give it to DYLAN, not Vadym.</strong><br>
+        Reason: Vadym's voice is recorded across the rest of the video. Dylan's voice only exists in these 15 seconds &mdash; it must be crystal clear.
+      </div>
+      <p class="mt-2"><strong>Best setup:</strong> TWO lav mics on separate audio channels.</p>
+    </div>
+  </div>
+
+  <h3>What Vadym MUST NOT Do</h3>
+  <div class="do-not-say-box">
+    <ul>
+      <li>Do NOT interrupt Dylan &mdash; even if he pauses 2 seconds searching for words</li>
+      <li>Do NOT finish his sentences &mdash; even if you know what he'll say</li>
+      <li>Do NOT correct him if he says something slightly wrong (real > perfect)</li>
+      <li>Do NOT look at camera while Dylan talks &mdash; look at HIM</li>
+      <li>Do NOT say "great answer" between questions &mdash; sounds scripted</li>
+      <li>Do NOT script Dylan beforehand &mdash; bullet points only</li>
+    </ul>
+  </div>
+
+  <h3>Shoot Plan: 3 Takes</h3>
+  <table>
+    <thead><tr><th>Take</th><th>Focus</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Take 1</strong></td><td>Standard pace, all 3 questions</td></tr>
+      <tr><td><strong>Take 2</strong></td><td>Faster, only Q1 + Q3</td></tr>
+      <tr><td><strong>Take 3</strong></td><td>Most casual, whichever question Dylan answered best in 1-2</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Sunday May 3 &mdash; Text Message to Dylan</h3>
+  <div class="info-card" style="background:#f0f9ff; border-color:#93c5fd; font-family: var(--font-mono); font-size: 0.88rem; white-space: pre-wrap; line-height: 1.8;">Hey Dylan,
+
+Thanks again for tomorrow. Quick heads-up so you're
+not surprised:
+
+I'll ask you 2-3 questions on camera about why you
+got BenchK and how you use it. Just answer naturally
+&mdash; no script needed. We'll do a couple takes. If you
+mess up, no problem, we just do it again.
+
+You'll be on camera maybe 15 seconds total. That's it.
+
+If you want to think about it beforehand, here are
+the questions:
+
+1. Why did you put BenchK in your studio?
+2. How often do you use this wall?
+3. Would you recommend BenchK to other gym owners?
+
+Just speak from the heart &mdash; that's what works on TV.
+
+&mdash; Vadym</div>
+
+  <h3>Backup Plan &mdash; If Dylan Freezes</h3>
+  <div class="correct-box">
+    <div class="box-label">Fallback Line</div>
+    <div class="script-line">"Behind me &mdash; 10Ten Fitness Sarasota. Owned by Dylan. Real American customer."</div>
+    <p class="text-muted" style="margin-top:8px;">Preserves location credibility without the awkward frozen moment. Less emotional impact, but safe.</p>
+  </div>
+
+  <div class="page-num">Page 14</div>
+</div>
+
+<!-- ================================================================== -->
+<!-- PAGE 15 — FILMING DAY SCHEDULE                                     -->
+<!-- ================================================================== -->
+<div class="page">
+  <h2>Filming Day Schedule &mdash; Monday May 4, 2026</h2>
+  <p class="text-muted">Filming order is NOT chronological &mdash; we shoot by energy requirements and location setup.</p>
+
+  <table>
+    <thead>
+      <tr><th style="width: 120px;">Time</th><th>Activity</th><th>Details</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="schedule-time">08:30&ndash;09:00</td>
+        <td><strong>Arrival &amp; Setup</strong></td>
+        <td>Vadym + videographer arrive. Unload equipment. Set up lights, camera, audio. Sound check.</td>
+      </tr>
+      <tr>
+        <td class="schedule-time">09:00&ndash;09:15</td>
+        <td><strong>Tech Check</strong></td>
+        <td>Camera test (horizontal, framing). Mic test (both lavs). Lighting check (no shadows). Record 30-sec test clip.</td>
+      </tr>
+      <tr>
+        <td class="schedule-time">09:15&ndash;09:30</td>
+        <td><strong>Vadym Warm-Up</strong></td>
+        <td>Voice warm-up (15 min routine). Dry run of Section 1 opener. Review Numbers Cheat Sheet one final time.</td>
+      </tr>
+      <tr>
+        <td class="schedule-time">09:30&ndash;10:00</td>
+        <td><strong>SHOOT: S4 &mdash; Origin Story</strong></td>
+        <td>Start with emotional section while Vadym is fresh. 3-5 takes. Emphasis on 2-second pause and punch line.</td>
+      </tr>
+      <tr>
+        <td class="schedule-time">10:00&ndash;10:30</td>
+        <td><strong>SHOOT: S5 &mdash; Operator Credibility</strong></td>
+        <td>Follows naturally from S4 energy. 3-5 takes. "$450K" and "everything is on the line" with weight.</td>
+      </tr>
+      <tr>
+        <td class="schedule-time">10:30&ndash;10:50</td>
+        <td><strong>SHOOT: S6 &mdash; Replication Logic</strong></td>
+        <td>High energy math section. 3-4 takes. Practice Poland/USA hand gestures.</td>
+      </tr>
+      <tr>
+        <td class="schedule-time">10:50&ndash;11:00</td>
+        <td><strong>Break</strong></td>
+        <td>Water (room temp). Review takes. Quick notes from videographer.</td>
+      </tr>
+      <tr>
+        <td class="schedule-time">11:00&ndash;11:30</td>
+        <td><strong>SHOOT: S2 &mdash; Product Demo</strong></td>
+        <td>Camera repositions for wide shot. Vadym at wall, demonstrating exercises. 3-5 takes. Physical, dynamic.</td>
+      </tr>
+      <tr>
+        <td class="schedule-time">11:30&ndash;11:45</td>
+        <td><strong>Dylan Arrives &amp; Brief</strong></td>
+        <td>Greet Dylan. Brief him on questions (bullet points only). Mic him up. Test audio level.</td>
+      </tr>
+      <tr>
+        <td class="schedule-time">11:45&ndash;12:15</td>
+        <td><strong>SHOOT: S3 + S3b</strong></td>
+        <td>Numbers first (3-5 takes), then Dylan testimonial (3 takes). Camera adjusts to two-shot for Dylan.</td>
+      </tr>
+      <tr>
+        <td class="schedule-time">12:15&ndash;13:00</td>
+        <td><strong>LUNCH BREAK</strong></td>
+        <td>Light meal only. Vadym: review notes, rest voice. Dylan can leave after lunch if done.</td>
+      </tr>
+      <tr>
+        <td class="schedule-time">13:00&ndash;13:15</td>
+        <td><strong>Post-Lunch Warm-Up</strong></td>
+        <td>Quick voice reset. Run Section 1 opener once. Hydrate.</td>
+      </tr>
+      <tr>
+        <td class="schedule-time">13:15&ndash;13:45</td>
+        <td><strong>SHOOT: S7 &mdash; The Ask</strong></td>
+        <td>Critical. 4-5 takes. "$400,000 in exchange for 15%" must be crystal clear. Point on "YOU."</td>
+      </tr>
+      <tr>
+        <td class="schedule-time">13:45&ndash;14:15</td>
+        <td><strong>SHOOT: S1 &mdash; Hook &amp; Intro</strong></td>
+        <td>Saved for later &mdash; Vadym now warmed up. 4-5 takes. "My business is BenchK" word-for-word.</td>
+      </tr>
+      <tr>
+        <td class="schedule-time">14:15&ndash;14:45</td>
+        <td><strong>SHOOT: S8 &mdash; Closer</strong></td>
+        <td>Final energy peak. 4-5 takes. Hold eye contact 3 seconds after "together." Must be memorized.</td>
+      </tr>
+      <tr>
+        <td class="schedule-time">14:45&ndash;15:15</td>
+        <td><strong>B-ROLL</strong></td>
+        <td>Close-ups: wood, steel, logo, full wall, hands on rungs, studio environment. See B-Roll Shot List.</td>
+      </tr>
+      <tr>
+        <td class="schedule-time">15:15&ndash;15:30</td>
+        <td><strong>Wrap &amp; Checklist</strong></td>
+        <td>Review Emily's 8 questions against cross-check table. Confirm every question has a good take. Pack up.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="director-box">
+    <div class="box-label">Why This Filming Order</div>
+    <strong>S4 &rarr; S5 &rarr; S6</strong> first: emotional + credibility sections need Vadym fresh and focused.<br>
+    <strong>S2</strong> midmorning: physical demo needs energy but also warm muscles.<br>
+    <strong>S3 + Dylan</strong> late morning: Dylan's schedule; numbers need sharpness.<br>
+    <strong>S7 &rarr; S1 &rarr; S8</strong> afternoon: the Ask, opener, and closer are highest-stakes &mdash; by now Vadym is fully warmed up and in character.
+  </div>
+
+  <div class="page-num">Page 15</div>
+</div>
+
+<!-- ================================================================== -->
+<!-- PAGE 16 — ENERGY & PERFORMANCE GUIDE                               -->
+<!-- ================================================================== -->
+<div class="page">
+  <h2>Energy &amp; Performance Guide</h2>
+
+  <h3>ABC Says: "Infomercial Energy"</h3>
+  <div class="correct-box">
+    <div class="box-label">Emily's Exact Words</div>
+    "Wow us! Dazzle us! Be talkative and energetic! Don't be humble. This is your opportunity to GLOAT. Infomercial energy. STAND UP."
+  </div>
+
+  <h3>Energy Map by Section</h3>
+  <table>
+    <thead>
+      <tr><th>Section</th><th>Time</th><th>Energy</th><th>Character</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>S1 &mdash; Hook</td><td>0:00</td><td><span style="color:var(--gold);font-weight:700;">7/10</span></td><td>Confident welcome. Warm but controlled. "Here I am."</td></tr>
+      <tr><td>S2 &mdash; Demo</td><td>0:35</td><td><span style="color:var(--green);font-weight:700;">8/10</span></td><td>Enthusiastic about the product. Physical. Dynamic.</td></tr>
+      <tr><td>S3 &mdash; Numbers</td><td>1:15</td><td><span style="color:var(--blue);font-weight:700;">8/10</span></td><td>Authoritative. Precise. Let numbers speak.</td></tr>
+      <tr><td>S3b &mdash; Dylan</td><td>2:10</td><td><span style="color:#db2777;font-weight:700;">6/10</span></td><td>Human moment. Warm. Attentive listener.</td></tr>
+      <tr><td>S4 &mdash; Origin</td><td>2:25</td><td><span style="color:#db2777;font-weight:700;">5&rarr;8</span></td><td>THE DIP. Emotional valley. "99 said no." Then rises to punch line.</td></tr>
+      <tr><td>S5 &mdash; Operator</td><td>3:15</td><td><span style="color:var(--green);font-weight:700;">8/10</span></td><td>Strong, confident. "I run a factory." "$450K of my own money."</td></tr>
+      <tr><td>S6 &mdash; Math</td><td>4:15</td><td><span style="color:var(--red);font-weight:700;">9/10</span></td><td>Intellectual momentum. Fastest section. Building toward the Ask.</td></tr>
+      <tr><td>S7 &mdash; Ask</td><td>4:55</td><td><span style="color:var(--red);font-weight:700;">9/10</span></td><td>Peak confidence. "I need YOU." Controlled power.</td></tr>
+      <tr><td>S8 &mdash; Closer</td><td>5:15</td><td><span style="color:var(--red);font-weight:700;">10&rarr;6</span></td><td>Climax on "already moving" then warm landing on "together."</td></tr>
+    </tbody>
+  </table>
+
+  <h3>The Pattern</h3>
+  <div class="info-card" style="font-family: var(--font-mono); font-size: 0.88rem; line-height: 2;">
+S1-S2: WARM OPEN (6-7)      "Welcome. Here is my product."
+S3:    BUILD PROOF (7-8)     "Here are the numbers."
+S4:    THE DIP (3-5)         "Here is my struggle."   &larr; LOWEST POINT
+S5-S6: THE CLIMB (7-9)      "Here is why I will win."
+S7:    THE PEAK (9)          "Here is what I want from YOU."
+S8:    THE LANDING (10&rarr;6)    "Here is the last thing you'll remember."</div>
+  <p class="text-muted mt-2">The dip in Section 4 is INTENTIONAL. Sharks need to feel struggle before they believe strength. If you're at 8/10 the whole video, nothing stands out.</p>
+
+  <h3>Voice Warm-Up (15 Minutes &mdash; Monday Morning)</h3>
+  <div class="two-col-grid">
+    <div class="info-card">
+      <h4>Minutes 0&ndash;3: Breathing</h4>
+      <ul>
+        <li>Stand tall. Hand on belly, hand on chest.</li>
+        <li>Breathe in 4 sec (belly out). Hold 2 sec. Exhale 6 sec ("ssssss").</li>
+        <li>Repeat 5 times.</li>
+        <li>Hum opening line low in chest. 5 times.</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>Minutes 3&ndash;7: Articulation</h4>
+      <ul>
+        <li>"Three hundred thirty-three thousand" x3 slow, x3 fast</li>
+        <li>"Worldwide commercial-grade wall" x3</li>
+        <li>"Thirty-three percent word-of-mouth" x3</li>
+        <li>Cork technique: read S1 with cork between teeth, then without</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>Minutes 7&ndash;10: Projection</h4>
+      <ul>
+        <li>Wall test: say Ask line from 3m, then 5m distance</li>
+        <li>Pitch drop: lower voice on "factory" and "fifteen percent"</li>
+        <li>Target volume: clear at 5 meters without shouting</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>Minutes 10&ndash;15: Full Run</h4>
+      <ul>
+        <li>Slow-Fast-Slow drill on Section 6</li>
+        <li>Deliver Section 1 at full energy</li>
+        <li>Deliver Section 8 at full energy</li>
+        <li>Drink room-temp water. Rest voice 5 min.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Stumble Recovery Protocol</h3>
+  <div class="info-card">
+    <ol>
+      <li><strong>Stop.</strong> Do not power through a mangled word.</li>
+      <li><strong>Breathe.</strong> One breath through the nose.</li>
+      <li><strong>Restart the sentence.</strong> Not the word &mdash; the whole sentence. Cleanly.</li>
+      <li><strong>Keep going.</strong> The editor will cut the stumble.</li>
+    </ol>
+    <p class="text-muted mt-2">You have 3-5 takes per section. Use them. Nobody delivers a perfect take on the first try, in any language.</p>
+  </div>
+
+  <h3>Confidence Mindset</h3>
+  <div class="correct-box">
+    <div class="box-label">Install This</div>
+    <p style="font-size:1.05rem; margin:0;">You are not a performer. You are an operator who built a $2 million business from nothing, in a foreign country, in a foreign language, with zero outside money. Your accent tells your story. Your accent IS your story. Do not hide it, soften it, or apologize for it. Speak clearly. Speak slowly. Speak proudly.</p>
+  </div>
+
+  <div class="page-num">Page 16</div>
+</div>
+
+<!-- ================================================================== -->
+<!-- PAGE 17 — DO NOT SAY                                               -->
+<!-- ================================================================== -->
+<div class="page">
+  <h2>DO NOT SAY &mdash; Quick Reference</h2>
+  <p class="text-muted">Print this page. Keep it visible on set between takes. One wrong claim can kill the deal.</p>
+
+  <h3>Identity &amp; Politics</h3>
+  <table>
+    <thead><tr><th style="width:45%;">Never Say</th><th style="width:45%;">Say Instead</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="text-red"><strong>"I'm Ukrainian"</strong> (alone)</td>
+        <td class="text-green"><strong>"I'm Polish &mdash; with Ukrainian origins"</strong></td>
+      </tr>
+      <tr>
+        <td class="text-red"><strong>"I'm Polish"</strong> (alone)</td>
+        <td class="text-green"><strong>"I'm Polish &mdash; with Ukrainian origins"</strong></td>
+      </tr>
+      <tr>
+        <td class="text-red">"I escaped from Ukraine"</td>
+        <td class="text-green">"My family moved to Poland in 2015"</td>
+      </tr>
+      <tr>
+        <td class="text-red">"I immigrated to America"</td>
+        <td class="text-green">"I came here on an investor visa"</td>
+      </tr>
+      <tr>
+        <td class="text-red">Russia / Putin / war references</td>
+        <td class="text-green">(do not bring up at all)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Business Overclaims</h3>
+  <table>
+    <thead><tr><th style="width:45%;">Never Say</th><th style="width:45%;">Say Instead</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="text-red"><strong>"Patented technology"</strong></td>
+        <td class="text-green"><strong>"Award-winning design" / "FIBO Innovation Award"</strong></td>
+      </tr>
+      <tr>
+        <td class="text-red">"Sold in 30 countries"</td>
+        <td class="text-green">"Strong distribution in 5 EU countries + online across Europe"</td>
+      </tr>
+      <tr>
+        <td class="text-red">"Made in Poland and the United States"</td>
+        <td class="text-green">"Made in Poland &mdash; US production planned"</td>
+      </tr>
+      <tr>
+        <td class="text-red">"Recoil's patent is ours"</td>
+        <td class="text-green">"We distribute Recoil &mdash; patented by our partner"</td>
+      </tr>
+      <tr>
+        <td class="text-red">"Profitable since day one"</td>
+        <td class="text-green">"Profitable for years, no outside investors"</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Emotional Pitfalls</h3>
+  <table>
+    <thead><tr><th style="width:45%;">Never Say</th><th style="width:45%;">Say Instead</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="text-red">"Please give me a chance"</td>
+        <td class="text-green">"I'm asking you to join something that is already moving"</td>
+      </tr>
+      <tr>
+        <td class="text-red">"I really really need this"</td>
+        <td class="text-green">"I don't need your money &mdash; I need YOU"</td>
+      </tr>
+      <tr>
+        <td class="text-red">"We're struggling in the US"</td>
+        <td class="text-green">"$60,000 a month in year one. $720K run rate."</td>
+      </tr>
+      <tr>
+        <td class="text-red">"I think our product is very good"</td>
+        <td class="text-green">"33% of customers come from word of mouth"</td>
+      </tr>
+      <tr>
+        <td class="text-red">"More or less" / "Let's say"</td>
+        <td class="text-green">State the exact number. Period.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Production Mistakes</h3>
+  <div class="do-not-say-box">
+    <ul>
+      <li>Vertical (portrait) video &mdash; ABC requires HORIZONTAL</li>
+      <li>Handheld camera &mdash; ABC requires TRIPOD</li>
+      <li>Background music &mdash; ABC requires NO MUSIC</li>
+      <li>Sitting down &mdash; ABC says STAND entire video</li>
+      <li>Reading from visible script &mdash; memorize or teleprompter behind camera</li>
+      <li>White shirt, busy patterns, visible BenchK logo on clothing</li>
+      <li>Phone visible, coffee cup on set, watch catching light</li>
+    </ul>
+  </div>
+
+  <h3>Golden Rule</h3>
+  <div class="correct-box">
+    <div class="box-label">Remember</div>
+    <strong>If you're not 100% sure something is true and verifiable &mdash; DON'T say it.</strong><br>
+    The casting team will fact-check everything. One inflated claim destroys credibility for the entire submission. The strongest pitch is the truthful one.
+  </div>
+
+  <div class="page-num">Page 17</div>
+</div>
+
+<!-- ================================================================== -->
+<!-- PAGE 18 — NUMBERS CHEAT SHEET                                      -->
+<!-- ================================================================== -->
+<div class="page">
+  <h2>Numbers Cheat Sheet &mdash; Quick-Glance Reference</h2>
+  <p class="text-muted">Glance at this between takes. Do NOT hold it on camera.</p>
+
+  <h3>The Big Numbers</h3>
+  <div class="info-card" style="font-family: var(--font-mono); font-size: 1.1rem; line-height: 2.2;">
+<strong>$2,000,000</strong>     Global revenue 2025
+<strong>$1,000,000</strong>     Poland (50%)
+  <strong>$700,000</strong>     Germany + Switzerland + Czech + Slovakia (35%)
+  <strong>$300,000</strong>     USA year 1 (15%)
+
+   <strong>$60,000</strong>     US monthly run rate (Dec / Jan / Feb)
+  <strong>$720,000</strong>     Annualized US run rate
+      <strong>33%</strong>     Word-of-mouth conversion
+     <strong>800+</strong>     Cumulative US units since Aug 2022
+  </div>
+
+  <h3>Lifetime &amp; 2026 Numbers</h3>
+  <div class="info-card" style="font-family: var(--font-mono); font-size: 1.1rem; line-height: 2.2;">
+<strong>$6,000,000+</strong>    Lifetime total sales (all markets)      <span class="verify-badge">VERIFY FROM ERP</span>
+  <strong>$240,000+</strong>    2026 US sales to date (Jan-Apr)       <span class="verify-badge">VERIFY FROM ERP</span>
+  <strong>$720,000</strong>     2026 US projected year-end
+  </div>
+
+  <h3>Operator &amp; Investment</h3>
+  <div class="info-card" style="font-family: var(--font-mono); font-size: 1.1rem; line-height: 2.2;">
+     <strong>250+</strong>     JCB machines sold (2006-2015)
+<strong>$90K-$300K</strong>     Each machine
+ <strong>$450,000+</strong>     Vadym's personal investment in US
+       <strong>10</strong>     Years in business
+        <strong>0</strong>     Outside investors
+  </div>
+
+  <h3>The Ask</h3>
+  <div class="info-card" style="font-family: var(--font-mono); font-size: 1.2rem; line-height: 2.2; background: var(--blue-light); border-color: var(--blue);">
+  <strong>$400,000</strong>     Investment sought
+      <strong>15%</strong>     Equity offered
+   <strong>$2.67M</strong>     Post-money valuation
+
+  $200,000 &rarr; Distribution (studios, PT, yoga, Pilates)
+  $100,000 &rarr; Marketing (fitness + medical)
+   $50,000 &rarr; BenchK PRO affiliate program
+   $50,000 &rarr; Trade shows (IHRSA, SIBEC, regional)
+  --------
+  $400,000    TOTAL
+  </div>
+
+  <h3>Identity (Exact Phrasing)</h3>
+  <div class="correct-box">
+    "I'm Polish &mdash; with Ukrainian origins."<br>
+    "Polish citizen since 2023. EU passport."<br>
+    "Born in Ukraine. Built BenchK in Poland over 10 years."<br>
+    "Came to America on an investor visa six months ago."
+  </div>
+
+  <h3>The 3 Punch Lines (Word-for-Word)</h3>
+  <div class="info-card" style="font-size: 1.1rem; line-height: 2;">
+    <strong>1.</strong> "Sometimes the best thing that happens to you... is everybody saying you can't."<br>
+    <strong>2.</strong> "I don't run a startup. I run a factory."<br>
+    <strong>3.</strong> "I'm not asking you to take a chance. I'm asking you to join something that is already moving."
+  </div>
+
+  <div class="page-num">Page 18</div>
+</div>
+
+<!-- ================================================================== -->
+<!-- PAGE 19 — B-ROLL SHOT LIST + SAMPLES                               -->
+<!-- ================================================================== -->
+<div class="page">
+  <h2>B-Roll Shot List + Product Samples</h2>
+
+  <h3>B-Roll Shots (14:45&ndash;15:15 &mdash; After All Main Takes)</h3>
+  <p class="text-muted">These give the editor cutaway material and visual richness.</p>
+
+  <div class="two-col-grid">
+    <div>
+      <div class="shot-card">
+        <span class="shot-num">1</span>
+        <strong>Full Wall &mdash; Wide</strong><br>
+        <span class="text-muted">Full BenchK installation from 3m back. No person. Clean hero shot.</span>
+      </div>
+      <div class="shot-card">
+        <span class="shot-num">2</span>
+        <strong>Wood Grain Close-Up</strong><br>
+        <span class="text-muted">Tight on beech wood rungs. Show texture, FSC quality. Camera slides slowly.</span>
+      </div>
+      <div class="shot-card">
+        <span class="shot-num">3</span>
+        <strong>Steel Detail</strong><br>
+        <span class="text-muted">Close-up of powder-coated steel brackets/joints. Premium feel.</span>
+      </div>
+      <div class="shot-card">
+        <span class="shot-num">4</span>
+        <strong>Logo / Branding</strong><br>
+        <span class="text-muted">BenchK logo on the product. Clean focus. 3-5 seconds.</span>
+      </div>
+      <div class="shot-card">
+        <span class="shot-num">5</span>
+        <strong>Hands on Rungs</strong><br>
+        <span class="text-muted">Vadym's hands gripping rungs. Shows human-product connection.</span>
+      </div>
+      <div class="shot-card">
+        <span class="shot-num">6</span>
+        <strong>Attachment Swap</strong><br>
+        <span class="text-muted">Show modularity: removing/attaching pull-up bar, dip handles, or Pilates bar.</span>
+      </div>
+    </div>
+    <div>
+      <div class="shot-card">
+        <span class="shot-num">7</span>
+        <strong>Exercise Montage</strong><br>
+        <span class="text-muted">Quick cuts: stretch, pull-up, band, Pilates, rehab. 3 sec each.</span>
+      </div>
+      <div class="shot-card">
+        <span class="shot-num">8</span>
+        <strong>Studio Environment</strong><br>
+        <span class="text-muted">Wide shot of 10Ten Fitness interior. Real commercial environment.</span>
+      </div>
+      <div class="shot-card">
+        <span class="shot-num">9</span>
+        <strong>Studio Signage</strong><br>
+        <span class="text-muted">10Ten Fitness sign or branding. Establishes location credibility.</span>
+      </div>
+      <div class="shot-card">
+        <span class="shot-num">10</span>
+        <strong>Vadym Walking In</strong><br>
+        <span class="text-muted">Gimbal shot: Vadym walks toward BenchK wall with purpose. Optional opener.</span>
+      </div>
+      <div class="shot-card">
+        <span class="shot-num">11</span>
+        <strong>Catalog / FIBO Award</strong><br>
+        <span class="text-muted">If on set: quick shot of BenchK catalog and FIBO Innovation Award photo.</span>
+      </div>
+      <div class="shot-card">
+        <span class="shot-num">12</span>
+        <strong>Behind-the-Scenes</strong><br>
+        <span class="text-muted">Phone camera: setup, lights, practice. For social media (post-NDA only).</span>
+      </div>
+    </div>
+  </div>
+
+  <h3>Product Samples &mdash; Ship to ABC</h3>
+  <div class="do-not-say-box" style="background: #fff7ed; border-color: #f97316;">
+    <div class="box-label" style="background: #f97316;">ACTION REQUIRED</div>
+    <p><strong>Ship 3&ndash;4 product samples to:</strong></p>
+    <div style="font-family: var(--font-mono); margin: 12px 0; padding: 12px; background: #fff; border-radius: 6px;">
+Mae Bennett &mdash; Shark Tank
+10202 W. Washington Blvd.
+Gable #100
+Culver City, CA 90232
+    </div>
+    <p><strong>What to send:</strong></p>
+    <ul>
+      <li>BenchK main unit sample (if shippable) or representative attachments</li>
+      <li>Catalog 2026 (printed, high quality)</li>
+      <li>FIBO Innovation Award certificate copy</li>
+      <li>Accessories: pull-up bar, resistance bands, dip handles (demonstrate modularity)</li>
+    </ul>
+    <p><strong>Ship by:</strong> Thursday May 8 at the latest (same day as video submission)</p>
+    <p><strong>Tracking:</strong> Keep tracking number. Follow up with Emily if not confirmed received.</p>
+  </div>
+
+  <h3>Files to Provide Editor</h3>
+  <table>
+    <thead><tr><th>File</th><th>Purpose</th><th>Source</th></tr></thead>
+    <tbody>
+      <tr><td>BenchK Catalog 2026 PDF</td><td>Product shots for B-roll overlay</td><td>Vadym's files</td></tr>
+      <tr><td>FIBO Award photo (2022)</td><td>Credibility shot</td><td>Vadym's files</td></tr>
+      <tr><td>Florida warehouse exterior</td><td>Operations proof</td><td>Phone photos</td></tr>
+      <tr><td>BenchK logo (high-res PNG)</td><td>Intro/outro overlay</td><td>Brand assets</td></tr>
+      <tr><td>Client installation photos</td><td>Social proof overlay</td><td>Praxis NYC, KARE Paris, Murrieta CA</td></tr>
+      <tr><td>Polish factory photos</td><td>"I run a factory" proof</td><td>Catalog pages 10-11</td></tr>
+    </tbody>
+  </table>
+
+  <div class="page-num">Page 19</div>
+</div>
+
+<!-- ================================================================== -->
+<!-- PAGE 20 — POST-PRODUCTION TIMELINE                                 -->
+<!-- ================================================================== -->
+<div class="page">
+  <h2>Post-Production Timeline &amp; Submission</h2>
+
+  <h3>Editing Pipeline: May 5&ndash;8</h3>
+
+  <div class="timeline-item">
+    <div class="timeline-date">Tue May 5</div>
+    <div>
+      <strong>Day 1 &mdash; Raw Footage Delivery</strong><br>
+      Videographer delivers all raw footage. Rough cut assembly with best takes per section. Audio sync. Initial sequence.
+    </div>
+  </div>
+
+  <div class="timeline-item">
+    <div class="timeline-date">Wed May 6</div>
+    <div>
+      <strong>Day 2 &mdash; Tight Edit</strong><br>
+      Tight edit with B-roll integration. Color correction. Audio cleanup (normalize levels, remove room noise). Add lower-third text if needed. No music (ABC requirement).
+    </div>
+  </div>
+
+  <div class="timeline-item">
+    <div class="timeline-date">Thu May 7</div>
+    <div>
+      <strong>Day 3 &mdash; Final Review</strong><br>
+      Vadym reviews cut. 1-2 rounds of revisions. Verify: all 8 Emily questions answered, correct numbers, no DO NOT SAY violations, video length 5-10 min.
+    </div>
+  </div>
+
+  <div class="timeline-item">
+    <div class="timeline-date" style="color: var(--red);">Fri May 8</div>
+    <div>
+      <strong>Day 4 &mdash; SUBMISSION DEADLINE</strong><br>
+      <ol>
+        <li>Final export: MP4, 1080p minimum (4K preferred)</li>
+        <li>Upload to <strong>Vimeo &mdash; UNLISTED</strong> with password protection</li>
+        <li>Email Vimeo link + password to Emily Watrobsky at ABC</li>
+        <li>Ship product samples to Mae Bennett (tracking number saved)</li>
+        <li>Submit PandaDoc Personal Application (92 fields)</li>
+        <li>Submit PandaDoc Business Application</li>
+      </ol>
+    </div>
+  </div>
+
+  <h3>Submission Checklist</h3>
+  <table>
+    <thead><tr><th>Item</th><th>Format</th><th>Done</th></tr></thead>
+    <tbody>
+      <tr><td>Video (5-10 min)</td><td>Vimeo UNLISTED + password</td><td style="text-align:center;"><div class="check-box" style="display:inline-block;"></div></td></tr>
+      <tr><td>PandaDoc Personal Application</td><td>92 fields &mdash; online</td><td style="text-align:center;"><div class="check-box" style="display:inline-block;"></div></td></tr>
+      <tr><td>PandaDoc Business Application</td><td>Online form</td><td style="text-align:center;"><div class="check-box" style="display:inline-block;"></div></td></tr>
+      <tr><td>Product Samples (3-4)</td><td>Shipped to Mae Bennett, Culver City</td><td style="text-align:center;"><div class="check-box" style="display:inline-block;"></div></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Video Quality Final Check</h3>
+  <div class="info-card">
+    <p>Before uploading to Vimeo, verify:</p>
+    <ul>
+      <li>Horizontal/landscape orientation</li>
+      <li>Length within 5-10 minutes</li>
+      <li>Audio clear throughout &mdash; especially Dylan's 15 seconds</li>
+      <li>No background music</li>
+      <li>Well-lit &mdash; no silhouetting</li>
+      <li>Tripod-stable &mdash; no camera shake on main takes</li>
+      <li>All 8 Emily questions covered (use cross-check table Page 13)</li>
+      <li>No DO NOT SAY violations (Page 17)</li>
+      <li>Numbers match verified ERP data</li>
+      <li>"My business is BenchK" present in opening</li>
+      <li>"I'm seeking $400,000 in exchange for 15%" present in the Ask</li>
+    </ul>
+  </div>
+
+  <h3>NDA Reminder</h3>
+  <div class="do-not-say-box">
+    <div class="box-label">Active Until Episode Airs or Rejection</div>
+    <ul>
+      <li>NO social media posts about Shark Tank application</li>
+      <li>NO discussions with press, media, distributors, or partners</li>
+      <li>NO public sharing of submission video (UNLISTED only)</li>
+      <li>Internal team and direct production partners ONLY</li>
+    </ul>
+  </div>
+
+  <div class="page-num">Page 20</div>
+</div>
+
+<!-- ================================================================== -->
+<!-- FINAL PAGE — LIFT YOURSELF                                         -->
+<!-- ================================================================== -->
+<div class="page">
+  <div class="cover-page" style="min-height: 60vh;">
+    <div class="cover-divider"></div>
+    <h1 style="font-size: 2.5rem;">Lift Yourself.</h1>
+    <p style="font-size: 1.2rem; color: var(--gray-500); margin-top: 16px;">Sharks &mdash; let's lift America together.</p>
+    <div class="cover-divider"></div>
+    <p class="text-muted" style="margin-top: 32px;">
+      BenchK &mdash; Filming Bible<br>
+      Shark Tank Season 18<br>
+      Prepared April 30, 2026<br>
+      Filming: Monday May 4, 2026<br>
+      Submission: Thursday May 8, 2026<br><br>
+      <strong>CONFIDENTIAL</strong>
+    </p>
+  </div>
+</div>
+
+</body>
+</html>
