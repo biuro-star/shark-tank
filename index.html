@@ -173,18 +173,16 @@ td:first-child{font-weight:600}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
 .sim-counter{font-size:13px;color:var(--muted);text-align:center;margin-bottom:16px}
 
-/* Teleprompter */
-.teleprompter{background:#000;border-radius:16px;padding:40px 32px;margin-bottom:24px;position:relative;overflow:hidden;min-height:300px}
-.teleprompter-text{font-size:22px;line-height:2;color:rgba(255,255,255,.35);transition:all .3s;text-align:center}
-.teleprompter-text .active-line{color:#fff;font-weight:600;font-size:26px}
-.teleprompter-text .done-line{color:rgba(255,255,255,.15)}
-.teleprompter-timer{position:absolute;top:16px;right:20px;font-size:28px;font-weight:800;font-family:monospace}
-.teleprompter-timer.ok{color:var(--green)}
-.teleprompter-timer.warn{color:var(--orange)}
-.teleprompter-timer.over{color:var(--red)}
-.teleprompter-section-label{position:absolute;top:16px;left:20px;font-size:12px;color:var(--accent);text-transform:uppercase;letter-spacing:1.5px;font-weight:600}
-.teleprompter-progress{height:4px;background:rgba(255,255,255,.1);border-radius:2px;margin-bottom:24px}
-.teleprompter-progress .fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--green));border-radius:2px;transition:width .3s}
+/* PRO Teleprompter */
+#pro-prompter:fullscreen, #pro-prompter:-webkit-full-screen {
+  border-radius:0;height:100vh;width:100vw;
+}
+#pro-prompter:fullscreen #pro-header-bar, #pro-prompter:-webkit-full-screen #pro-header-bar {
+  padding:24px 40px;
+}
+#pro-prompter:fullscreen #pro-scroll-content, #pro-prompter:-webkit-full-screen #pro-scroll-content {
+  padding:50vh 80px;
+}
 .rec-badge{display:none;align-items:center;gap:6px;background:rgba(239,68,68,.2);border:1px solid rgba(239,68,68,.4);border-radius:20px;padding:6px 14px;font-size:12px;font-weight:600;color:var(--red);margin:0 auto 16px}
 .rec-badge.show{display:inline-flex}
 .rec-dot{width:8px;height:8px;border-radius:50%;background:var(--red);animation:blink 1s infinite}
@@ -231,7 +229,7 @@ td:first-child{font-weight:600}
     <div class="nav-item" data-section="insights"><span class="icon">💎</span>3 Core Insights</div>
     <div class="nav-item" data-section="dylan"><span class="icon">🎤</span>Dylan Moment</div>
     <div class="nav-item" data-section="shark"><span class="icon">🦈</span>Shark Simulator</div>
-    <div class="nav-item" data-section="teleprompter"><span class="icon">📺</span>Pitch Practice</div>
+    <div class="nav-item" data-section="teleprompter"><span class="icon">📺</span>PRO Teleprompter</div>
     <div class="nav-item" data-section="monitor"><span class="icon">🔴</span>Red Flag Monitor</div>
     <div class="nav-item" data-section="checklist"><span class="icon">✅</span>Checklists</div>
     <div class="nav-item" data-section="identity"><span class="icon">🆔</span>Identity Guide</div>
@@ -620,25 +618,74 @@ td:first-child{font-weight:600}
 
     <!-- TELEPROMPTER / PITCH PRACTICE -->
     <div class="section" id="sec-teleprompter">
-      <h2>Pitch Practice</h2>
-      <p style="color:var(--muted);margin-bottom:24px">Full 5:30 pitch with teleprompter, timer, and audio recording. Practice your delivery like it's filming day.</p>
-      <div style="text-align:center;margin-bottom:16px">
-        <span class="rec-badge" id="rec-badge"><span class="rec-dot"></span> RECORDING</span>
-      </div>
-      <div class="teleprompter" id="teleprompter-box">
-        <div class="teleprompter-section-label" id="tp-section">Ready</div>
-        <div class="teleprompter-timer ok" id="tp-timer">5:30</div>
-        <div class="teleprompter-text" id="tp-text" style="display:flex;align-items:center;justify-content:center;min-height:220px">
-          <div style="color:rgba(255,255,255,.5);font-size:18px">Press Start to begin your pitch practice.<br>The teleprompter will scroll through each section.<br>Tap lines to advance manually.</div>
+      <h2>PRO Teleprompter</h2>
+      <p style="color:var(--muted);margin-bottom:16px">Professional actor-style teleprompter. Big letters, auto-scroll, adjustable speed. Go full-screen for real practice.</p>
+
+      <div class="card" style="margin-bottom:16px">
+        <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+          <div style="flex:1;min-width:200px">
+            <label style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:6px">Font Size</label>
+            <div style="display:flex;align-items:center;gap:12px">
+              <input type="range" id="pro-font-size" min="28" max="80" value="48" style="flex:1;accent-color:var(--accent)" oninput="proUpdateFontSize()">
+              <span id="pro-font-label" style="font-size:14px;color:var(--text);min-width:40px;font-weight:700">48px</span>
+            </div>
+          </div>
+          <div style="flex:1;min-width:200px">
+            <label style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:6px">Scroll Speed</label>
+            <div style="display:flex;align-items:center;gap:12px">
+              <input type="range" id="pro-speed" min="1" max="10" value="5" style="flex:1;accent-color:var(--accent)" oninput="proUpdateSpeed()">
+              <span id="pro-speed-label" style="font-size:14px;color:var(--text);min-width:30px;font-weight:700">5</span>
+            </div>
+          </div>
+          <div>
+            <label style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:6px">Language</label>
+            <div style="display:flex;gap:6px">
+              <button class="btn btn-primary" id="pro-lang-en" onclick="proSetLang('en')" style="padding:6px 14px;font-size:13px">English</button>
+              <button class="btn btn-secondary" id="pro-lang-ua" onclick="proSetLang('ua')" style="padding:6px 14px;font-size:13px">UA</button>
+              <button class="btn btn-secondary" id="pro-lang-both" onclick="proSetLang('both')" style="padding:6px 14px;font-size:13px">Both</button>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="teleprompter-progress"><div class="fill" id="tp-progress" style="width:0%"></div></div>
-      <div class="btn-group" style="justify-content:center">
-        <button class="btn btn-primary" id="tp-start-btn" onclick="tpStart()">Start Pitch</button>
-        <button class="btn btn-danger" id="tp-stop-btn" onclick="tpStop()" style="display:none">Stop</button>
-        <button class="btn btn-secondary" id="tp-pause-btn" onclick="tpPause()" style="display:none">Pause</button>
-        <button class="btn btn-secondary" onclick="tpReset()">Reset</button>
+
+      <div style="display:flex;gap:8px;justify-content:center;margin-bottom:16px;flex-wrap:wrap">
+        <button class="btn btn-primary" id="pro-start-btn" onclick="proStart()" style="padding:14px 32px;font-size:16px">START</button>
+        <button class="btn btn-danger" id="pro-pause-btn" onclick="proPause()" style="display:none;padding:14px 32px;font-size:16px">PAUSE</button>
+        <button class="btn btn-success" id="pro-resume-btn" onclick="proResume()" style="display:none;padding:14px 32px;font-size:16px">RESUME</button>
+        <button class="btn btn-secondary" onclick="proReset()" style="padding:14px 24px;font-size:16px">RESET</button>
+        <button class="btn btn-secondary" id="pro-fs-btn" onclick="proFullscreen()" style="padding:14px 24px;font-size:16px">FULL SCREEN</button>
       </div>
+
+      <div style="text-align:center;margin-bottom:12px">
+        <span class="rec-badge" id="rec-badge"><span class="rec-dot"></span> RECORDING</span>
+      </div>
+
+      <div id="pro-prompter" style="background:#000;border-radius:16px;overflow:hidden;position:relative;height:70vh;min-height:400px;cursor:pointer" onclick="proTapAdvance()">
+        <div id="pro-header-bar" style="position:absolute;top:0;left:0;right:0;padding:12px 24px;display:flex;justify-content:space-between;align-items:center;z-index:10;background:linear-gradient(to bottom,rgba(0,0,0,0.9),transparent);pointer-events:none">
+          <div id="pro-section-label" style="font-size:13px;color:var(--accent);text-transform:uppercase;letter-spacing:2px;font-weight:700">READY</div>
+          <div id="pro-timer" style="font-size:32px;font-weight:800;font-family:monospace;color:var(--green)">5:30</div>
+        </div>
+        <div id="pro-progress-bar" style="position:absolute;bottom:0;left:0;right:0;height:4px;background:rgba(255,255,255,0.1);z-index:10">
+          <div id="pro-progress-fill" style="height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--green));transition:width 0.3s"></div>
+        </div>
+        <div id="pro-scroll-container" style="position:absolute;inset:0;overflow:hidden;display:flex;align-items:center;justify-content:center">
+          <div id="pro-scroll-content" style="padding:40vh 48px;transition:transform 0.1s linear;width:100%">
+            <div id="pro-idle-msg" style="text-align:center;color:rgba(255,255,255,0.4);font-size:22px;line-height:1.8;padding:0 20px">
+              Press START to begin<br>
+              Use arrow keys or tap to advance manually<br>
+              Full Screen for best experience
+            </div>
+          </div>
+        </div>
+        <div id="pro-focus-line" style="display:none;position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);pointer-events:none">
+          <div style="height:2px;background:linear-gradient(90deg,transparent,rgba(79,124,255,0.4),transparent)"></div>
+        </div>
+      </div>
+
+      <div style="margin-top:12px;text-align:center">
+        <span style="font-size:12px;color:var(--muted)">SPACE = pause/resume &nbsp; | &nbsp; Arrow keys = navigate &nbsp; | &nbsp; +/- = font size &nbsp; | &nbsp; F = fullscreen &nbsp; | &nbsp; Tap = next line</span>
+      </div>
+
       <div class="audio-playback" id="tp-playback">
         <div class="card" style="margin-top:16px">
           <h3>Your Recording</h3>
@@ -1186,234 +1233,408 @@ function sharkFinish() {
 // ============================================================
 // TELEPROMPTER / PITCH PRACTICE
 // ============================================================
-const tpScript = [
-  { section:"Section 1 — Hook", time:"0:00–0:30", lines:[
-    "My name is Vadym. I'm Polish — with Ukrainian origins.",
-    "And this behind me... is a BenchK Vertical Training Wall.",
-    "We reinvented the 100-year-old Swedish ladder.",
-    "Modular. Premium. Commercial-grade.",
-    "One wall. Five training methods. Zero floor space.",
+const proScript = [
+  { section:"SECTION 1 — HOOK & INTRO", time:"0:00 – 0:35", energy:"7/10", lines:[
+    {en:"My name is Vadym. I'm Polish — with Ukrainian origins.", ua:"Мене звати Вадим. Я поляк — з українським корінням."},
+    {en:"My business is BenchK — and this behind me is our product.", ua:"Мій бізнес — BenchK — і ось це за мною — наш продукт.", note:"REQUIRED by ABC"},
+    {en:"The BenchK Vertical Training Wall.", ua:"Вертикальна тренувальна стіна BenchK."},
+    {en:"We reinvented the 100-year-old Swedish ladder.", ua:"Ми переосмислили столітню шведську стінку."},
+    {en:"Modular. Premium. Commercial-grade.", ua:"Модульна. Преміальна. Комерційного класу."},
+    {en:"One wall. Five training methods. Zero floor space.", ua:"Одна стіна. П'ять методів тренувань. Нуль зайнятого місця на підлозі."},
   ]},
-  { section:"Section 2 — Product Demo", time:"0:30–1:10", lines:[
-    "Used by Pilates studios, PT clinics, gyms, hotels, offices, schools, and families.",
-    "One product. Seven markets.",
-    "[DEMO — show stretch, pull-up, resistance, Pilates, rehab on the wall]",
+  { section:"SECTION 2 — PRODUCT DEMO", time:"0:35 – 1:15", energy:"8/10", lines:[
+    {en:"Used by Pilates studios, physical therapy clinics, gyms, hotels, offices, schools, and families.", ua:"Нас використовують студії Пілатесу, клініки фізіотерапії, спортзали, готелі, офіси, школи та сім'ї."},
+    {en:"One product. Seven markets.", ua:"Один продукт. Сім ринків."},
+    {en:"[DEMONSTRATE — stretch, pull-up, resistance band, Pilates, rehab]", ua:"[ДЕМОНСТРАЦІЯ]", stage:true},
+    {en:"Every exercise you see — one wall. No floor space needed.", ua:"Всі вправи, які ви бачите — одна стіна. Жодного місця на підлозі."},
+    {en:"That's the hook — studios pay $50 per square foot in rent. BenchK uses the wall they already have.", ua:"Ось у чому фішка — студії платять $50 за квадратний фут оренди. BenchK використовує стіну, яка в них вже є.", note:"THE HOOK"},
+    {en:"This is not just a ladder. This is a vertical training station.", ua:"Це не просто драбина. Це вертикальна тренувальна станція."},
+    {en:"We don't rely on patents. We rely on 10 years of engineering, premium materials — FSC-certified beech wood, powder-coated steel — and a FIBO Innovation Award from 2022.", ua:"Ми не покладаємося на патенти. Ми покладаємося на 10 років інженерії, преміальні матеріали — сертифіковане FSC букове дерево, порошкове покриття сталі — і нагороду FIBO Innovation Award 2022 року."},
   ]},
-  { section:"Section 3 — Traction", time:"1:10–2:10", lines:[
-    "$2 million in global revenue.",
-    "Poland — $1 million. Germany, Switzerland, Czech Republic, Slovakia — $700,000.",
-    "USA, year one — $300,000.",
-    "$60,000 each month — December, January, February.",
-    "$720,000 annualized run rate.",
-    "And listen to this — one out of every three sales comes from word of mouth.",
-    "33%, verified by customer surveys.",
+  { section:"SECTION 3 — TRACTION & SALES", time:"1:15 – 2:10", energy:"8/10", lines:[
+    {en:"Let me give you the numbers.", ua:"Давайте я покажу вам цифри."},
+    {en:"$2 million in global revenue in 2025.", ua:"$2 мільйони глобального доходу у 2025 році."},
+    {en:"Poland — $1 million. Germany, Switzerland, Czech Republic, Slovakia — $700,000. USA — year one — $300,000.", ua:"Польща — $1 мільйон. Німеччина, Швейцарія, Чехія, Словаччина — $700 тисяч. США — перший рік — $300 тисяч."},
+    {en:"Lifetime, since I started BenchK — over $6 million in total sales across all markets.", ua:"За весь час існування BenchK — понад $6 мільйонів загального обороту по всіх ринках."},
+    {en:"Now let's talk 2026.", ua:"Тепер поговоримо про 2026-й."},
+    {en:"December — $60,000. January — $60,000. February — $60,000. Three consecutive months.", ua:"Грудень — $60 тисяч. Січень — $60 тисяч. Лютий — $60 тисяч. Три місяці поспіль."},
+    {en:"2026 US sales to date — over $240,000.", ua:"Продажі в США за 2026 рік на сьогодні — понад $240 тисяч."},
+    {en:"That puts us at a $720,000 annualized run rate.", ua:"Це дає нам річний темп у $720 тисяч."},
+    {en:"Our projected US year-end for 2026 — $720,000, based on the current run rate.", ua:"Наш прогноз по США на кінець 2026 року — $720 тисяч, виходячи з поточного темпу."},
+    {en:"And listen to this — one out of every three sales comes from word of mouth. 33%, verified by customer surveys.", ua:"І послухайте — кожен третій продаж приходить через рекомендації. 33%, підтверджено опитуваннями клієнтів."},
+    {en:"That's why our sales are growing — the product sells itself once people try it.", ua:"Ось чому наші продажі ростуть — продукт продає себе сам, щойно люди його спробують."},
   ]},
-  { section:"Section 3b — Dylan", time:"2:10–2:25", lines:[
-    "Sharks — meet Dylan. He owns this studio.",
-    "Dylan... why did you put BenchK in your studio?",
-    "[DYLAN ANSWERS ~15 sec]",
-    "Thanks, brother.",
+  { section:"SECTION 3b — DYLAN", time:"2:10 – 2:25", energy:"6/10", lines:[
+    {en:"Sharks — meet Dylan. He owns this studio.", ua:"Акули — познайомтесь із Діланом. Він власник цієї студії."},
+    {en:"[Turn to Dylan. Look at HIM, not camera.]", ua:"[Повернутися до Ділана.]", stage:true},
+    {en:"Dylan... why did you put BenchK in your studio?", ua:"Ділане... чому ти поставив BenchK у своїй студії?"},
+    {en:"[DYLAN ANSWERS — DO NOT INTERRUPT]", ua:"[ДІЛАН ВІДПОВІДАЄ — НЕ ПЕРЕБИВАЙ]", stage:true},
+    {en:"Dylan — how often do you use this wall?", ua:"Ділане — як часто ти користуєшся цією стіною?"},
+    {en:"[DYLAN ANSWERS]", ua:"[ДІЛАН ВІДПОВІДАЄ]", stage:true},
+    {en:"Thanks, brother.", ua:"Дякую, братику."},
   ]},
-  { section:"Section 4 — Origin Story", time:"2:25–3:15", lines:[
-    "1989, my father bought me a Swedish ladder. I was seven.",
-    "That wall became everything — my gym, my playground, my escape.",
-    "2015 — my family moved to Poland.",
-    "Foreign country, foreign language, foreign mentality.",
-    "I started BenchK with nothing.",
-    "99 out of 100 companies said no.",
-    "Sometimes the best thing that happens to you... is everybody saying you can't.",
+  { section:"SECTION 4 — ORIGIN STORY", time:"2:25 – 3:15", energy:"5→8/10", lines:[
+    {en:"How did I come up with this? Let me take you back.", ua:"Як я до цього дійшов? Дозвольте повернути вас назад."},
+    {en:"1989. My father bought me a Swedish ladder. I was seven years old.", ua:"1989-й. Батько купив мені шведську стінку. Мені було сім років."},
+    {en:"That wall became everything — my gym, my playground, my escape.", ua:"Та стіна стала для мене всім — спортзалом, майданчиком, моїм світом."},
+    {en:"Fast forward to 2015. My family moved to Poland.", ua:"Перемотаємо на 2015-й. Моя сім'я переїхала до Польщі."},
+    {en:"Foreign country. Foreign language. Foreign mentality.", ua:"Чужа країна. Чужа мова. Чужий менталітет."},
+    {en:"I started BenchK with nothing.", ua:"Я почав BenchK з нуля."},
+    {en:"99 out of 100 companies said no.", ua:"99 зі 100 компаній сказали «ні»."},
+    {en:"[PAUSE — 2 full seconds of silence]", ua:"[ПАУЗА — 2 секунди]", stage:true},
+    {en:"Sometimes the best thing that happens to you... is everybody saying you can't.", ua:"Іноді найкраще, що з тобою трапляється... це коли всі кажуть, що ти не зможеш.", note:"PUNCH LINE"},
   ]},
-  { section:"Section 5 — Operator", time:"3:15–4:15", lines:[
-    "Before BenchK — 9 years selling JCB construction machines.",
-    "250+ machines. $90,000 to $300,000 each.",
-    "Tens of millions in B2B sales.",
-    "I don't run a startup. I run a factory.",
-    "25 suppliers. Polish manufacturing. Toyota Way principles.",
-    "If I cracked Poland from zero — what makes you think I won't crack America?",
+  { section:"SECTION 5 — OPERATOR & INVESTMENT", time:"3:15 – 4:15", energy:"8/10", lines:[
+    {en:"Before BenchK — 9 years selling JCB construction machines.", ua:"До BenchK — 9 років продажу будівельної техніки JCB."},
+    {en:"250+ machines. $90,000 to $300,000 each. Tens of millions in B2B sales.", ua:"250+ машин. Від $90 до $300 тисяч кожна. Десятки мільйонів у B2B."},
+    {en:"I don't run a startup. I run a factory.", ua:"Я не керую стартапом. Я керую заводом.", note:"PUNCH LINE"},
+    {en:"25 suppliers. Polish manufacturing. Toyota Way principles.", ua:"25 постачальників. Виробництво в Польщі. Принципи Toyota Way."},
+    {en:"I've personally invested over $450,000 of my own money into BenchK.", ua:"Я особисто вклав понад $450 тисяч власних грошей у BenchK.", note:"Q7 ANSWER"},
+    {en:"I moved my entire family — my wife, my daughter, my son — to Florida.", ua:"Я перевіз усю свою сім'ю — дружину, доньку, сина — до Флориди."},
+    {en:"We're here on an investor visa. Everything is on the line.", ua:"Ми тут за інвесторською візою. Все поставлено на карту."},
+    {en:"If I cracked Poland from zero — what makes you think I won't crack America?", ua:"Якщо я підкорив Польщу з нуля — що змусить вас думати, що я не підкорю Америку?"},
   ]},
-  { section:"Section 6 — Replication", time:"4:15–4:55", lines:[
-    "Poland: $1 million revenue. 38 million people.",
-    "USA: 340 million — 8 times bigger.",
-    "Same product. Same playbook. Same operator.",
-    "The barrier is not awareness — it's TRIAL.",
-    "Once they see it, touch it, train on it — they buy.",
-    "Your money goes to trial generation, not market education.",
+  { section:"SECTION 6 — REPLICATION LOGIC", time:"4:15 – 4:55", energy:"9/10", lines:[
+    {en:"Poland: $1 million revenue. 38 million people.", ua:"Польща: $1 мільйон доходу. 38 мільйонів людей."},
+    {en:"USA: 340 million people — 8 times bigger.", ua:"США: 340 мільйонів людей — у 8 разів більше."},
+    {en:"Same product. Same playbook. Same operator.", ua:"Той самий продукт. Той самий план. Той самий оператор."},
+    {en:"The barrier is not awareness — it's TRIAL.", ua:"Бар'єр — не впізнаваність, а СПРОБА."},
+    {en:"Once they see it, touch it, train on it — they buy.", ua:"Щойно вони побачать, доторкнуться, потренуються — вони купують."},
+    {en:"Your investment goes to trial generation, not market education.", ua:"Ваші інвестиції йдуть на генерацію спроб, а не на навчання ринку."},
   ]},
-  { section:"Section 7 — The Ask", time:"4:55–5:10", lines:[
-    "$400,000 for 15%.",
-    "$200K distribution. $100K marketing. $50K BenchK PRO. $50K trade shows.",
-    "10 years bootstrapped. Zero outside investors.",
-    "I don't need your money — I need YOU.",
-    "American mindset. American network. American doors I can't open from a warehouse in Florida.",
+  { section:"SECTION 7 — THE ASK", time:"4:55 – 5:15", energy:"9/10", lines:[
+    {en:"I'm seeking $400,000 in exchange for 15% of my company.", ua:"Я шукаю $400 тисяч в обмін на 15% моєї компанії.", note:"REQUIRED FORMAT"},
+    {en:"Here's exactly how I'll use it:", ua:"Ось як саме я їх використаю:"},
+    {en:"$200,000 — build a US distribution chain. Boutique studios, PT clinics, yoga, Pilates.", ua:"$200 тисяч — побудувати дистриб'юторську мережу в США."},
+    {en:"$100,000 — marketing to fitness and medical professionals.", ua:"$100 тисяч — маркетинг для фітнес- та медичних спеціалістів."},
+    {en:"$50,000 — BenchK PRO, our affiliate program for physical therapists and chiropractors.", ua:"$50 тисяч — BenchK PRO, наша партнерська програма для фізіотерапевтів та хіропрактиків."},
+    {en:"$50,000 — trade shows. IHRSA, SIBEC, and regional fitness events.", ua:"$50 тисяч — виставки. IHRSA, SIBEC та регіональні фітнес-івенти."},
+    {en:"10 years bootstrapped. Zero outside investors.", ua:"10 років на власних ресурсах. Жодного зовнішнього інвестора."},
+    {en:"I don't need your money — I need YOU.", ua:"Мені не потрібні ваші гроші — мені потрібні ВИ.", note:"SMART MONEY"},
+    {en:"American mindset. American network. American doors I can't open from a warehouse in Florida.", ua:"Американський менталітет. Американські зв'язки. Американські двері, які я не можу відчинити зі складу у Флориді."},
   ]},
-  { section:"Section 8 — Closer", time:"5:10–5:30", lines:[
-    "BenchK is not a startup.",
-    "10 years old. Profitable. Award-winning.",
-    "I'm not asking you to take a chance.",
-    "I'm asking you to join something that is already moving.",
-    "Lift Yourself.",
-    "Sharks — let's lift America together.",
+  { section:"SECTION 8 — CLOSER", time:"5:15 – 5:35", energy:"10/10", lines:[
+    {en:"BenchK is not a startup.", ua:"BenchK — це не стартап."},
+    {en:"10 years old. Profitable. Award-winning.", ua:"10 років. Прибутковий. Відзначений нагородами."},
+    {en:"I'm not asking you to take a chance.", ua:"Я не прошу вас ризикувати."},
+    {en:"I'm asking you to join something that is already moving.", ua:"Я прошу вас приєднатися до того, що вже рухається."},
+    {en:"[PAUSE — 1 second]", ua:"[ПАУЗА]", stage:true},
+    {en:"Lift Yourself.", ua:"Lift Yourself."},
+    {en:"Sharks — let's lift America together.", ua:"Акули — давайте піднімемо Америку разом.", note:"FINAL WORD"},
+    {en:"[HOLD eye contact 3 FULL seconds. Do NOT break character.]", ua:"[ТРИМАТИ зоровий контакт 3 секунди.]", stage:true},
   ]},
 ];
 
-let tpRunning = false, tpPaused = false, tpTimerInterval = null, tpSeconds = 0;
-let tpCurrentSection = 0, tpCurrentLine = 0;
-let tpMediaRecorder = null, tpAudioChunks = [];
-const TP_TOTAL = 330; // 5:30
+let proRunning = false, proPaused = false, proTimerInterval = null, proSeconds = 0;
+let proCurrentLine = 0, proFontSize = 48, proSpeed = 5, proLang = 'en';
+let proScrollInterval = null, proScrollY = 0;
+let proMediaRecorder = null, proAudioChunks = [];
+const PRO_TOTAL = 330;
 
-function tpBuildLines() {
-  const allLines = [];
-  tpScript.forEach((sec, si) => {
+function proBuildLines() {
+  const lines = [];
+  proScript.forEach((sec, si) => {
+    lines.push({ type:'section', text: sec.section, energy: sec.energy, time: sec.time });
     sec.lines.forEach((line, li) => {
-      allLines.push({ text: line, section: sec.section, si, li });
+      lines.push({ type: line.stage ? 'stage' : 'line', en: line.en, ua: line.ua, note: line.note, si, li });
     });
   });
-  return allLines;
+  return lines;
 }
 
-function tpRender() {
-  const allLines = tpBuildLines();
-  const flatIdx = tpFlatIndex();
+function proGetText(item) {
+  if (item.type === 'section') return null;
+  if (proLang === 'en') return item.en;
+  if (proLang === 'ua') return item.ua;
+  return item.en + '\n' + item.ua;
+}
+
+function proRenderContent() {
+  const lines = proBuildLines();
+  const container = document.getElementById('pro-scroll-content');
+  const idle = document.getElementById('pro-idle-msg');
+  if (idle) idle.remove();
+
   let html = '';
-  allLines.forEach((l, i) => {
-    let cls = '';
-    if(i < flatIdx) cls = 'done-line';
-    else if(i === flatIdx) cls = 'active-line';
-    html += '<div class="' + cls + '" style="padding:4px 0;cursor:pointer" data-idx="'+i+'">' + l.text + '</div>';
+  lines.forEach((item, i) => {
+    if (item.type === 'section') {
+      html += '<div data-pro-idx="'+i+'" style="text-align:center;padding:24px 0 16px;border-top:1px solid rgba(79,124,255,0.2);margin-top:16px">';
+      html += '<div style="font-size:14px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);font-weight:700">' + item.text + '</div>';
+      html += '<div style="font-size:12px;color:var(--muted);margin-top:4px">' + item.time + ' | Energy ' + item.energy + '</div>';
+      html += '</div>';
+    } else {
+      const isActive = i === proCurrentLine;
+      const isPast = i < proCurrentLine;
+      let opacity = isPast ? 0.15 : (isActive ? 1 : 0.35);
+      let weight = isActive ? '700' : '400';
+      let scale = isActive ? 1.05 : 1;
+      let color = item.type === 'stage' ? 'rgba(245,158,11,' + (isActive?1:opacity) + ')' : 'rgba(255,255,255,' + opacity + ')';
+      let fs = item.type === 'stage' ? Math.round(proFontSize * 0.6) : proFontSize;
+      if (isActive && item.type !== 'stage') color = '#fff';
+
+      html += '<div data-pro-idx="'+i+'" style="text-align:center;padding:' + Math.round(proFontSize*0.4) + 'px 0;font-size:'+fs+'px;font-weight:'+weight+';color:'+color+';line-height:1.4;transform:scale('+scale+');transition:all 0.3s;cursor:pointer">';
+
+      if (item.note && isActive) {
+        html += '<div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--green);margin-bottom:6px;font-weight:700">' + item.note + '</div>';
+      }
+
+      const text = proGetText(item);
+      if (proLang === 'both' && item.type !== 'stage') {
+        html += '<div>' + item.en + '</div>';
+        html += '<div style="font-size:' + Math.round(fs*0.75) + 'px;color:rgba(79,124,255,' + (isActive?0.8:opacity*0.7) + ');margin-top:8px;font-style:italic">' + item.ua + '</div>';
+      } else {
+        html += text;
+      }
+      html += '</div>';
+    }
   });
-  document.getElementById('tp-text').innerHTML = html;
-  document.getElementById('tp-section').textContent = tpScript[tpCurrentSection]?.section || 'Done';
+  container.innerHTML = html;
 
-  // Scroll active line into view
-  const activeLine = document.querySelector('.active-line');
-  if(activeLine) activeLine.scrollIntoView({ behavior:'smooth', block:'center' });
-
-  // Progress
-  const pct = allLines.length > 0 ? Math.round(flatIdx / allLines.length * 100) : 0;
-  document.getElementById('tp-progress').style.width = pct + '%';
-
-  // Click to advance
-  document.querySelectorAll('#tp-text > div').forEach(div => {
-    div.addEventListener('click', () => {
-      const idx = parseInt(div.dataset.idx);
-      const allL = tpBuildLines();
-      if(idx < allL.length) {
-        tpCurrentSection = allL[idx].si;
-        tpCurrentLine = allL[idx].li;
-        tpRender();
+  document.querySelectorAll('[data-pro-idx]').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const idx = parseInt(el.dataset.proIdx);
+      const lines = proBuildLines();
+      if (lines[idx] && lines[idx].type !== 'section') {
+        proCurrentLine = idx;
+        proRenderContent();
+        proScrollToActive();
       }
     });
   });
 }
 
-function tpFlatIndex() {
-  let idx = 0;
-  for(let s=0;s<tpCurrentSection;s++) idx += tpScript[s].lines.length;
-  idx += tpCurrentLine;
-  return idx;
+function proScrollToActive() {
+  const container = document.getElementById('pro-scroll-container');
+  const activeEl = document.querySelector('[data-pro-idx="'+proCurrentLine+'"]');
+  if (!activeEl || !container) return;
+  const containerRect = container.getBoundingClientRect();
+  const activeRect = activeEl.getBoundingClientRect();
+  const scrollContent = document.getElementById('pro-scroll-content');
+  const currentTransform = parseFloat(scrollContent.style.transform.replace('translateY(','').replace('px)','')) || 0;
+  const targetY = currentTransform - (activeRect.top - containerRect.top - containerRect.height/2 + activeRect.height/2);
+  scrollContent.style.transform = 'translateY(' + targetY + 'px)';
+  proScrollY = targetY;
 }
 
-function tpUpdateTimer() {
-  const remaining = TP_TOTAL - tpSeconds;
+function proUpdateTimer() {
+  const remaining = PRO_TOTAL - proSeconds;
   const m = Math.floor(Math.abs(remaining) / 60);
   const s = Math.abs(remaining) % 60;
   const display = (remaining < 0 ? '-' : '') + m + ':' + (s < 10 ? '0' : '') + s;
-  const el = document.getElementById('tp-timer');
+  const el = document.getElementById('pro-timer');
   el.textContent = display;
-  if(remaining > 60) el.className = 'teleprompter-timer ok';
-  else if(remaining > 0) el.className = 'teleprompter-timer warn';
-  else el.className = 'teleprompter-timer over';
+  if (remaining > 60) el.style.color = 'var(--green)';
+  else if (remaining > 0) el.style.color = 'var(--orange)';
+  else el.style.color = 'var(--red)';
 }
 
-async function tpStart() {
-  if(tpPaused) { tpResume(); return; }
-  tpRunning = true; tpPaused = false; tpSeconds = 0;
-  tpCurrentSection = 0; tpCurrentLine = 0;
-  document.getElementById('tp-start-btn').style.display = 'none';
-  document.getElementById('tp-stop-btn').style.display = '';
-  document.getElementById('tp-pause-btn').style.display = '';
+function proUpdateProgress() {
+  const lines = proBuildLines().filter(l => l.type !== 'section');
+  const spoken = proBuildLines().slice(0, proCurrentLine + 1).filter(l => l.type !== 'section').length;
+  const pct = lines.length > 0 ? Math.round(spoken / lines.length * 100) : 0;
+  document.getElementById('pro-progress-fill').style.width = pct + '%';
+}
+
+function proUpdateSectionLabel() {
+  const lines = proBuildLines();
+  let sectionName = 'READY';
+  for (let i = proCurrentLine; i >= 0; i--) {
+    if (lines[i] && lines[i].type === 'section') { sectionName = lines[i].text; break; }
+  }
+  document.getElementById('pro-section-label').textContent = sectionName;
+}
+
+async function proStart() {
+  proRunning = true; proPaused = false; proSeconds = 0;
+  proCurrentLine = 1;
+  proScrollY = 0;
+  document.getElementById('pro-scroll-content').style.transform = 'translateY(0px)';
+  document.getElementById('pro-start-btn').style.display = 'none';
+  document.getElementById('pro-pause-btn').style.display = '';
+  document.getElementById('pro-resume-btn').style.display = 'none';
   document.getElementById('tp-playback').classList.remove('show');
   document.getElementById('rec-badge').classList.add('show');
+  document.getElementById('pro-focus-line').style.display = '';
 
-  tpRender();
-  tpUpdateTimer();
-  tpTimerInterval = setInterval(() => {
-    if(!tpPaused) {
-      tpSeconds++;
-      tpUpdateTimer();
-    }
+  proRenderContent();
+  proScrollToActive();
+  proUpdateTimer();
+  proUpdateProgress();
+  proUpdateSectionLabel();
+
+  proTimerInterval = setInterval(() => {
+    if (!proPaused) { proSeconds++; proUpdateTimer(); }
   }, 1000);
 
-  // Auto-advance lines based on approximate timing
-  tpAutoAdvance();
+  proStartAutoScroll();
 
-  // Start audio recording
   try {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    tpAudioChunks = [];
-    tpMediaRecorder = new MediaRecorder(stream);
-    tpMediaRecorder.ondataavailable = (e) => { if(e.data.size > 0) tpAudioChunks.push(e.data); };
-    tpMediaRecorder.onstop = () => {
-      const blob = new Blob(tpAudioChunks, { type: 'audio/webm' });
+    proAudioChunks = [];
+    proMediaRecorder = new MediaRecorder(stream);
+    proMediaRecorder.ondataavailable = (e) => { if(e.data.size > 0) proAudioChunks.push(e.data); };
+    proMediaRecorder.onstop = () => {
+      const blob = new Blob(proAudioChunks, { type: 'audio/webm' });
       document.getElementById('tp-audio').src = URL.createObjectURL(blob);
       document.getElementById('tp-playback').classList.add('show');
       stream.getTracks().forEach(t => t.stop());
     };
-    tpMediaRecorder.start();
-  } catch(e) {
-    console.log('No mic access — recording disabled');
+    proMediaRecorder.start();
+  } catch(e) {}
+}
+
+function proStartAutoScroll() {
+  const allLines = proBuildLines();
+  const spokenLines = allLines.filter(l => l.type !== 'section');
+  const msPerLine = (PRO_TOTAL * 1000) / spokenLines.length;
+  const adjustedMs = msPerLine * (6 / proSpeed);
+
+  if (proScrollInterval) clearInterval(proScrollInterval);
+  let spokenCount = 0;
+
+  function tick() {
+    if (!proRunning) return;
+    if (proPaused) { setTimeout(tick, 200); return; }
+
+    let next = proCurrentLine + 1;
+    while (next < allLines.length && allLines[next].type === 'section') next++;
+    if (next >= allLines.length) return;
+
+    proCurrentLine = next;
+    proRenderContent();
+    proScrollToActive();
+    proUpdateProgress();
+    proUpdateSectionLabel();
+    spokenCount++;
+    setTimeout(tick, adjustedMs);
   }
+  setTimeout(tick, adjustedMs);
 }
 
-function tpAutoAdvance() {
-  const allLines = tpBuildLines();
-  const totalLines = allLines.length;
-  const perLine = (TP_TOTAL * 1000) / totalLines;
-  let lineIdx = 0;
-  function advanceTick() {
-    if(!tpRunning) return;
-    if(tpPaused) { setTimeout(advanceTick, 200); return; }
-    lineIdx++;
-    if(lineIdx >= totalLines) return;
-    const l = allLines[lineIdx];
-    tpCurrentSection = l.si;
-    tpCurrentLine = l.li;
-    tpRender();
-    setTimeout(advanceTick, perLine);
-  }
-  setTimeout(advanceTick, perLine);
+function proPause() {
+  proPaused = true;
+  document.getElementById('pro-pause-btn').style.display = 'none';
+  document.getElementById('pro-resume-btn').style.display = '';
 }
 
-function tpPause() {
-  tpPaused = !tpPaused;
-  document.getElementById('tp-pause-btn').textContent = tpPaused ? 'Resume' : 'Pause';
+function proResume() {
+  proPaused = false;
+  document.getElementById('pro-pause-btn').style.display = '';
+  document.getElementById('pro-resume-btn').style.display = 'none';
 }
 
-function tpResume() {
-  tpPaused = false;
-  document.getElementById('tp-pause-btn').textContent = 'Pause';
-}
-
-function tpStop() {
-  tpRunning = false; tpPaused = false;
-  if(tpTimerInterval) clearInterval(tpTimerInterval);
-  document.getElementById('tp-start-btn').style.display = '';
-  document.getElementById('tp-stop-btn').style.display = 'none';
-  document.getElementById('tp-pause-btn').style.display = 'none';
+function proStop() {
+  proRunning = false; proPaused = false;
+  if (proTimerInterval) clearInterval(proTimerInterval);
+  if (proScrollInterval) clearInterval(proScrollInterval);
+  document.getElementById('pro-start-btn').style.display = '';
+  document.getElementById('pro-pause-btn').style.display = 'none';
+  document.getElementById('pro-resume-btn').style.display = 'none';
   document.getElementById('rec-badge').classList.remove('show');
-  if(tpMediaRecorder && tpMediaRecorder.state !== 'inactive') tpMediaRecorder.stop();
+  document.getElementById('pro-focus-line').style.display = 'none';
+  if (proMediaRecorder && proMediaRecorder.state !== 'inactive') proMediaRecorder.stop();
 }
 
-function tpReset() {
-  tpStop();
-  tpCurrentSection = 0; tpCurrentLine = 0; tpSeconds = 0;
-  document.getElementById('tp-timer').textContent = '5:30';
-  document.getElementById('tp-timer').className = 'teleprompter-timer ok';
-  document.getElementById('tp-progress').style.width = '0%';
-  document.getElementById('tp-text').innerHTML = '<div style="color:rgba(255,255,255,.5);font-size:18px;display:flex;align-items:center;justify-content:center;min-height:220px">Press Start to begin your pitch practice.<br>The teleprompter will scroll through each section.<br>Tap lines to advance manually.</div>';
-  document.getElementById('tp-section').textContent = 'Ready';
+function proReset() {
+  proStop();
+  proCurrentLine = 0; proSeconds = 0; proScrollY = 0;
+  document.getElementById('pro-timer').textContent = '5:30';
+  document.getElementById('pro-timer').style.color = 'var(--green)';
+  document.getElementById('pro-progress-fill').style.width = '0%';
+  document.getElementById('pro-section-label').textContent = 'READY';
+  document.getElementById('pro-scroll-content').style.transform = 'translateY(0px)';
+  document.getElementById('pro-scroll-content').innerHTML = '<div id="pro-idle-msg" style="text-align:center;color:rgba(255,255,255,0.4);font-size:22px;line-height:1.8;padding:0 20px">Press START to begin<br>Use arrow keys or tap to advance manually<br>Full Screen for best experience</div>';
   document.getElementById('tp-playback').classList.remove('show');
 }
+
+function proTapAdvance() {
+  if (!proRunning) return;
+  const allLines = proBuildLines();
+  let next = proCurrentLine + 1;
+  while (next < allLines.length && allLines[next].type === 'section') next++;
+  if (next < allLines.length) {
+    proCurrentLine = next;
+    proRenderContent();
+    proScrollToActive();
+    proUpdateProgress();
+    proUpdateSectionLabel();
+  }
+}
+
+function proUpdateFontSize() {
+  proFontSize = parseInt(document.getElementById('pro-font-size').value);
+  document.getElementById('pro-font-label').textContent = proFontSize + 'px';
+  if (proRunning) proRenderContent();
+}
+
+function proUpdateSpeed() {
+  proSpeed = parseInt(document.getElementById('pro-speed').value);
+  document.getElementById('pro-speed-label').textContent = proSpeed;
+}
+
+function proSetLang(lang) {
+  proLang = lang;
+  ['en','ua','both'].forEach(l => {
+    const btn = document.getElementById('pro-lang-' + l);
+    btn.className = l === lang ? 'btn btn-primary' : 'btn btn-secondary';
+    btn.style.padding = '6px 14px';
+    btn.style.fontSize = '13px';
+  });
+  if (proRunning) { proRenderContent(); proScrollToActive(); }
+}
+
+function proFullscreen() {
+  const el = document.getElementById('pro-prompter');
+  if (el.requestFullscreen) el.requestFullscreen();
+  else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+}
+
+document.addEventListener('keydown', (e) => {
+  const sec = document.getElementById('sec-teleprompter');
+  if (!sec || !sec.classList.contains('active')) return;
+
+  if (e.key === ' ' || e.code === 'Space') {
+    e.preventDefault();
+    if (!proRunning) { proStart(); return; }
+    if (proPaused) proResume(); else proPause();
+  }
+  if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+    e.preventDefault();
+    proTapAdvance();
+  }
+  if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+    e.preventDefault();
+    if (!proRunning) return;
+    const allLines = proBuildLines();
+    let prev = proCurrentLine - 1;
+    while (prev >= 0 && allLines[prev].type === 'section') prev--;
+    if (prev >= 0) {
+      proCurrentLine = prev;
+      proRenderContent();
+      proScrollToActive();
+      proUpdateProgress();
+      proUpdateSectionLabel();
+    }
+  }
+  if (e.key === '+' || e.key === '=') {
+    e.preventDefault();
+    const slider = document.getElementById('pro-font-size');
+    slider.value = Math.min(80, parseInt(slider.value) + 4);
+    proUpdateFontSize();
+  }
+  if (e.key === '-' || e.key === '_') {
+    e.preventDefault();
+    const slider = document.getElementById('pro-font-size');
+    slider.value = Math.max(28, parseInt(slider.value) - 4);
+    proUpdateFontSize();
+  }
+  if (e.key === 'f' || e.key === 'F') {
+    if (e.target.tagName === 'INPUT') return;
+    e.preventDefault();
+    proFullscreen();
+  }
+});
 
 // ============================================================
 // RED FLAG MONITOR
