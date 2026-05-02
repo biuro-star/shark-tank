@@ -13,6 +13,17 @@
 | **USA** | $300,000 | 15% | Year 1 of active management |
 | **TOTAL GLOBAL** | **$2,000,000** | **100%** | |
 
+## 💰 Cumulative Sales (ERP Verified)
+
+| Period | Amount | Source |
+|--------|--------|--------|
+| **Last 5 years (2021-2025)** | **$10,175,169 (~$10.2M)** | ERP verified |
+| Last 4 years (2022-2025) | $8,476,366 (~$8.5M) | ERP verified |
+| Last 3 years (2023-2025) | $6,228,849 (~$6.2M) | ERP verified |
+| **Lifetime (2015-2025)** | **$13M-$15M+ (estimated)** | Need 2015-2020 data for exact |
+
+**Say on camera:** "In just the last five years — over ten million dollars in sales."
+
 ---
 
 ## 🚀 US Momentum (KILLER NUMBERS)
