@@ -16,16 +16,32 @@
   }
   .page {
     width: 100%;
-    min-height: 100vh;
-    padding: 40px 60px;
+    height: 100vh;
+    padding: 30px 50px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     page-break-after: always;
     position: relative;
+    overflow: hidden;
   }
   .page:last-child {
     page-break-after: avoid;
+  }
+  .page.dense {
+    justify-content: flex-start;
+    padding-top: 20px;
+  }
+  .page.dense .line {
+    font-size: 24px;
+    line-height: 1.4;
+    margin-bottom: 10px;
+  }
+  .page.dense .line.punch {
+    font-size: 26px;
+  }
+  .page.dense .section-header {
+    margin-bottom: 18px;
   }
   .section-header {
     font-size: 18px;
@@ -103,8 +119,17 @@
   @media print {
     body { background: #fff; }
     .page {
-      min-height: auto;
-      padding: 24px 40px;
+      height: auto;
+      min-height: 95vh;
+      padding: 16px 30px;
+    }
+    .page.dense .line {
+      font-size: 22px;
+      line-height: 1.35;
+      margin-bottom: 8px;
+    }
+    .page.dense .line.punch {
+      font-size: 24px;
     }
     .section-header {
       -webkit-print-color-adjust: exact;
@@ -149,7 +174,7 @@
 </div>
 
 <!-- PAGE 3 — SECTION 3 -->
-<div class="page">
+<div class="page dense">
   <div class="section-header">
     <span>Section 3 — Traction & Sales</span>
     <span class="meta">1:15 – 2:10 | Energy 8/10</span>
@@ -233,7 +258,7 @@
 </div>
 
 <!-- PAGE 8 — SECTION 7 -->
-<div class="page">
+<div class="page dense">
   <div class="section-header">
     <span>Section 7 — The Ask</span>
     <span class="meta">4:55 – 5:15 | Energy 9/10</span>
