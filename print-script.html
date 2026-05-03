@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>BenchK — Script to Print — Shark Tank S18</title>
+<style>
+  @page {
+    size: landscape;
+    margin: 1.5cm;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Arial Black', 'Helvetica Neue', Arial, sans-serif;
+    background: #fff;
+    color: #111;
+  }
+  .page {
+    width: 100%;
+    min-height: 100vh;
+    padding: 40px 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    page-break-after: always;
+    position: relative;
+  }
+  .page:last-child {
+    page-break-after: avoid;
+  }
+  .section-header {
+    font-size: 18px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: #fff;
+    background: #1a2744;
+    padding: 10px 24px;
+    border-radius: 6px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .section-header .meta {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: #d4a017;
+  }
+  .line {
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.55;
+    margin-bottom: 16px;
+    padding-left: 16px;
+    border-left: 5px solid #2563eb;
+    color: #111;
+  }
+  .line.punch {
+    border-left-color: #dc2626;
+    color: #1a1a1a;
+    font-size: 34px;
+  }
+  .line.stage {
+    font-size: 22px;
+    font-weight: 600;
+    font-style: italic;
+    color: #6b7280;
+    border-left-color: #d1d5db;
+  }
+  .line .note {
+    font-size: 14px;
+    font-weight: 600;
+    color: #dc2626;
+    display: inline-block;
+    margin-left: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .page-num {
+    position: absolute;
+    bottom: 20px;
+    right: 40px;
+    font-size: 14px;
+    color: #999;
+    font-weight: 600;
+  }
+
+  /* Screen: show landscape preview */
+  @media screen {
+    body { background: #e5e7eb; }
+    .page {
+      max-width: 1200px;
+      margin: 20px auto;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      border-radius: 4px;
+      min-height: 700px;
+      aspect-ratio: 1.414;
+    }
+  }
+  /* Print: maximize space */
+  @media print {
+    body { background: #fff; }
+    .page {
+      min-height: auto;
+      padding: 24px 40px;
+    }
+    .section-header {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- PAGE 1 — SECTION 1 -->
+<div class="page">
+  <div class="section-header">
+    <span>Section 1 — Hook & Intro</span>
+    <span class="meta">0:00 – 0:35 | Energy 7/10</span>
+  </div>
+  <div class="line">"My name is Vadym Zemlianyi, from Sarasota, Florida. I'm Polish — with Ukrainian roots."</div>
+  <div class="line">"My business is BenchK — and this is our product." <span class="note">REQUIRED by ABC</span></div>
+  <div class="line">"The BenchK Vertical Training Wall."</div>
+  <div class="line">"We reinvented the 200-year-old Swedish ladder."</div>
+  <div class="line punch">"The wooden Swedish ladder? Cheap. Ugly. Outdated."</div>
+  <div class="line punch">"Modular. Premium. Commercial-grade."</div>
+  <div class="line">"One wall. Five training methods. Zero floor space."</div>
+  <div class="page-num">1 / 9</div>
+</div>
+
+<!-- PAGE 2 — SECTION 2 -->
+<div class="page">
+  <div class="section-header">
+    <span>Section 2 — Product Demo & Hook</span>
+    <span class="meta">0:35 – 1:15 | Energy 8/10</span>
+  </div>
+  <div class="line">"Pilates studios, PT clinics, gyms, hotels — even families at home."</div>
+  <div class="line">"One product. Seven markets."</div>
+  <div class="line stage">[DEMONSTRATE — stretch, pull-up, resistance band, Pilates, rehab]</div>
+  <div class="line">"All of that — one wall. Zero floor space."</div>
+  <div class="line punch">"Studios pay $50 per square foot in rent. BenchK uses the wall they already have." <span class="note">THE HOOK</span></div>
+  <div class="line">"This is not just a ladder. This is a vertical training station."</div>
+  <div class="line">"We don't rely on patents. We rely on 10 years of engineering and premium materials."</div>
+  <div class="line">"FSC-certified beech wood. Powder-coated steel. And a FIBO Innovation Award."</div>
+  <div class="page-num">2 / 9</div>
+</div>
+
+<!-- PAGE 3 — SECTION 3 -->
+<div class="page">
+  <div class="section-header">
+    <span>Section 3 — Traction & Sales</span>
+    <span class="meta">1:15 – 2:10 | Energy 8/10</span>
+  </div>
+  <div class="line">"Let me give you the numbers."</div>
+  <div class="line">"$2 million in global revenue in 2025."</div>
+  <div class="line">"Poland — $1 million. Germany, Switzerland, Czech Republic, Slovakia — $700,000. USA — first year — $300,000."</div>
+  <div class="line punch">"In just the last five years — over ten million dollars in sales."</div>
+  <div class="line">"Now let's talk 2026."</div>
+  <div class="line">"US sales so far in 2026 — over $240,000 — averaging $60,000 a month."</div>
+  <div class="line punch">"That puts us on track for over $720,000 this year."</div>
+  <div class="line">"And listen to this — one out of every three customers comes from word of mouth. 33%. We verified it."</div>
+  <div class="line">"People try it, they love it, they tell others. That's why we're growing."</div>
+  <div class="page-num">3 / 9</div>
+</div>
+
+<!-- PAGE 4 — SECTION 3b -->
+<div class="page">
+  <div class="section-header">
+    <span>Section 3b — Dylan Testimonial</span>
+    <span class="meta">2:10 – 2:25 | Energy 6/10</span>
+  </div>
+  <div class="line">"Sharks — meet Dylan. He owns this studio."</div>
+  <div class="line stage">[Turn to Dylan. Look at HIM, not camera.]</div>
+  <div class="line">"Dylan... why did you put BenchK in your studio?"</div>
+  <div class="line stage">[DYLAN ANSWERS — DO NOT INTERRUPT]</div>
+  <div class="line">"Dylan — how often do you use this wall?"</div>
+  <div class="line stage">[DYLAN ANSWERS]</div>
+  <div class="line">"Thanks, brother."</div>
+  <div class="page-num">4 / 9</div>
+</div>
+
+<!-- PAGE 5 — SECTION 4 -->
+<div class="page">
+  <div class="section-header">
+    <span>Section 4 — Origin Story & A-HA Moment</span>
+    <span class="meta">2:25 – 3:15 | Energy 5 → 8/10</span>
+  </div>
+  <div class="line">"How did I come up with this? Let me take you back."</div>
+  <div class="line">"1989. My father bought me a Swedish ladder. I was seven years old."</div>
+  <div class="line">"That wall became everything — my gym, my playground, my escape."</div>
+  <div class="line">"Fast forward to 2015. My family moved to Poland."</div>
+  <div class="line">"Foreign country. Foreign language. Foreign mentality."</div>
+  <div class="line">"I started BenchK with nothing."</div>
+  <div class="line">"99 out of 100 people said no."</div>
+  <div class="line stage">[PAUSE — 2 FULL SECONDS OF SILENCE]</div>
+  <div class="line punch">"Sometimes the best thing that happens to you... is everybody saying you can't."</div>
+  <div class="page-num">5 / 9</div>
+</div>
+
+<!-- PAGE 6 — SECTION 5 -->
+<div class="page">
+  <div class="section-header">
+    <span>Section 5 — Operator & Personal Investment</span>
+    <span class="meta">3:15 – 4:15 | Energy 8/10</span>
+  </div>
+  <div class="line">"Before BenchK — 9 years selling JCB construction machines."</div>
+  <div class="line">"250+ machines. $90,000 to $300,000 each. Tens of millions in B2B sales."</div>
+  <div class="line punch">"I don't run a startup. I run a factory."</div>
+  <div class="line">"25 suppliers. Polish manufacturing. Toyota Way principles."</div>
+  <div class="line punch">"Over $450,000 of my own money — and that's just America." <span class="note">Q7</span></div>
+  <div class="line">"I moved my entire family — my wife, my daughter, my son — to Florida."</div>
+  <div class="line">"We're here on an investor visa. Everything is on the line."</div>
+  <div class="line punch">"If I cracked Poland from zero — what makes you think I won't crack America?"</div>
+  <div class="page-num">6 / 9</div>
+</div>
+
+<!-- PAGE 7 — SECTION 6 -->
+<div class="page">
+  <div class="section-header">
+    <span>Section 6 — Replication Logic</span>
+    <span class="meta">4:15 – 4:55 | Energy 9/10</span>
+  </div>
+  <div class="line">"Poland: $1 million revenue. 38 million people."</div>
+  <div class="line">"USA: 340 million people — 8 times bigger."</div>
+  <div class="line punch">"Same product. Same playbook. Same operator."</div>
+  <div class="line">"The barrier is not awareness — it's TRIAL."</div>
+  <div class="line">"Once they see it, touch it, train on it — they buy."</div>
+  <div class="line">"Your money goes to getting people to try it — not explaining what it is."</div>
+  <div class="page-num">7 / 9</div>
+</div>
+
+<!-- PAGE 8 — SECTION 7 -->
+<div class="page">
+  <div class="section-header">
+    <span>Section 7 — The Ask</span>
+    <span class="meta">4:55 – 5:15 | Energy 9/10</span>
+  </div>
+  <div class="line punch">"I'm asking for $400,000 for 15% equity in my company." <span class="note">REQUIRED</span></div>
+  <div class="line">"Here's exactly how I'll use it:"</div>
+  <div class="line">"$200,000 — build a US distribution network. Boutique studios, PT clinics, yoga and Pilates studios."</div>
+  <div class="line">"$100,000 — marketing to fitness and medical professionals."</div>
+  <div class="line">"$50,000 — BenchK PRO, our affiliate program for physical therapists and chiropractors."</div>
+  <div class="line">"$50,000 — trade shows. IHRSA, SIBEC, and regional fitness events."</div>
+  <div class="line">"10 years bootstrapped. Zero outside investors."</div>
+  <div class="line punch">"I don't need your money — I need YOU."</div>
+  <div class="line">"American mindset. American network. American doors I can't open from a warehouse in Florida."</div>
+  <div class="page-num">8 / 9</div>
+</div>
+
+<!-- PAGE 9 — SECTION 8 -->
+<div class="page">
+  <div class="section-header">
+    <span>Section 8 — Closer</span>
+    <span class="meta">5:15 – 5:35 | Energy 10/10</span>
+  </div>
+  <div class="line">"BenchK is not a startup."</div>
+  <div class="line">"10 years old. Profitable. Award-winning."</div>
+  <div class="line punch">"I'm not asking you to take a chance."</div>
+  <div class="line punch">"I'm asking you to join something that is already moving."</div>
+  <div class="line stage">[PAUSE — 1 second]</div>
+  <div class="line">"Lift Yourself."</div>
+  <div class="line punch">"Sharks — let's lift America together." <span class="note">FINAL WORD</span></div>
+  <div class="line stage">[HOLD eye contact 3 FULL seconds. Do NOT break character.]</div>
+  <div class="page-num">9 / 9</div>
+</div>
+
+</body>
+</html>
